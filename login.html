@@ -21,7 +21,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/alert.css">
     <!-- script
       ================================================== -->
     <script src="js/modernizr.js"></script>
@@ -35,10 +34,10 @@
     <div class="preloader">
     </div>
 </div>
-
 <div id="head"></div>
 <script type="text/javascript">
-    $('#head').load('page-header.html')
+    $('#head').empty();
+    $('#head').load('page-header.html');
 </script>
 
 <section class="site-banner jarallax padding-large"

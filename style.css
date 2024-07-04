@@ -2890,3 +2890,20 @@ section.categories .category-content a{
 .jarallax.min-height300 {
     min-height: 300px;
 }
+/* CSS */
+.product-container {
+    width: 400px;   /* 设定固定宽度 */
+    height: 450px;  /* 设定固定高度 */
+    overflow: visible; /* 不隐藏超出部分 */
+    position: relative; /* 设置相对定位 */
+    background-color: #f0f0f0; /* 可选：背景颜色 */
+}
+
+.product-container img {
+    position: absolute;
+    top: 50%; /* 垂直居中 */
+    left: 50%; /* 水平居中 */
+    transform: translate(-50%, -50%); /* 调整位置使其精确居中 */
+    max-width: 100%; /* 最大宽度等于容器宽度 */
+    max-height: 100%; /* 最大高度等于容器高度 */
+}
