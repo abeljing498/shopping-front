@@ -153,16 +153,16 @@
         <div class="section-header">
             <h2 class="section-title">Best selling products</h2>
         </div>
-<!--        <ul class="tabs list-unstyled">-->
-<!--            <li data-tab-target="#all" class="active tab">All</li>-->
-<!--            <li data-tab-target="#shoes" class="tab">Shoes</li>-->
-<!--            <li data-tab-target="#tshirts" class="tab">Tshirts</li>-->
-<!--            <li data-tab-target="#pants" class="tab">Pants</li>-->
-<!--            <li data-tab-target="#hoodie" class="tab">Hoodie</li>-->
-<!--            <li data-tab-target="#outer" class="tab">Outer</li>-->
-<!--            <li data-tab-target="#jackets" class="tab">Jackets</li>-->
-<!--            <li data-tab-target="#accessories" class="tab">Accessories</li>-->
-<!--        </ul>-->
+        <!--        <ul class="tabs list-unstyled">-->
+        <!--            <li data-tab-target="#all" class="active tab">All</li>-->
+        <!--            <li data-tab-target="#shoes" class="tab">Shoes</li>-->
+        <!--            <li data-tab-target="#tshirts" class="tab">Tshirts</li>-->
+        <!--            <li data-tab-target="#pants" class="tab">Pants</li>-->
+        <!--            <li data-tab-target="#hoodie" class="tab">Hoodie</li>-->
+        <!--            <li data-tab-target="#outer" class="tab">Outer</li>-->
+        <!--            <li data-tab-target="#jackets" class="tab">Jackets</li>-->
+        <!--            <li data-tab-target="#accessories" class="tab">Accessories</li>-->
+        <!--        </ul>-->
         <div class="tab-content">
             <div id="all" data-tab-content class="active">
                 <div class="row d-flex flex-wrap" id="div-hot-product">
@@ -395,11 +395,11 @@
 
                     });
                     $.each(data.data.newProductList, function (i, newProduct) {
-                        setNewProductDiv('div-new-products',newProduct);
+                        setNewProductDiv('div-new-products', newProduct);
 
                     });
                     $.each(data.data.hotProductList, function (i, hotProduct) {
-                        setHotProductDiv('div-hot-product',hotProduct);
+                        setHotProductDiv('div-hot-product', hotProduct);
 
                     });
                     $.each(data.data.brandList, function (i, brandList) {
@@ -448,6 +448,7 @@
                 </div>
                  `);
     }
+
     function setHotProductDiv(divId, newProduct) {
         $('#' + divId).append(`
                 <div class="product-item col-lg-3 col-md-6 col-sm-6">
@@ -479,6 +480,7 @@
                     </div>
                  `);
     }
+
     function setBrandList(brand) {
         $('#div-brand-list').append(`
                  <img src="${brand.logo}" alt="phone" class="brand-image">
