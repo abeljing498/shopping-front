@@ -1,0 +1,224 @@
+{
+  "code": 200,
+  "message": "操作成功",
+  "data": {
+    "product": {
+      "id": 26,
+      "brandId": 3,
+      "productCategoryId": 19,
+      "feightTemplateId": 0,
+      "productAttributeCategoryId": 3,
+      "name": "Double Yellow Shirt",
+      "pic": "http://154.92.22.163:9000/mall/20240703/product-item3.jpg",
+      "productSn": "6946605",
+      "deleteStatus": 0,
+      "publishStatus": 1,
+      "newStatus": 1,
+      "recommandStatus": 1,
+      "verifyStatus": 0,
+      "sort": 100,
+      "sale": 100,
+      "price": 3788,
+      "promotionPrice": 3659,
+      "giftGrowth": 3788,
+      "giftPoint": 3788,
+      "usePointLimit": 0,
+      "subTitle": "Double Yellow Shirt",
+      "originalPrice": 4288,
+      "stock": 1000,
+      "lowStock": 0,
+      "unit": "件",
+      "weight": 0,
+      "previewStatus": 1,
+      "serviceIds": "2,3,1",
+      "keywords": "",
+      "note": "",
+      "albumPics": "http://154.92.22.163:9000/mall/20240705/post-small-image3.jpg,http://154.92.22.163:9000/mall/20240705/selling-products6.jpg",
+      "detailTitle": "",
+      "promotionStartTime": "2023-01-10T07:49:38.000+00:00",
+      "promotionEndTime": "2023-01-30T16:00:00.000+00:00",
+      "promotionPerLimit": 0,
+      "promotionType": 1,
+      "brandName": "华为",
+      "productCategoryName": "手机通讯",
+      "description": "",
+      "detailDesc": "",
+      "detailHtml": "<p><img class=\"wscnph\" src=\"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ad44f1cNf51f3bb0.jpg\" /><img class=\"wscnph\" src=\"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ad44fa8Nfcf71c10.jpg\" /><img class=\"wscnph\" src=\"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ad44fa9N40e78ee0.jpg\" /><img class=\"wscnph\" src=\"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ad457f4N1c94bdda.jpg\" /><img class=\"wscnph\" src=\"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ad457f5Nd30de41d.jpg\" /><img class=\"wscnph\" src=\"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5b10fb0eN0eb053fb.jpg\" /></p>",
+      "detailMobileHtml": "<p><img src=\"//img20.360buyimg.com/vc/jfs/t1/81293/35/5822/369414/5d3fe77cE619c5487/6e775a52850feea5.jpg!q70.dpg.webp\" alt=\"\" width=\"750\" height=\"776\" /></p>\n<p><img src=\"//img20.360buyimg.com/vc/jfs/t1/45300/25/11592/3658871/5d85ef66E92a8a911/083e47d8f662c582.jpg!q70.dpg.webp\" alt=\"\" width=\"596\" height=\"16383\" /></p>"
+    },
+    "brand": {
+      "id": 3,
+      "name": "华为",
+      "firstLetter": "H",
+      "sort": 100,
+      "factoryStatus": 1,
+      "showStatus": 1,
+      "productCount": 100,
+      "productCommentCount": 100,
+      "logo": "http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20200607/5abf6f26N31658aa2.jpg",
+      "bigPic": "http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20221108/huawei_banner_01.png",
+      "brandStory": "荣耀品牌成立于2013年,是华为旗下手机双品牌之一。荣耀以“创新、品质、服务”为核心战略,为全球年轻人提供潮酷的全场景智能化体验,打造年轻人向往的先锋文化和潮流生活方式"
+    },
+    "productAttributeList": [
+      {
+        "id": 43,
+        "productAttributeCategoryId": 3,
+        "name": "颜色",
+        "selectType": 0,
+        "inputType": 0,
+        "inputList": "",
+        "sort": 100,
+        "filterType": 0,
+        "searchType": 0,
+        "relatedStatus": 0,
+        "handAddStatus": 1,
+        "type": 0
+      },
+      {
+        "id": 44,
+        "productAttributeCategoryId": 3,
+        "name": "容量",
+        "selectType": 0,
+        "inputType": 1,
+        "inputList": "16G,32G,64G,128G,256G,512G",
+        "sort": 0,
+        "filterType": 0,
+        "searchType": 0,
+        "relatedStatus": 0,
+        "handAddStatus": 0,
+        "type": 0
+      },
+      {
+        "id": 45,
+        "productAttributeCategoryId": 3,
+        "name": "屏幕尺寸",
+        "selectType": 0,
+        "inputType": 0,
+        "inputList": "",
+        "sort": 0,
+        "filterType": 0,
+        "searchType": 0,
+        "relatedStatus": 0,
+        "handAddStatus": 0,
+        "type": 1
+      },
+      {
+        "id": 46,
+        "productAttributeCategoryId": 3,
+        "name": "网络",
+        "selectType": 0,
+        "inputType": 1,
+        "inputList": "3G,4G,5G,WLAN",
+        "sort": 0,
+        "filterType": 0,
+        "searchType": 0,
+        "relatedStatus": 0,
+        "handAddStatus": 0,
+        "type": 1
+      },
+      {
+        "id": 47,
+        "productAttributeCategoryId": 3,
+        "name": "系统",
+        "selectType": 0,
+        "inputType": 1,
+        "inputList": "Android,IOS",
+        "sort": 0,
+        "filterType": 0,
+        "searchType": 0,
+        "relatedStatus": 0,
+        "handAddStatus": 0,
+        "type": 1
+      },
+      {
+        "id": 48,
+        "productAttributeCategoryId": 3,
+        "name": "电池容量",
+        "selectType": 0,
+        "inputType": 0,
+        "inputList": "",
+        "sort": 0,
+        "filterType": 0,
+        "searchType": 0,
+        "relatedStatus": 0,
+        "handAddStatus": 0,
+        "type": 1
+      }
+    ],
+    "productAttributeValueList": [
+      {
+        "id": 612,
+        "productId": 26,
+        "productAttributeId": 43,
+        "value": "金色,银色"
+      },
+      {
+        "id": 613,
+        "productId": 26,
+        "productAttributeId": 45,
+        "value": "5.0"
+      },
+      {
+        "id": 614,
+        "productId": 26,
+        "productAttributeId": 46,
+        "value": "4G"
+      },
+      {
+        "id": 615,
+        "productId": 26,
+        "productAttributeId": 47,
+        "value": "Android"
+      },
+      {
+        "id": 616,
+        "productId": 26,
+        "productAttributeId": 48,
+        "value": "3000"
+      }
+    ],
+    "skuStockList": [
+      {
+        "id": 110,
+        "productId": 26,
+        "skuCode": "201806070026001",
+        "price": 3788,
+        "stock": 487,
+        "promotionPrice": 3699,
+        "lockStock": 0,
+        "spData": "[{\"key\":\"颜色\",\"value\":\"金色\"},{\"key\":\"容量\",\"value\":\"16G\"}]"
+      },
+      {
+        "id": 111,
+        "productId": 26,
+        "skuCode": "201806070026002",
+        "price": 3999,
+        "stock": 499,
+        "promotionPrice": 3899,
+        "lockStock": 0,
+        "spData": "[{\"key\":\"颜色\",\"value\":\"金色\"},{\"key\":\"容量\",\"value\":\"32G\"}]"
+      },
+      {
+        "id": 112,
+        "productId": 26,
+        "skuCode": "201806070026003",
+        "price": 3788,
+        "stock": 500,
+        "promotionPrice": 3699,
+        "lockStock": 0,
+        "spData": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"容量\",\"value\":\"16G\"}]"
+      },
+      {
+        "id": 113,
+        "productId": 26,
+        "skuCode": "201806070026004",
+        "price": 3999,
+        "stock": 500,
+        "promotionPrice": 3899,
+        "lockStock": 0,
+        "spData": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"容量\",\"value\":\"32G\"}]"
+      }
+    ],
+    "couponList": []
+  }
+}
