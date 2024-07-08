@@ -24,8 +24,23 @@ function initProductDetail(productId) {
                 $('#div-image-product-detail').attr('src', pic);
                 $("#h-product-name").text(data.data.product.name);
                 $("#p-product-detail").text(data.data.product.description);
-                $("#s-product-price").text("$" + data.data.product.price);
-                $("#del-product-price").text("$" + data.data.product.promotionPrice);
+                $("#s-product-price").text("$ " + data.data.product.price);
+                $("#del-product-price").text("$" + data.data.product.originalPrice);
+                $("#ul-product-category").append(`
+                    <li data-value=${data.data.product.productCategoryName} class="select-item">
+                    <a href="#">${data.data.product.productCategoryName}</a>
+                </li>
+                `);
+                $("#product-stock").html(data.data.product.stock+" in stock");
+                var keywords=data.data.product.keywords.split(' ');
+                var htmlKey="";
+                $.each(keywords, function (i, attValue) {
+                    htmlKey += `
+                      <li data-value="S" class="select-item">
+                                    <a href="#">${attValue}</a>,
+                                </li>`;
+                });
+                $("#ul-product-tags").append(htmlKey);
                 $.each(data.data.productAttributeValueList, function (i, value) {
                     var attributeValueList = value.value.split(",");
                     var colorOptionsHtml = '';

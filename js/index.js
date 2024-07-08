@@ -57,7 +57,7 @@ function setNewProductDiv(divId, newProduct) {
                  <div class="swiper-slide">
                     <div class="product-item">
                         <div class="image-holder product-container">
-                            <img src="${newProduct.pic}" alt="Books" class="product-image">
+                            <img src="${newProduct.pic}" alt="Books" class="product-image" style="height:100%;width:100%">
                         </div>
                         <div class="cart-concern">
                             <div class="cart-button d-flex justify-content-between align-items-center">
@@ -90,7 +90,7 @@ function setHotProductDiv(divId, newProduct) {
     $('#' + divId).append(`
                 <div class="product-item col-lg-3 col-md-6 col-sm-6">
                         <div class="image-holder product-container" >
-                            <img src="${newProduct.pic}" alt="Books" class="product-image">
+                            <img src="${newProduct.pic}" alt="Books" class="product-image" style="height:100%;width:100%">
                         </div>
                         <div class="cart-concern">
                             <div class="cart-button d-flex justify-content-between align-items-center">

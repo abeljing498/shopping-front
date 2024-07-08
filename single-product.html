@@ -38,18 +38,17 @@
     $('#head').load('page-header.html');
 </script>
 
-<section class="site-banner padding-small bg-light-grey">
+<section class="site-banner jarallax min-height300 padding-large"
+         style="background: url(images/hero-image.jpg) no-repeat; background-position: top;">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <h1 class="page-title">Shop page</h1>
                 <div class="breadcrumbs">
             <span class="item">
               <a href="index.html">Home /</a>
             </span>
-                    <span class="item">
-              <a href="shop.html">Shop /</a>
-            </span>
-                    <span class="item">Shop Single</span>
+                    <span class="item">Shop</span>
                 </div>
             </div>
         </div>
@@ -112,7 +111,7 @@
 
                         <div class="product-quantity">
                             <div class="item-title">
-                                <strong>2 in stock</strong>
+                                <strong id="product-stock">2 in stock</strong>
                             </div>
                             <div class="stock-button-wrap">
                                 <div class="product-quantity d-flex align-items-center">
@@ -140,37 +139,13 @@
                     </div>
                     <div class="meta-product margin-small">
                         <div class="meta-item d-flex flex-wrap align-items-baseline">
-                            <h4 class="item-title no-margin">SKU:</h4>
-                            <ul class="select-list list-unstyled d-flex">
-                                <li data-value="S" class="select-item">1223</li>
-                            </ul>
-                        </div>
-                        <div class="meta-item d-flex flex-wrap align-items-baseline">
                             <h4 class="item-title no-margin">Category:</h4>
                             <ul class="select-list list-unstyled d-flex" id="ul-product-category">
-                                <li data-value="S" class="select-item">
-                                    <a href="#">Women</a>,
-                                </li>
-                                <li data-value="S" class="select-item">
-                                    <a href="#">Popular</a>,
-                                </li>
-                                <li data-value="S" class="select-item">
-                                    <a href="#">Orange</a>
-                                </li>
                             </ul>
                         </div>
                         <div class="meta-item d-flex flex-wrap align-items-baseline">
                             <h4 class="item-title no-margin">Tags:</h4>
-                            <ul class="select-list list-unstyled d-flex" id="ul-product-tags">
-                                <li data-value="S" class="select-item">
-                                    <a href="#">Classic</a>,
-                                </li>
-                                <li data-value="S" class="select-item">
-                                    <a href="#">Winter</a>,
-                                </li>
-                                <li data-value="S" class="select-item">
-                                    <a href="#">Modern</a>
-                                </li>
+                            <ul class="select-list list-unstyled d-flex" id="ul-product-tags" >
                             </ul>
                         </div>
                     </div>
