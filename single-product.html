@@ -130,7 +130,7 @@
                         </div>
                         <div class="action-buttons">
                             <button type="submit" class="btn btn-medium btn-dark">Buy now</button>
-                            <button type="submit" name="add" class="btn btn-medium btn-dark">
+                            <button  name="add" class="btn btn-medium btn-dark" id="btn_add_cart">
                                 <span id="add-to-cart">Add to cart</span>
                             </button>
                             <button type="submit" class="btn btn-medium btn-dark"><i class="icon icon-heart"></i>
@@ -381,34 +381,6 @@
 <script type="text/javascript">
     $('#footer').load('page-footer.html')
 </script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        var urlParams = new URLSearchParams(window.location.search);
-        var id = urlParams.get('id');
-        initProductDetail(id);
-    });
-    var initIncrementDecrement = function () {
-        const decrementButton = document.querySelector('.decrement-button');
-        const incrementButton = document.querySelector('.increment-button');
-        const quantityInput = document.querySelector('#quantity');
-
-        decrementButton.addEventListener('click', () => {
-            if (quantityInput.value > 1) {
-                quantityInput.value--;
-            }
-        });
-
-        incrementButton.addEventListener('click', () => {
-            if (quantityInput.value < 100) {
-                quantityInput.value++;
-            }
-        });
-    }
-    initIncrementDecrement();
-
-</script>
-
 
 <script src="js/plugins.js"></script>
 <script src="js/script.js"></script>
