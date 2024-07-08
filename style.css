@@ -2907,3 +2907,6 @@ section.categories .category-content a{
     max-width: 100%; /* 最大宽度等于容器宽度 */
     max-height: 100%; /* 最大高度等于容器高度 */
 }
+.selected {
+    color: orange; /* 你可以选择任何你喜欢的颜色 */
+}
