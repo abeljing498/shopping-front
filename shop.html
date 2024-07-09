@@ -24,7 +24,8 @@
     ================================================== -->
   <script src="js/modernizr.js"></script>
   <script src="js/jquery-1.11.0.min.js"></script>
-
+  <script src="js/common.js"></script>
+  <script src="js/shopping.js"></script>
 </head>
 
 <body>
@@ -62,7 +63,7 @@
 
         <section id="selling-products" class="col-md-9 product-store">
           <div class="container">
-            <ul class="tabs list-unstyled">
+            <ul class="tabs list-unstyled" id="category-ul">
               <li data-tab-target="#all" class="active tab">All</li>
               <li data-tab-target="#shoes" class="tab">Shoes</li>
               <li data-tab-target="#tshirts" class="tab">Tshirts</li>
@@ -1090,7 +1091,7 @@
             </div>
             <div class="widgets widget-product-brands">
               <h5 class="widget-title">Brands</h5>
-              <ul class="product-tags sidebar-list list-unstyled">
+              <ul class="product-tags sidebar-list list-unstyled" id="ul-brands">
                 <li class="tags-item">
                   <a href="">Nike</a>
                 </li>

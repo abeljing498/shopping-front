@@ -16,7 +16,6 @@ function initProductDetail(productId) {
                 } else {
                     pics = pic;
                 }
-
                 var arr = pics.split(",");
                 $.each(arr, function (i, pic) {
                     $('#div-product-man-pic').append(`
@@ -24,7 +23,6 @@ function initProductDetail(productId) {
                            <img src="${pic}" alt="" onclick="changeImageSorce('${pic}')">
                         </div>
                     `);
-
                 });
                 $('#div-image-product-detail').attr('src', pic);
                 $("#h-product-name").text(data.data.product.name);

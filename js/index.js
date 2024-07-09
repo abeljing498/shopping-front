@@ -38,10 +38,10 @@ function initData() {
                     setHotProductDiv('div-hot-product', hotProduct);
 
                 });
-                $.each(data.data.brandList, function (i, brandList) {
-                    setBrandList(brandList);
-
-                });
+                // $.each(data.data.brandList, function (i, brandList) {
+                //     setBrandList(brandList);
+                //
+                // });
 
             }
         },
@@ -81,8 +81,12 @@ function setNewProductDiv(divId, newProduct) {
                     </div>
                 </div>
                  `);
-    $('.btn-wrap.cart-link', '#' + divId).last().on('click', function() {
+    $('.btn-wrap.cart-link', '#' + divId).last().on('click', function () {
         addCart(newProduct.id);
+    });
+    $('.view-btn.tooltip', '#' + divId).last().on('click', function () {
+        window.location.href = "single-product.html?id="+newProduct.id;
+
     });
 }
 
@@ -95,15 +99,13 @@ function setHotProductDiv(divId, newProduct) {
                         <div class="cart-concern">
                             <div class="cart-button d-flex justify-content-between align-items-center">
                                 <button type="button" class="btn-wrap cart-link d-flex align-items-center">add to cart
-                                    <i
-                                            class="icon icon-arrow-io"></i>
+                                    <i class="icon icon-arrow-io"></i>
                                 </button>
-                                <button type="button" class="view-btn tooltip
-                        d-flex">
+                                <button type="button" class="view-btn tooltip d-flex">
                                     <i class="icon icon-screen-full"></i>
                                     <span class="tooltip-text">Quick view</span>
                                 </button>
-                                <button type="button" class="wishlist-btn">
+                                <button type="button" class="wishlist-btn" >
                                     <i class="icon icon-heart"></i>
                                 </button>
                             </div>
@@ -116,13 +118,19 @@ function setHotProductDiv(divId, newProduct) {
                         </div>
                     </div>
                  `);
+    $('.btn-wrap.cart-link', '#' + divId).last().on('click', function () {
+        addCart(newProduct.id);
+    });
+    $('.view-btn.tooltip', '#' + divId).last().on('click', function () {
+        window.location.href = "single-product.html?id="+newProduct.id;
+
+    });
 }
-
+function clickToProduct(id){
+    window.location.href = "single-product.html?id="+id;
+}
 function setBrandList(brand) {
-    $('#div-brand-list').append(`
-                 <img src="${brand.logo}" alt="phone" class="brand-image">
-                 `);
-
+    $('#div-brand-list').append(` <img src="${brand.logo}" alt="phone" class="brand-image">`);
 }
 
 /**
@@ -130,64 +138,64 @@ function setBrandList(brand) {
  * @param product
  */
 function addCart(id) {
-    var productAttr = []; // 存储最终的JSON数组
-    var productData = initProductDetail(id);
-    var product=productData.data.product;
-    $.each(product.productAttributeValueList, function (i, value) {
-        $.each(product.productAttributeList, function (i, attrs) {
-            if (attrs.id == value.productAttributeId) {
-                var attributeValueList = value.value.split(",");
-                var colorOptionsHtml = '';
-                // 如果属性值列表长度大于1，意味着需要用户选择
-                if (attributeValueList.length > 1) {
-                    // 默认选择第一个值
-                    productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
-                } else {
-                    // 如果只有一个值，直接添加到JSON数组中
-                    productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
-                }
+    initProductDetail(id, function (productData) {
+        var productAttr = []; // 存储最终的JSON数组
+        var product = productData;
+        $.each(product.productAttributeValueList, function (i, value) {
+            $.each(product.productAttributeList, function (i, attrs) {
+                if (attrs.id == value.productAttributeId) {
+                    var attributeValueList = value.value.split(",");
+                    var colorOptionsHtml = '';
+                    // 如果属性值列表长度大于1，意味着需要用户选择
+                    if (attributeValueList.length > 1) {
+                        productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
+                    } else {
+                        productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
+                    }
 
+                }
+            });
+        });
+        var addCartVaule = {};
+        addCartVaule.price = product.product.price;
+        addCartVaule.productAttr = JSON.stringify(productAttr);
+        addCartVaule.productBrand = product.product.brandName;
+        addCartVaule.productCategoryId = product.product.productCategoryId;
+        addCartVaule.productId = product.product.id;
+        addCartVaule.productName = product.product.name;
+        addCartVaule.productPic = product.product.pic;
+        addCartVaule.productSn = product.product.productSn;
+        addCartVaule.productSubTitle = product.product.subTitle;
+        addCartVaule.quantity = 1; // 使用.val()来获取input的值
+        // 发起POST请求到购物车添加端点
+        $.ajax({
+            url: requestUrl + 'cart/add',
+            type: "POST",
+            data: JSON.stringify(addCartVaule),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.code == 200) {
+                    alert("添加到购物车成功！");
+                    window.location.href = "cart.html";
+                } else {
+                    alert('添加到购物车失败！');
+                }
+            },
+            error: function (err) {
+                console.error("提交失败:", err);
             }
         });
     });
-    var addCartVaule = {};
-    addCartVaule.price = product.id;
-    addCartVaule.productAttr = JSON.stringify(productAttr);
-    addCartVaule.productBrand = product.brandName;
-    addCartVaule.productCategoryId = product.productCategoryId;
-    addCartVaule.productId = product.id;
-    addCartVaule.productName = product.name;
-    addCartVaule.productPic = product.pic;
-    addCartVaule.productSn = product.productSn;
-    addCartVaule.productSubTitle = product.subTitle;
-    addCartVaule.quantity =1; // 使用.val()来获取input的值
-    // 发起POST请求到购物车添加端点
-    $.ajax({
-        url: requestUrl + 'cart/add',
-        type: "POST",
-        data: JSON.stringify(addCartVaule),
-        contentType: "application/json; charset=utf-8",
-        success: function (response) {
-            if (response.code == 200) {
-                alert("添加到购物车成功！");
-                window.location.href = "cart.html";
-            } else {
-                alert('添加到购物车失败！');
-            }
-        },
-        error: function (err) {
-            console.error("提交失败:", err);
-        }
-    });
 }
-function initProductDetail(productId) {
+
+function initProductDetail(productId, callback) {
     $.ajax({
         url: requestUrl + 'product/detail/' + productId,
         type: "GET",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
             if (data.code == 200) {
-                return data.data;
+                callback(data.data);
             }
         },
         error: function (err) {
