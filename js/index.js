@@ -1,4 +1,3 @@
-
 function initData() {
     $.ajax({
         url: requestUrl + 'home/content',
@@ -61,12 +60,10 @@ function setNewProductDiv(divId, newProduct) {
                         </div>
                         <div class="cart-concern">
                             <div class="cart-button d-flex justify-content-between align-items-center">
-                                <button type="button" class="btn-wrap cart-link d-flex align-items-center">add to cart
-                                    <i
-                                            class="icon icon-arrow-io"></i>
+                                <button type="button" class="btn-wrap cart-link d-flex align-items-center"">add to cart
+                                    <i class="icon icon-arrow-io"></i>
                                 </button>
-                                <button type="button" class="view-btn tooltip
-                        d-flex">
+                                <button type="button" class="view-btn tooltip d-flex">
                                     <i class="icon icon-screen-full"></i>
                                     <span class="tooltip-text">Quick view</span>
                                 </button>
@@ -84,6 +81,9 @@ function setNewProductDiv(divId, newProduct) {
                     </div>
                 </div>
                  `);
+    $('.btn-wrap.cart-link', '#' + divId).last().on('click', function() {
+        addCart(newProduct.id);
+    });
 }
 
 function setHotProductDiv(divId, newProduct) {
@@ -123,4 +123,75 @@ function setBrandList(brand) {
                  <img src="${brand.logo}" alt="phone" class="brand-image">
                  `);
 
+}
+
+/**
+ * 添加到购物车
+ * @param product
+ */
+function addCart(id) {
+    var productAttr = []; // 存储最终的JSON数组
+    var productData = initProductDetail(id);
+    var product=productData.data.product;
+    $.each(product.productAttributeValueList, function (i, value) {
+        $.each(product.productAttributeList, function (i, attrs) {
+            if (attrs.id == value.productAttributeId) {
+                var attributeValueList = value.value.split(",");
+                var colorOptionsHtml = '';
+                // 如果属性值列表长度大于1，意味着需要用户选择
+                if (attributeValueList.length > 1) {
+                    // 默认选择第一个值
+                    productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
+                } else {
+                    // 如果只有一个值，直接添加到JSON数组中
+                    productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
+                }
+
+            }
+        });
+    });
+    var addCartVaule = {};
+    addCartVaule.price = product.id;
+    addCartVaule.productAttr = JSON.stringify(productAttr);
+    addCartVaule.productBrand = product.brandName;
+    addCartVaule.productCategoryId = product.productCategoryId;
+    addCartVaule.productId = product.id;
+    addCartVaule.productName = product.name;
+    addCartVaule.productPic = product.pic;
+    addCartVaule.productSn = product.productSn;
+    addCartVaule.productSubTitle = product.subTitle;
+    addCartVaule.quantity =1; // 使用.val()来获取input的值
+    // 发起POST请求到购物车添加端点
+    $.ajax({
+        url: requestUrl + 'cart/add',
+        type: "POST",
+        data: JSON.stringify(addCartVaule),
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+            if (response.code == 200) {
+                alert("添加到购物车成功！");
+                window.location.href = "cart.html";
+            } else {
+                alert('添加到购物车失败！');
+            }
+        },
+        error: function (err) {
+            console.error("提交失败:", err);
+        }
+    });
+}
+function initProductDetail(productId) {
+    $.ajax({
+        url: requestUrl + 'product/detail/' + productId,
+        type: "GET",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: function (data) {
+            if (data.code == 200) {
+                return data.data;
+            }
+        },
+        error: function (err) {
+            console.error("Request failed:", err);
+        }
+    });
 }
