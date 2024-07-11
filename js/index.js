@@ -76,7 +76,7 @@ function setNewProductDiv(divId, newProduct) {
                             <h3 class="product-title">
                                 <a href="single-product.html?id=${newProduct.id}">${newProduct.name}</a>
                             </h3>
-                            <span class="item-price text-primary">$${newProduct.price}</span>
+                            <span class="item-price text-primary">$${newProduct.price.toFixed(2)}</span>
                         </div>
                     </div>
                 </div>
@@ -133,73 +133,3 @@ function setBrandList(brand) {
     $('#div-brand-list').append(` <img src="${brand.logo}" alt="phone" class="brand-image">`);
 }
 
-/**
- * 添加到购物车
- * @param product
- */
-function addCart(id) {
-    initProductDetail(id, function (productData) {
-        var productAttr = []; // 存储最终的JSON数组
-        var product = productData;
-        $.each(product.productAttributeValueList, function (i, value) {
-            $.each(product.productAttributeList, function (i, attrs) {
-                if (attrs.id == value.productAttributeId) {
-                    var attributeValueList = value.value.split(",");
-                    var colorOptionsHtml = '';
-                    // 如果属性值列表长度大于1，意味着需要用户选择
-                    if (attributeValueList.length > 1) {
-                        productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
-                    } else {
-                        productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
-                    }
-
-                }
-            });
-        });
-        var addCartVaule = {};
-        addCartVaule.price = product.product.price;
-        addCartVaule.productAttr = JSON.stringify(productAttr);
-        addCartVaule.productBrand = product.product.brandName;
-        addCartVaule.productCategoryId = product.product.productCategoryId;
-        addCartVaule.productId = product.product.id;
-        addCartVaule.productName = product.product.name;
-        addCartVaule.productPic = product.product.pic;
-        addCartVaule.productSn = product.product.productSn;
-        addCartVaule.productSubTitle = product.product.subTitle;
-        addCartVaule.quantity = 1; // 使用.val()来获取input的值
-        // 发起POST请求到购物车添加端点
-        $.ajax({
-            url: requestUrl + 'cart/add',
-            type: "POST",
-            data: JSON.stringify(addCartVaule),
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                if (response.code == 200) {
-                    alert("添加到购物车成功！");
-                    window.location.href = "cart.html";
-                } else {
-                    alert('添加到购物车失败！');
-                }
-            },
-            error: function (err) {
-                console.error("提交失败:", err);
-            }
-        });
-    });
-}
-
-function initProductDetail(productId, callback) {
-    $.ajax({
-        url: requestUrl + 'product/detail/' + productId,
-        type: "GET",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        success: function (data) {
-            if (data.code == 200) {
-                callback(data.data);
-            }
-        },
-        error: function (err) {
-            console.error("Request failed:", err);
-        }
-    });
-}

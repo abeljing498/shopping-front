@@ -1,6 +1,7 @@
 var productData = null;
 var productAttr = []; // 存储最终的JSON数组
 var currentSelection = {}; // 跟踪每个属性的当前选择值
+var changeSelectionState = {}; // 跟踪每个属性的当前选择值
 function initProductDetail(productId) {
     $.ajax({
         url: requestUrl + 'product/detail/' + productId,
@@ -55,10 +56,12 @@ function initProductDetail(productId) {
                             if (attributeValueList.length > 1) {
                                 // 默认选择第一个值
                                 currentSelection[attrs.name] = attributeValueList[0];
+                                changeSelectionState[attrs.name] = false;
                                 productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
                             } else {
                                 // 如果只有一个值，直接添加到JSON数组中
                                 productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
+                                currentSelection[attrs.name] = attributeValueList[0];
                             }
                             $.each(attributeValueList, function (i, attValue) {
                                 colorOptionsHtml += `
@@ -89,9 +92,9 @@ function initProductDetail(productId) {
 }
 
 function chooseAttr(element, attrsName, attrsValue) {
-
     // 更新当前选择状态
     currentSelection[attrsName] = attrsValue;
+    changeSelectionState[attrsName] = true;
     // 更新JSON数组中的相应项
     for (var i = 0; i < productAttr.length; i++) {
         if (productAttr[i].key === attrsName) {
@@ -119,16 +122,22 @@ $(document).ready(function () {
     var data = initProductDetail(id);
 
     $('#btn_add_cart').click(function () {
+        let allAttrsSelected = true;
+        let msg = "";
+        Object.keys(changeSelectionState).forEach(attrName => {
+            if (!changeSelectionState[attrName]) {
+                msg = `请先选择${attrName}`;
+                allAttrsSelected=false;
+                return false;
+            }
+        });
+        if (allAttrsSelected === false) {
+            alert(msg)
+            return false;
+        }
         var addCartVaule = {};
-        addCartVaule.price = productData.data.product.id;
-        addCartVaule.productAttr = JSON.stringify(productAttr);
-        addCartVaule.productBrand = productData.data.product.brandName;
-        addCartVaule.productCategoryId = productData.data.product.productCategoryId;
         addCartVaule.productId = productData.data.product.id;
-        addCartVaule.productName = productData.data.product.name;
-        addCartVaule.productPic = productData.data.product.pic;
-        addCartVaule.productSn = productData.data.product.productSn;
-        addCartVaule.productSubTitle = productData.data.product.subTitle;
+        addCartVaule.productAttr = JSON.stringify(productAttr);
         addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
         // 发起POST请求到购物车添加端点
         $.ajax({

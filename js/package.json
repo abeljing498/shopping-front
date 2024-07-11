@@ -239,3 +239,54 @@
   "productSubTitle": "【限时限量抢购】Apple产品年中狂欢节，好物尽享，美在智慧！速来 >> 勾选[保障服务][原厂保2年]，获得AppleCare+全方位服务计划，原厂延保售后无忧。",
   "quantity": 1
 }
+
+
+{
+  "code": 200,
+  "message": "操作成功",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 1,
+    "totalPage": 20,
+    "total": 20,
+    "list": [
+      {
+        "id": 32,
+        "brandId": 50,
+        "productCategoryId": 8,
+        "feightTemplateId": 0,
+        "productAttributeCategoryId": 1,
+        "name": "Stylish Grey T-Shirter",
+        "pic": "http://154.92.22.163:9000/mall/20240703/review-image2.jpg",
+        "productSn": "HNTBJ2E153A",
+        "deleteStatus": 0,
+        "publishStatus": 1,
+        "newStatus": 0,
+        "recommandStatus": 0,
+        "verifyStatus": 0,
+        "sort": 0,
+        "sale": 0,
+        "price": 68,
+        "giftGrowth": 0,
+        "giftPoint": 0,
+        "usePointLimit": 0,
+        "subTitle": "Stylish Grey T-Shirtdf",
+        "originalPrice": 68,
+        "stock": 100,
+        "lowStock": 0,
+        "unit": "",
+        "weight": 0,
+        "previewStatus": 0,
+        "serviceIds": "1,2",
+        "keywords": "",
+        "note": "",
+        "albumPics": "",
+        "detailTitle": "",
+        "promotionPerLimit": 0,
+        "promotionType": 0,
+        "brandName": "海澜之家",
+        "productCategoryName": "T恤"
+      }
+    ]
+  }
+}

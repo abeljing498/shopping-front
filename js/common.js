@@ -62,3 +62,71 @@ function retryFailedRequest() {
         console.error("没有重试请求的机制");
     }
 }
+
+function addCart(id) {
+    initProductDetail(id, function (productData) {
+        var productAttr = []; // 存储最终的JSON数组
+        var product = productData;
+        var hasMultipleValues = false; // 添加一个标志变量
+        $.each(product.productAttributeValueList, function (i, value) {
+            $.each(product.productAttributeList, function (i, attrs) {
+                if (attrs.id == value.productAttributeId) {
+                    var attributeValueList = value.value.split(",");
+                    var colorOptionsHtml = '';
+                    // 如果属性值列表长度大于1，意味着需要用户选择
+                    if (attributeValueList.length > 1) {
+                        hasMultipleValues = true;
+                        return false
+                    } else {
+                        productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
+                    }
+
+                }
+            });
+        });
+        if (hasMultipleValues) {
+            alert("please select the attribute value and then add it!");
+            window.location.href = "single-product.html?id=" + product.product.id;
+            return false
+        }
+        var addCartVaule = {};
+        addCartVaule.productId = product.product.id;
+        addCartVaule.price = product.product.price;
+        addCartVaule.productAttr = JSON.stringify(productAttr);
+        addCartVaule.quantity = 1; // 使用.val()来获取input的值
+        // 发起POST请求到购物车添加端点
+        $.ajax({
+            url: requestUrl + 'cart/add',
+            type: "POST",
+            data: JSON.stringify(addCartVaule),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.code == 200) {
+                    alert("添加到购物车成功！");
+                    window.location.href = "cart.html";
+                } else {
+                    alert('添加到购物车失败！');
+                }
+            },
+            error: function (err) {
+                console.error("提交失败:", err);
+            }
+        });
+    });
+}
+
+function initProductDetail(productId, callback) {
+    $.ajax({
+        url: requestUrl + 'product/detail/' + productId,
+        type: "GET",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: function (data) {
+            if (data.code == 200) {
+                callback(data.data);
+            }
+        },
+        error: function (err) {
+            console.error("Request failed:", err);
+        }
+    });
+}
