@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ultras - Clothing Store eCommerce Store HTML Website Template</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/google-front.css">
+    <script src="js/modernizr.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/order.js"></script>
+    <style>
+        /* 自定义样式 */
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-details {
+            margin-top: 1rem;
+        }
+
+        .order-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .order-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .order-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-image {
+            flex-shrink: 0; /* 防止图片在缩小窗口时被压缩 */
+            max-width: 100px; /* 设置图片的最大宽度 */
+            margin-right: 1rem; /* 在图片和信息之间添加间距 */
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 垂直居中 */
+        }
+
+        .product-attributes {
+            display: block;
+            color: #666; /* 可以选择一种较淡的颜色 */
+            margin-bottom: 0.5em; /* 添加一些底部边距 */
+        }
+
+        /* ... 其他样式 ... */
+
+        .btn-group > .btn {
+            border-radius: 0; /* 去掉按钮的圆角，使它们在一行中看起来更像一个整体 */
+            margin-right: -1px; /* 减少边框间隙，使按钮紧密相邻 */
+        }
+
+        .btn-group > .btn:first-child {
+            border-top-left-radius: 4px; /* 圆角只应用于第一个按钮的左侧 */
+            border-bottom-left-radius: 4px;
+        }
+
+        .btn-group > .btn:last-child {
+            border-top-right-radius: 4px; /* 圆角只应用于最后一个按钮的右侧 */
+            border-bottom-right-radius: 4px;
+            margin-right: 0; /* 确保最后一个按钮没有负边距 */
+        }
+
+        .btn-group > .btn.active {
+            background-color: #007bff; /* 选择按钮的背景颜色 */
+            border-color: #007bff; /* 选择按钮的边框颜色 */
+            color: white; /* 选择按钮的文字颜色 */
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="preloader-wrapper">
+    <div class="preloader">
+    </div>
+</div>
+<header id="header">
+    <div id="header-wrap">
+        <nav class="secondary-nav border-bottom">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-4 header-contact">
+                        <p>Let's talk! <strong>+57 444 11 00 35</strong>
+                        </p>
+                    </div>
+                    <div class="col-md-4 shipping-purchase text-center">
+                        <p>Free shipping on a purchase value of $200</p>
+                    </div>
+                    <div class="col-md-4 col-sm-12 user-items">
+                        <ul class="d-flex justify-content-end list-unstyled">
+                            <li>
+                                <a href="login.html">
+                                    <i class="icon icon-user"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="cart.html">
+                                    <i class="icon icon-shopping-cart"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="wishlist.html">
+                                    <i class="icon icon-heart"></i>
+                                </a>
+                            </li>
+                            <li class="user-items search-item pe-3">
+                                <a href="#" class="search-button">
+                                    <i class="icon icon-search"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <nav class="primary-nav padding-small">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-lg-2 col-md-2">
+                        <div class="main-logo">
+                            <a href="index.html">
+                                <img src="images/main-logo.png" alt="logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-md-10">
+                        <div class="navbar">
+
+                            <div id="main-nav" class="stellarnav d-flex justify-content-end right">
+                                <ul class="menu-list">
+
+                                    <li class="menu-item has-sub">
+                                        <a href="index.html" class="item-anchor active d-flex align-item-center"
+                                           data-effect="Home">Home<i
+                                                class="icon icon-chevron-down"></i></a>
+                                        <ul class="submenu">
+                                            <li><a href="index.html" class="item-anchor active">Home</a></li>
+                                            <li><a href="home2.html" class="item-anchor">Home v2<span
+                                                    class="text-primary"> (PRO)</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="about.html" class="item-anchor" data-effect="About">About</a></li>
+
+                                    <li class="menu-item has-sub">
+                                        <a href="#" class="item-anchor d-flex align-item-center" data-effect="Shop">Shop<i
+                                                class="icon icon-chevron-down"></i></a>
+                                        <ul class="submenu">
+                                            <li><a href="shop.html" class="item-anchor">Shop<span class="text-primary"> (PRO)</span></a>
+                                            </li>
+                                            <li><a href="shop-slider.html" class="item-anchor">Shop slider<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="shop-grid.html" class="item-anchor">Shop grid<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="shop-list.html" class="item-anchor">Shop list<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="single-product.html" class="item-anchor">Single product<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="cart.html" class="item-anchor">Cart<span class="text-primary"> (PRO)</span></a>
+                                            </li>
+                                            <li><a href="wishlist.html" class="item-anchor">Wishlist<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="checkout.html" class="item-anchor">Checkout<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="menu-item has-sub">
+                                        <a href="#" class="item-anchor d-flex align-item-center" data-effect="Pages">Pages<i
+                                                class="icon icon-chevron-down"></i></a>
+                                        <ul class="submenu">
+                                            <li><a href="coming-soon.html" class="item-anchor">Coming soon<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="login.html" class="item-anchor">Login<span
+                                                    class="text-primary"> (PRO)</span></a>
+                                            </li>
+                                            <li><a href="about.html" class="item-anchor">About<span
+                                                    class="text-primary"> (PRO)</span></a>
+                                            </li>
+                                            <li><a href="contact.html" class="item-anchor">Contact<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="faqs.html" class="item-anchor">FAQs<span class="text-primary"> (PRO)</span></a>
+                                            </li>
+                                            <li><a href="styles.html" class="item-anchor">Styles<span
+                                                    class="text-primary"> (PRO)</span></a>
+                                            </li>
+                                            <li><a href="thank-you.html" class="item-anchor">Thankyou<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="error.html" class="item-anchor">Error page<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="menu-item has-sub">
+                                        <a href="#" class="item-anchor d-flex align-item-center" data-effect="Blog">Blog<i
+                                                class="icon icon-chevron-down"></i></a>
+                                        <ul class="submenu">
+                                            <li><a href="blog.html" class="item-anchor">Blog<span class="text-primary"> (PRO)</span></a>
+                                            </li>
+                                            <li><a href="blog-sidebar.html" class="item-anchor">Blog with sidebar<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="blog-masonry.html" class="item-anchor">Blog masonry<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                            <li><a href="single-post.html" class="item-anchor">Single post<span
+                                                    class="text-primary">
+                              (PRO)</span></a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="contact.html" class="item-anchor" data-effect="Contact">Contact</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section class="site-banner jarallax min-height300 padding-large"
+         style="background: url(images/hero-image.jpg) no-repeat; background-position: top;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-title">Order page</h1>
+                <div class="breadcrumbs">
+            <span class="item">
+              <a href="index.html">Home /</a>
+            </span>
+                    <span class="item">Order</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="shopify-grid padding-large">
+    <div class="container">
+        <div class="d-flex align-items-center mb-3">
+            <div class="btn-group" role="group" aria-label="Status Filters">
+                <button type="button" class="btn btn-primary">All</button>
+                <button type="button" class="btn btn-primary">Pending</button>
+                <button type="button" class="btn btn-primary">Shipped</button>
+                <button type="button" class="btn btn-primary">Delivered</button>
+                <button type="button" class="btn btn-primary">Cancelled</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-lg-6 mx-auto">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Order #12345</h5>
+                        <div class="order-meta">
+                            <small class="text-muted">Placed on: July 15, 2023 at 10:30 AM</small>
+                            <small class="text-success order-status">Status: Shipped</small>
+                        </div>
+                        <hr>
+                        <div class="order-details">
+                            <div class="order-item">
+                                <div class="product-image">
+                                    <img src="/images/product-item2.jpg" alt="Product Image" class="img-fluid">
+                                </div>
+                                <div class="product-info">
+                                    <span class="product-name">Product Name 1</span>
+                                    <span class="quantity">x 2</span>
+                                    <span class="product-attributes"> Color: Blue, Size: M </span>
+                                    <span class="price">$199.00</span>
+                                </div>
+                            </div>
+                            <div class="order-item">
+                                <div class="product-image">
+                                    <img src="/images/product-item2.jpg" alt="Product Image" class="img-fluid">
+                                </div>
+                                <div class="product-info">
+                                    <span class="product-name">Product Name 1</span>
+                                    <span class="quantity">x 2</span>
+                                    <span class="product-attributes"> Color: Blue, Size: M </span>
+                                    <span class="price">$199.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="order-total">Total: $498.00</p>
+                            <div class="order-actions">
+                                <button type="button" class="btn btn-sm btn-primary me-2">View</button>
+                                <button type="button" class="btn btn-sm btn-danger">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More order cards can be added here -->
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<section id="subscribe" class="bg-light-grey padding-large">
+    <div class="container">
+        <div class="row">
+            <div class="block-text col-md-6">
+                <div class="section-header">
+                    <h2 class="section-title">Get 25% off Discount Coupons</h2>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dictumst amet, metus, sit massa posuere
+                    maecenas.
+                    At tellus ut nunc amet vel egestas.</p>
+            </div>
+            <div class="subscribe-content col-md-6">
+                <form id="form" class="d-flex justify-content-between">
+                    <input type="text" name="email" placeholder="Enter your email addresss here">
+                    <button class="btn btn-dark">Subscribe Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="instagram" class="padding-large">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Follow our instagram</h2>
+        </div>
+        <p>Our official Instagram account <a href="#">@ultras</a> or <a href="#">#ultras_clothing</a>
+        </p>
+        <div class="row d-flex flex-wrap justify-content-between">
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <figure class="zoom-effect">
+                    <img src="images/insta-image1.jpg" alt="instagram" class="insta-image">
+                    <i class="icon icon-instagram"></i>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <figure class="zoom-effect">
+                    <img src="images/insta-image2.jpg" alt="instagram" class="insta-image">
+                    <i class="icon icon-instagram"></i>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <figure class="zoom-effect">
+                    <img src="images/insta-image3.jpg" alt="instagram" class="insta-image">
+                    <i class="icon icon-instagram"></i>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <figure class="zoom-effect">
+                    <img src="images/insta-image4.jpg" alt="instagram" class="insta-image">
+                    <i class="icon icon-instagram"></i>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <figure class="zoom-effect">
+                    <img src="images/insta-image5.jpg" alt="instagram" class="insta-image">
+                    <i class="icon icon-instagram"></i>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <figure class="zoom-effect">
+                    <img src="images/insta-image6.jpg" alt="instagram" class="insta-image">
+                    <i class="icon icon-instagram"></i>
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="shipping-information">
+    <hr>
+    <div class="container">
+        <div class="row d-flex flex-wrap align-items-center justify-content-between">
+            <div class="col-md-3 col-sm-6">
+                <div class="icon-box">
+                    <i class="icon icon-truck"></i>
+                    <h4 class="block-title">
+                        <strong>Free shipping</strong> Over $200
+                    </h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="icon-box">
+                    <i class="icon icon-return"></i>
+                    <h4 class="block-title">
+                        <strong>Money back</strong> Return within 7 days
+                    </h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="icon-box">
+                    <i class="icon icon-tags1"></i>
+                    <h4 class="block-title">
+                        <strong>Buy 4 get 5th</strong> 50% off
+                    </h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="icon-box">
+                    <i class="icon icon-help_outline"></i>
+                    <h4 class="block-title">
+                        <strong>Any questions?</strong> experts are ready
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</section>
+
+<div id="footer"></div>
+<script type="text/javascript">
+    $('#footer').load('page-footer.html')
+</script>
+
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/script.js"></script>
+</body>
+
+</html>
