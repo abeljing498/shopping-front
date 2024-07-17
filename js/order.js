@@ -209,7 +209,7 @@ function confirmOrder(id) {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
             if (data.code == 200) {
-                searchProduct('-1');
+                searchProduct('2');
             }
 
         },
@@ -230,7 +230,7 @@ function deletOrder(id) {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
             if (data.code == 200) {
-                searchProduct('-1');
+                searchProduct('4');
             }
 
         },
