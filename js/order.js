@@ -241,5 +241,5 @@ function deletOrder(id) {
 }
 
 function checkoutOrder(id) {
-    window.location.href = "checkout.html?id=" + id;
+    window.location.href = "checkout.html?orderId=" + id;
 }
