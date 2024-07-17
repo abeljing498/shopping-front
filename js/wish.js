@@ -74,25 +74,26 @@ function initData() {
             console.error("Request failed:", err);
         }
     });
-    function deleteProduct(id) {
-        let params = {
-            productId: id
-        };
-        $.ajax({
-            url: requestUrl + 'member/productCollection/delete',
-            type: 'POST',
-            data: params,
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            success: function (data) {
-                if (data.code == 200) {
-                    initData();
-                }
 
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    }
 }
 
+function deleteProduct(id) {
+    let params = {
+        productId: id
+    };
+    $.ajax({
+        url: requestUrl + 'member/productCollection/delete',
+        type: 'POST',
+        data: params,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: function (data) {
+            if (data.code == 200) {
+                initData();
+            }
+
+        },
+        error: function (error) {
+            console.error('Error:', error);
+        }
+    });
+}

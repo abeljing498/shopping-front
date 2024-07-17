@@ -115,6 +115,65 @@
             border-color: #007bff; /* 选择按钮的边框颜色 */
             color: white; /* 选择按钮的文字颜色 */
         }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-details {
+            margin-top: 1rem;
+        }
+
+        .order-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .order-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .shipping-info {
+            margin-top: 1rem; /* 上方留出一定的间距 */
+        }
+
+        .shipping-card {
+            display: flex; /* 使用Flexbox布局 */
+            justify-content: space-between; /* 标题和数据之间平均分配剩余空间 */
+            align-items: center; /* 水平居中对齐标题和数据 */
+            padding: 0.5rem; /* 内边距 */
+            margin-bottom: 0.5rem; /* 底部外边距 */
+            background-color: #f8f9fa; /* 背景颜色 */
+            border-radius: 4px; /* 圆角 */
+        }
+
+        .shipping-card strong {
+            text-align: right; /* 标题右对齐 */
+            width: 30%; /* 标题宽度 */
+            margin-right: 1rem; /* 标题和数据之间的间距 */
+            font-weight: bold; /* 加粗字体 */
+        }
+
+        .shipping-card .shipping-data {
+            text-align: left; /* 数据左对齐 */
+            flex-grow: 1; /* 数据部分填充剩余空间 */
+        }
+
+        @media (max-width: 768px) {
+            .shipping-card {
+                flex-direction: column; /* 垂直堆叠标题和数据 */
+            }
+
+            .shipping-card strong {
+                width: 100%; /* 标题占据整行 */
+                margin-right: 0; /* 移除标题和数据之间的间距 */
+                margin-bottom: 0.5rem; /* 标题下方留出一定间距 */
+            }
+        }
+
     </style>
 </head>
 
@@ -150,123 +209,20 @@
     <div class="container">
         <div class="d-flex align-items-center mb-3">
             <div class="btn-group" role="group" aria-label="Status Filters">
-                <button type="button" class="btn btn-primary">All</button>
-                <button type="button" class="btn btn-primary">Pending</button>
-                <button type="button" class="btn btn-primary">Shipped</button>
-                <button type="button" class="btn btn-primary">Delivered</button>
-                <button type="button" class="btn btn-primary">Cancelled</button>
+                <button type="button" class="btn btn-sm btn-primary me-2" id="btn-all">All</button>
+                <button type="button" class="btn btn-sm btn-primary me-2" id="btn-pending">Awaiting Pay</button>
+                <button type="button" class="btn btn-sm btn-primary me-2" id="btn-ship">Ready to Ship</button>
+                <button type="button" class="btn btn-sm btn-primary me-2" id="btn-shipped">Shipped</button>
+                <button type="button" class="btn btn-sm btn-primary me-2" id="btn-completed">Completed</button>
+                <button type="button" class="btn btn-sm btn-primary me-2" id="btn-closed">Closed</button>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-8 col-lg-6 mx-auto">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Order #12345</h5>
-                        <div class="order-meta">
-                            <small class="text-muted">Placed on: July 15, 2023 at 10:30 AM</small>
-                            <small class="text-success order-status">Status: Shipped</small>
-                        </div>
-                        <hr>
-                        <div class="order-details">
-                            <div class="order-item">
-                                <div class="product-image">
-                                    <img src="/images/product-item2.jpg" alt="Product Image" class="img-fluid">
-                                </div>
-                                <div class="product-info">
-                                    <span class="product-name">Product Name 1</span>
-                                    <span class="quantity">x 2</span>
-                                    <span class="product-attributes"> Color: Blue, Size: M </span>
-                                    <span class="price">$199.00</span>
-                                </div>
-                            </div>
-                            <div class="order-item">
-                                <div class="product-image">
-                                    <img src="/images/product-item2.jpg" alt="Product Image" class="img-fluid">
-                                </div>
-                                <div class="product-info">
-                                    <span class="product-name">Product Name 1</span>
-                                    <span class="quantity">x 2</span>
-                                    <span class="product-attributes"> Color: Blue, Size: M </span>
-                                    <span class="price">$199.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="product-name">logistics Information:debang:454545454545454545</p>
-                            <p class="product-name">Delivery Time:July 15, 2023 at 10:30 AM</p>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="order-total">Total: $498.00</p>
-                            <div class="order-actions">
-                                <button type="button" class="btn btn-sm btn-primary me-2">View</button>
-                                <button type="button" class="btn btn-sm btn-danger">删除</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- More order cards can be added here -->
-
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-8 col-lg-6 mx-auto">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Order #12345</h5>
-                        <div class="order-meta">
-                            <small class="text-muted">Placed on: July 15, 2023 at 10:30 AM</small>
-                            <small class="text-success order-status">Status: Shipped</small>
-                        </div>
-                        <hr>
-                        <div class="order-details">
-                            <div class="order-item">
-                                <div class="product-image">
-                                    <img src="/images/product-item2.jpg" alt="Product Image" class="img-fluid">
-                                </div>
-                                <div class="product-info">
-                                    <span class="product-name">Product Name 1</span>
-                                    <span class="quantity">x 2</span>
-                                    <span class="product-attributes"> Color: Blue, Size: M </span>
-                                    <span class="price">$199.00</span>
-                                </div>
-                            </div>
-                            <div class="order-item">
-                                <div class="product-image">
-                                    <img src="/images/product-item2.jpg" alt="Product Image" class="img-fluid">
-                                </div>
-                                <div class="product-info">
-                                    <span class="product-name">Product Name 1</span>
-                                    <span class="quantity">x 2</span>
-                                    <span class="product-attributes"> Color: Blue, Size: M </span>
-                                    <span class="price">$199.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="product-name">logistics Information:debang:454545454545454545</p>
-                            <p class="product-name">Delivery Time:July 15, 2023 at 10:30 AM</p>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="order-total">Total: $498.00</p>
-                            <div class="order-actions">
-                                <button type="button" class="btn btn-sm btn-primary me-2">View</button>
-                                <button type="button" class="btn btn-sm btn-danger">删除</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- More order cards can be added here -->
-
-            </div>
+        <div id="div-orders">
         </div>
     </div>
+    <hr>
+
+</div>
 
 </div>
 <section id="subscribe" class="bg-light-grey padding-large">
