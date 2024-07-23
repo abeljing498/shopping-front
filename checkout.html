@@ -24,7 +24,7 @@
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/modernizr.js"></script>
     <script src="js/common.js"></script>
-
+    <script src="js/checkout.js"></script>
 </head>
 
 <body>
@@ -60,6 +60,8 @@
 
 <section class="shopify-cart checkout-wrap padding-large">
     <div class="container">
+        <input type="hidden" id="input_hidden_address_id" name="hiddenInput" value="">
+        <input type="hidden" id="input_hidden_card_id" name="hiddenInput" value="">
         <form class="form-group">
             <div class="row d-flex flex-wrap">
                 <div class="col-lg-6">
@@ -69,25 +71,21 @@
                         <input type="text" id="fname" name="firstname" class="form-control">
                         <label for="lname">Last Name*</label>
                         <input type="text" id="lname" name="lastname" class="form-control">
-                        <label for="cname">Company Name(optional)*</label>
-                        <input type="text" id="cname" name="companyname" class="form-control">
                         <label for="cname">Country / Region*</label>
                         <select class="form-select form-control" aria-label="Default select example" id="select_country">
                             <option selected="" value="">Please Choose</option>
-                            <option value="0">United States</option>
-                            <option value="1">UK</option>
-                            <option value="2">Australia</option>
-                            <option value="3">Canada</option>
+                            <option value="USA">USA</option>
+                            <option value="UK">UK</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Canada">Canada</option>
                         </select>
+                        <label for="text_address_city">Town / City *</label>
+                        <input type="text" name="city" class="form-control" id="text_address_city">
+                        <label for="cname">Company Name</label>
+                        <input type="text" id="cname" name="companyname" class="form-control">
                         <label >Street Address*</label>
                         <input type="text" id="text_address_name" name="address" placeholder="House number and street name"
                                class="form-control">
-                        <input type="text" id="text_address_suite" name="address" placeholder="Appartments, suite, etc."
-                               class="form-control">
-                        <label for="text_address_city">Town / City *</label>
-                        <input type="text" name="city" class="form-control" id="text_address_city">
-                        <label for="text_address_state">State *</label>
-                        <input type="text"   name="city" class="form-control" id="text_address_state">
                         <label for="text_zip">Zip Code *</label>
                         <input type="text" id="text_zip" name="zip" class="form-control">
                         <label for="text_phone">Phone *</label>
@@ -167,7 +165,7 @@
                                     </div>
                                 </label>
                             </div>
-                            <button type="submit" name="submit" class="btn btn-dark btn-full btn-medium">Place an
+                            <button  class="btn btn-dark btn-full btn-medium" id="btn_payOrder">Place an
                                 order
                             </button>
                         </div>

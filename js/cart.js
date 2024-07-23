@@ -147,6 +147,26 @@ function updateProductNumber(id,quantity ){
         }
     });
 }
+function enerateConfirmOrder(id,quantity ){
+    $.ajax({
+        url: requestUrl + 'order/generateConfirmOrder',
+        type: 'POST',
+        data: $.param({ // 使用$.param来转换数据
+            ids: [id]
+        }, true), // 第二个参数true表示使用traditional模式
+        processData: false,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        success: function (data) {
+            if (data.code == 200) {
+                initData();
+            }
+
+        },
+        error: function (error) {
+            console.error('Error:', error);
+        }
+    });
+}
 
 $(document).ready(function () {
     initData();
