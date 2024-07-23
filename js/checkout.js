@@ -54,6 +54,18 @@ function initProductDetail(orderId) {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
             if (data.code == 200) {
+                    var orderDetail = data.data;
+                    $('#fname').text(orderDetail.name);
+                    $('#lname').text(order.productName);
+                    $('#cname').text(order.productPrice);
+                    $('#select_country').text(JSON.stringify(order.productAttr));
+                    $('#text_address_name').val(order.count);
+                $('#text_address_state').val(order.count);
+                $('#text_address_city').val(order.count);
+                $('#text_zip').val(order.count);
+                $('text_phone').val(order.count);
+                $('text_email').val(order.count);
+                $('text_address_suite').val(order.count);
 
             }
         },
