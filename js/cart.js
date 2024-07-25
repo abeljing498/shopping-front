@@ -8,7 +8,7 @@ function initData() {
                 $('#div_cart_product_list').empty();
                 $.each(data.data, function (i, cart) {
                     var totalPrice = cart.quantity * cart.price;
-             $('#div_cart_product_list').append(`
+                    $('#div_cart_product_list').append(`
           <div class="cart-item border-bottom padding-small">
           <div class="row">
             <div class="col-lg-4 col-md-3">
@@ -54,10 +54,11 @@ function initData() {
           </div>
         </div>`);
                 });
+                var grandTotal = calculateTotal();
+                $('#subTotalMoney').html(`<bdi> <span class="price-currency-symbol">$</span>${grandTotal.toFixed(2)}</bdi>`);
+                $('#totalMoney').html(`<bdi> <span class="price-currency-symbol">$</span>${grandTotal.toFixed(2)}</bdi>`);
             }
-            var grandTotal = calculateTotal();
-            $('#subTotalMoney').html(`<bdi> <span class="price-currency-symbol">$</span>${grandTotal.toFixed(2)}</bdi>`);
-            $('#totalMoney').html(`<bdi> <span class="price-currency-symbol">$</span>${grandTotal.toFixed(2)}</bdi>`);
+
         },
         error: function (err) {
             console.error("Request failed:", err);
@@ -66,7 +67,7 @@ function initData() {
 }
 
 // 修改JavaScript
-function operateNum(element, operation, price,id) {
+function operateNum(element, operation, price, id) {
     // 使用jQuery选择器来获取input元素
     var input = $(element).siblings('.spin-number-output');
     var currentQuantity = parseInt(input.val(), 10);
@@ -81,7 +82,7 @@ function operateNum(element, operation, price,id) {
     } else {
         input.val(newQuantity);
     }
-    updateProductNumber(id,newQuantity);
+    updateProductNumber(id, newQuantity);
     updateTotalPrice(input, price);
 }
 
@@ -128,7 +129,8 @@ function deleteCart(id) {
     });
 
 }
-function updateProductNumber(id,quantity ){
+
+function updateProductNumber(id, quantity) {
     $.ajax({
         url: requestUrl + 'cart/update/quantity',
         type: "GET",
@@ -139,7 +141,7 @@ function updateProductNumber(id,quantity ){
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
             if (data.code == 200) {
-               initData();
+                initData();
             }
         },
         error: function (err) {
@@ -147,28 +149,29 @@ function updateProductNumber(id,quantity ){
         }
     });
 }
-function enerateConfirmOrder(id,quantity ){
-    $.ajax({
-        url: requestUrl + 'order/generateConfirmOrder',
-        type: 'POST',
-        data: $.param({ // 使用$.param来转换数据
-            ids: [id]
-        }, true), // 第二个参数true表示使用traditional模式
-        processData: false,
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        success: function (data) {
-            if (data.code == 200) {
-                initData();
-            }
-
-        },
-        error: function (error) {
-            console.error('Error:', error);
-        }
-    });
-}
 
 $(document).ready(function () {
     initData();
+    $('#btn_checkout').click(function () {
+        $.ajax({
+            url: requestUrl + 'cart/list',
+            type: "GET",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (data) {
+                if (data.code == 200) {
+                    var grandTotal = calculateTotal();
+                    if (grandTotal === 0) {
+                        alert("Please select the product to your shopping cart!");
+                    } else {
+                        window.location.href ='checkout.html?payTotalMoney='+ grandTotal.toFixed(2);
+                    }
+                }
 
+            },
+            error: function (err) {
+                console.error("Request failed:", err);
+            }
+        });
+
+    });
 });
