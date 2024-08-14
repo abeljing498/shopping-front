@@ -57,30 +57,41 @@ function initData() {
 
 function setNewProductDiv(divId, newProduct) {
     $('#' + divId).append(`
-                 <div class="swiper-slide">
-                    <div class="product-item">
-                        <div class="image-holder product-container">
-                            <img src="${newProduct.pic}" alt="Books" class="product-image" style="height:100%;width:100%">
+                 <div class="product-single-item">
+                    <div class="image">
+                        <img src="static/picture/13.jpg" alt="">
+                        <div class="card-icon">
+                            <div class="hot">Hot</div>
+                            <div class="hot-2">-70%</div>
                         </div>
-                        <div class="cart-concern">
-                            <div class="cart-button d-flex justify-content-between align-items-center">
-                                <button type="button" class="btn-wrap cart-link d-flex align-items-center"">add to cart
-                                    <i class="icon icon-arrow-io"></i>
-                                </button>
-                                <button type="button" class="view-btn tooltip d-flex">
-                                    <i class="icon icon-screen-full"></i>
-                                    <span class="tooltip-text">Quick view</span>
-                                </button>
-                                <button type="button" class="wishlist-btn">
-                                    <i class="icon icon-heart"></i>
-                                </button>
-                            </div>
+                        <ul class="cart-wrap">
+                            <li>
+                                <a href="shop-single.html" data-bs-toggle="tooltip" data-bs-html="true" title="Shop"><i
+                                        class="fi flaticon-shopping-bag"></i></a>
+                            </li>
+                            <li data-bs-toggle="modal" data-bs-target="#popup-quickview">
+                                <button data-bs-toggle="tooltip" data-bs-html="true" title="Quick View"><i
+                                        class="fi ti-eye"></i></button>
+                            </li>
+                            <li>
+                                <a href="wishlist.html" data-bs-toggle="tooltip" data-bs-html="true" title="wishlist"><i
+                                        class="fa flaticon-heart" aria-hidden="true"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text">
+                        <div class="price">
+                            <span class="present-price">$70.30</span>
+                            <del class="old-price">$85.50</del>
                         </div>
-                        <div class="product-detail">
-                            <h3 class="product-title">
-                                <a href="single-product.html?id=${newProduct.id}">${newProduct.name}</a>
-                            </h3>
-                            <span class="item-price text-primary">$${newProduct.price.toFixed(2)}</span>
+                        <h2><a href="shop-single.html">Stylish man with hat</a></h2>
+                        <div class="rating-product">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                            <span>13 reviews</span>
                         </div>
                     </div>
                 </div>
@@ -96,29 +107,40 @@ function setNewProductDiv(divId, newProduct) {
 
 function setHotProductDiv(divId, newProduct) {
     $('#' + divId).append(`
-                <div class="product-item col-lg-3 col-md-6 col-sm-6">
-                        <div class="image-holder product-container" >
-                            <img src="${newProduct.pic}" alt="Books" class="product-image" style="height:100%;width:100%">
-                        </div>
-                        <div class="cart-concern">
-                            <div class="cart-button d-flex justify-content-between align-items-center">
-                                <button type="button" class="btn-wrap cart-link d-flex align-items-center">add to cart
-                                    <i class="icon icon-arrow-io"></i>
-                                </button>
-                                <button type="button" class="view-btn tooltip d-flex">
-                                    <i class="icon icon-screen-full"></i>
-                                    <span class="tooltip-text">Quick view</span>
-                                </button>
-                                <button type="button" class="wishlist-btn" >
-                                    <i class="icon icon-heart"></i>
-                                </button>
+                 <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="product-single-item">
+                            <div class="image">
+                                <img src="static/picture/5.jpg" alt="">
+                                <ul class="cart-wrap">
+                                    <li>
+                                        <a href="shop-single.html" data-bs-toggle="tooltip" data-bs-html="true"
+                                           title="Shop"><i class="fi flaticon-shopping-bag"></i></a>
+                                    </li>
+                                    <li data-bs-toggle="modal" data-bs-target="#popup-quickview">
+                                        <button data-bs-toggle="tooltip" data-bs-html="true" title="Quick View"><i
+                                                class="fi ti-eye"></i></button>
+                                    </li>
+                                    <li>
+                                        <a href="wishlist.html" data-bs-toggle="tooltip" data-bs-html="true"
+                                           title="wishlist"><i class="fa flaticon-heart" aria-hidden="true"></i></a>
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="product-detail">
-                            <h3 class="product-title">
-                                <a href="single-product.html?id=${newProduct.id}">${newProduct.name}</a>
-                            </h3>
-                            <div class="item-price text-primary">$${newProduct.price}</div>
+                            <div class="text">
+                                <div class="price">
+                                    <span class="present-price">$45.30</span>
+                                    <del class="old-price">$70.50</del>
+                                </div>
+                                <h2><a href="shop-single.html">Woman winter cloths</a></h2>
+                                <div class="rating-product">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <span>25 reviews</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                  `);
