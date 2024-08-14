@@ -10,10 +10,9 @@ function initData() {
                  <div class="col col-lg-6 col-12">
                     <div class="hero-content">
                         <div class="images">
-                            <img src="${data.data.advertiseList[2].pic}" alt="">
+                            <img src="${data.data.advertiseList[0].pic}" alt="">
                             <div class="hero-text">
-                                <h2>${data.data.advertiseList[2].name}</h2>
-                                <h3>${data.data.advertiseList[2].note}</h3>
+                                <h3>${data.data.advertiseList[0].note}</h3>
                                 <a class="theme-btn" href="shop.html">Shop Now</a>
                             </div>
                         </div>
@@ -25,30 +24,28 @@ function initData() {
                             <img src="${data.data.advertiseList[1].pic}" alt="">
                         </div>
                         <div class="hero-text">
-                            <h2>${data.data.advertiseList[1].name}</h2>
-                            <h3>${data.data.advertiseList[1].note}</h3>
+                            ${data.data.advertiseList[1].note}
                             <a class="theme-btn" href="shop.html">Shop Now</a>
                         </div>
                     </div>
                     <div class="hero-content">
                         <div class="images">
-                            <img src="${data.data.advertiseList[0].pic}" alt="">
+                            <img src="${data.data.advertiseList[2].pic}" alt="">
                         </div>
-                        <div class="hero-text">
-                            <h2>${data.data.advertiseList[0].name}</h2>
-                            <h3> <h2>${data.data.advertiseList[0].note}</h2></h3>
+                        <div class="hero-text"> 
+                             ${data.data.advertiseList[2].note}
                             <a class="theme-btn" href="shop.html">Shop Now</a>
                         </div>
                     </div>
                 </div>`);
-                // $.each(data.data.newProductList, function (i, newProduct) {
-                //     setNewProductDiv('div-new-products', newProduct);
-                //
-                // });
-                // $.each(data.data.hotProductList, function (i, hotProduct) {
-                //     setHotProductDiv('div-hot-product', hotProduct);
-                //
-                // });
+                $.each(data.data.newProductList, function (i, newProduct) {
+                    setNewProductDiv('div-new-products', newProduct);
+
+                });
+                $.each(data.data.hotProductList, function (i, hotProduct) {
+                    setHotProductDiv('div-hot-product', hotProduct);
+
+                });
 
             }
         },
@@ -143,3 +140,33 @@ function setBrandList(brand) {
 }
 
 
+function initCategoryTreeList() {
+    $.ajax({
+        url: requestUrl + 'product/categoryTreeList',
+        type: "GET",
+        success: function (data) {
+            if (data.code == 200) {
+                $('#metis-menu').empty();
+                $("#metis-menu").append('<li><a href="shop.html">All</a></li>');
+                $.each(data.data, function (i, dataObject) {
+                    var childHtml = '';
+                    $.each(dataObject.children, function (i, childData) {
+                        childHtml += '<li><a href="shop.html?catagoryId=' + childData.id + '">' + childData.name + '</a></li>';
+                    });
+                var menuEntry = `
+                    <li class="header-catagory-item">
+                        <a class="menu-down-arrow" href="#">${dataObject.name}</a>
+                        <ul class="header-catagory-single">
+                           ${childHtml}
+                        </ul>
+                    </li>`;
+                $("#metis-menu").append(menuEntry);
+                });
+
+            }
+        },
+        error: function (err) {
+            console.error("Request failed:", err);
+        }
+    });
+}
