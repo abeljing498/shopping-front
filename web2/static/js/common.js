@@ -1,4 +1,4 @@
-window.requestUrl = "http://localhost:8085/";
+window.requestUrl = "http://localhost:8085/api/";
 $(document).ready(function () {
     // 设置全局的AJAX请求拦截器
     $.ajaxSetup({
