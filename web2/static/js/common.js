@@ -23,6 +23,8 @@ $(document).ready(function () {
 
 
 });
+//写一个公共请求数据的方法要求token无需的时候跳转至登录页面
+
 
 function refreshToken() {
     $.ajax({
