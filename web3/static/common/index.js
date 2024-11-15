@@ -135,7 +135,58 @@ function initData() {
             $("#collections").append(productHtml);
         });
 
+        $.each(response.data.trendingProductList, function (index, product) {
+            var productHtml = `
+           <li>
+                        <div class="product-grid-item">
+                            <div class="product-element-top"><a href="product-detail-v1.html"> 
+                            <img class="thumbnail"src="${product.pic}" alt="${product.name}"> </a>
+                                <span class="off product-label">20% off</span></div>
+                            <div class="ayira-buttons">
+                                <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
+                                        class="flaticon-heart"></i></a></div>
+                                <div class="ayira-compare-btn"><a class="button ayira-tooltip" href="compare.html"><i
+                                        class="flaticon-reload"></i></a></div>
+                                <div class="quick-view"><a href="#" class="open-quick-view" data-bs-toggle="modal"
+                                                           data-bs-target="#quick_view"><i
+                                        class="flaticon-search-2"></i></a></div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category-action">
+                                    <div class="product-title"><a href="product-detail-v1.html">${product.name}</a>
+                                    </div>
+                                    <div class="product-rating d-flex">
+                                        <ul class="d-flex">
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                        </ul>
+                                        <span>(212)</span></div>
+                                </div>
+                                <div class="wrap-price">
+                                    <div class="wrapp-swap">
+                                        <div class="swap-elements">
+                                            <div class="price">
+                                                <div class="product-price">
+                                                    <div class="old-price">$${product.originalPrice}</div>
+                                                    <div class="sale-price">$${product.price}</div>
+                                                </div>
+                                            </div>
+                                            <div class="btn-add header-action-btn-cart"><a href="javascript:void(0)"
+                                                                                           class="add_to_cart_button">
+                                                <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+        `;
 
+            $("#collections").append(productHtml);
+        });
 
         // trendingProductList
         // featuredProductList
