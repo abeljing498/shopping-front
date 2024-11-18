@@ -215,6 +215,22 @@ $("#best_selling").owlCarousel({
         1000: {items: 4, loop: true,},
     }
 });
+$("#trending_products").owlCarousel({
+    items: 4,
+    margin: 30,
+    nav: true,
+    autoplay: false,
+    autoplayHoverPause: true,
+    loop: false,
+    navText: ["<i class='flaticon-left-arrow'></i>", "<i class='flaticon-right-arrow'></i>"],
+    responsive: {
+        0: {items: 1, slideBy: 1},
+        576: {items: 2,},
+        768: {items: 3, slideBy: 3},
+        991: {items: 3, loop: true, dots: true,},
+        1000: {items: 4, loop: true,},
+    }
+});
 $("#testimonials").owlCarousel({
     stagePadding: 98,
     loop: true,
