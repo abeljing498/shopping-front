@@ -5,39 +5,39 @@ function initData() {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
             if (data.code == 200) {
-                $('#adDivContent').empty();
-                $('#adDivContent').append(`
-                 <div class="col col-lg-6 col-12">
-                    <div class="hero-content">
-                        <div class="images">
-                            <img src="${data.data.advertiseList[0].pic}" alt="">
-                            <div class="hero-text">
-                                <h3>${data.data.advertiseList[0].note}</h3>
-                                <a class="theme-btn" href="shop.html">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-lg-6 col-12">
-                    <div class="hero-content s2">
-                        <div class="images">
-                            <img src="${data.data.advertiseList[1].pic}" alt="">
-                        </div>
-                        <div class="hero-text">
-                            ${data.data.advertiseList[1].note}
-                            <a class="theme-btn" href="shop.html">Shop Now</a>
-                        </div>
-                    </div>
-                    <div class="hero-content">
-                        <div class="images">
-                            <img src="${data.data.advertiseList[2].pic}" alt="">
-                        </div>
-                        <div class="hero-text"> 
-                             ${data.data.advertiseList[2].note}
-                            <a class="theme-btn" href="shop.html">Shop Now</a>
-                        </div>
-                    </div>
-                </div>`);
+                // $('#adDivContent').empty();
+                // $('#adDivContent').append(`
+                //  <div class="col col-lg-6 col-12">
+                //     <div class="hero-content">
+                //         <div class="images">
+                //             <img src="${data.data.advertiseList[0].pic}" alt="">
+                //             <div class="hero-text">
+                //                 <h3>${data.data.advertiseList[0].note}</h3>
+                //                 <a class="theme-btn" href="shop.html">Shop Now</a>
+                //             </div>
+                //         </div>
+                //     </div>
+                // </div>
+                // <div class="col col-lg-6 col-12">
+                //     <div class="hero-content s2">
+                //         <div class="images">
+                //             <img src="${data.data.advertiseList[1].pic}" alt="">
+                //         </div>
+                //         <div class="hero-text">
+                //             ${data.data.advertiseList[1].note}
+                //             <a class="theme-btn" href="shop.html">Shop Now</a>
+                //         </div>
+                //     </div>
+                //     <div class="hero-content">
+                //         <div class="images">
+                //             <img src="${data.data.advertiseList[2].pic}" alt="">
+                //         </div>
+                //         <div class="hero-text">
+                //              ${data.data.advertiseList[2].note}
+                //             <a class="theme-btn" href="shop.html">Shop Now</a>
+                //         </div>
+                //     </div>
+                // </div>`);
                 $.each(data.data.newProductList, function (i, newProduct) {
                     setNewProductDiv('div-new-products', newProduct);
 

@@ -152,7 +152,7 @@ function initData() {
                 //动态给quick-view添加点击事件
                 $("#collections").append(productHtml);
             $('.open-quick-view', '#collections').last().on('click', function () {
-                openProductDetail(product.id);
+                initProductDetail(product.id);
             });
             }
         );
@@ -344,10 +344,5 @@ function initData() {
         }
         return starsHtml;
     }
-    function openProductDetail(id){
 
-        ajaxRequest('GET', 'product/detail/'+id, null, function (response) {
-            console.log('GET Response:', response);
-        });
-    }
 }
