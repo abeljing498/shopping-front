@@ -62,7 +62,8 @@ function initProductDetail(productId) {
                             } else {
                                 colorCode = '#000000'; // 默认颜色为黑色
                             }
-                            colorOptionsHtml += '<li class="active ms-0" data-tooltip="tooltip" data-placement="top" title="' + color + '" data-color="' + colorCode + '" data-bs-original-title="' + color + '" aria-label="Blue" style="background-color: rgb(28, 155, 181)";></li>';
+                            // 添加颜色选项
+                            colorOptionsHtml += '<li class="active ms-0"  data-tooltip="tooltip" data-placement="top" title="' + color + '" data-color="' + colorCode + '" data-bs-original-title="' + color + '" aria-label="' + color + '" style="background-color: ' + colorCode + ';"></li>';
 
                         }
                         $("#div-product-attr").append(`
