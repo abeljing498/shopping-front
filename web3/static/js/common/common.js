@@ -34,4 +34,26 @@ function ajaxRequest(method, url, data, callback) {
         }
     });
 }
-
+// 绑定按钮点击事件
+// $(document).ready(function () {
+//     $('#getBtn').click(function () {
+//         // 定义 GET 请求的参数
+//         var getParams = {
+//             param1: 'value1',
+//             param2: 'value2'
+//         };
+//         ajaxRequest('GET', 'http://example.com/api/data', getParams, function (response) {
+//             console.log('GET Response:', response);
+//         });
+//     });
+//
+//     $('#postBtn').click(function () {
+//         // 定义 POST 请求的参数
+//         var postParams = {
+//             key: 'value'
+//         };
+//         ajaxRequest('POST', 'http://example.com/api/submit', postParams, function (response) {
+//             console.log('POST Response:', response);
+//         });
+//     });
+// });
