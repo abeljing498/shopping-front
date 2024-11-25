@@ -18,8 +18,8 @@ const colorMap = {
 };
 
 function initProductDetail(productId) {
-    productAttr=[];
-    changeSelectionState={};
+    productAttr = [];
+    changeSelectionState = {};
     ajaxRequest('GET', 'product/detail/' + productId, null, function (response) {
         if (response.code == 200) {
             productData = response;
@@ -64,7 +64,7 @@ function initProductDetail(productId) {
                     </div>
                 </div>
             `;
-        $("#div-product-attr").append(`${outAttrHtml}`);
+                        $("#div-product-attr").append(`${outAttrHtml}`);
                     } else {
                         let sizeOptionsHtml = item.inputList.split(',').map(option => {
                             return `
@@ -104,34 +104,20 @@ function initProductDetail(productId) {
             tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
-            let sizeOptionsHtml = item.inputList.split(',').map(option => {
-                return `
-                    <li class="wc-size" onclick="changeSelectionAttr(this,'${item.name}','${option}','other')">
-                        <a href="#">${option}</a>
-                    </li> `;
-            }).join('');
-            var outAttrHtml = `
-                            <div class="widget-item d-flex"><h4 class="widget-title">${item.name}:</h4>
-                                        <div class="widget-size">
-                                            <ul class="d-flex p-0">
-                                               ${sizeOptionsHtml}
-                                            </ul>
-                                        </div>
-                              </div> `;
-            $("#div-product-attr").append(`${outAttrHtml}`);
 
-            $("#div-product-detail-img1").append(`${images1}`);
-            $("#div-product-detail-img2").append(`${images2}`);
-            let images1=' <div class="slick-slide" data-src="${item.pic}"><img src="${item.pic}" alt="Product"></div> ';
-            let images2='<div class="divide"><img src="${item.pic}" alt="Product"></div> ';
-             images1 = item.albumPics.split(',').map(option => {
+            $("#div-product-detail-img1").empty();
+            $("#div-product-detail-img2").empty();
+            let images1 = ' <div class="slick-slide" data-src="${item.pic}"><img src="${item.pic}" alt="Product"></div> ';
+            let images2 = '<div class="divide"><img src="${item.pic}" alt="Product"></div> ';
+            images1 = response.data.product.albumPics.split(',').map(option => {
                 return `<div class="slick-slide" data-src="${option}"><img src="${option}" alt="Product"></div>`;
             }).join('');
-             images2 = item.albumPics.split(',').map(option => {
+            images2 = response.data.product.albumPics.split(',').map(option => {
                 return `<div class="divide"><img src="${option}" alt="Product"></div>`;
             }).join('');
             $("#div-product-detail-img1").append(`${images1}`);
             $("#div-product-detail-img2").append(`${images2}`);
+            initializeSlick();
         }
 
     })
@@ -185,4 +171,38 @@ $(document).ready(function () {
 
         })
     });
+
 });
+
+// 初始化 Slick 插件的函数
+function initializeSlick() {
+    // 检查是否已经存在 Slick 实例，如果有则销毁
+    if ($('#div-product-detail-img1').hasClass('slick-initialized')) {
+        $('#div-product-detail-img1').slick('unslick');
+    }
+
+    // 初始化 Slick 插件
+    $('#div-product-detail-img1').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        navText: ["<i class='flaticon-next'></i>", "<i class='flaticon-back'></i>"],
+        asNavFor: '.slider-nav'
+    });
+
+    // 如果需要对第二个容器也进行初始化，可以类似处理
+    if ($('#div-product-detail-img2').hasClass('slick-initialized')) {
+        $('#div-product-detail-img2').slick('unslick');
+    }
+
+    $('#div-product-detail-img2').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        asNavFor: '.slider-five',
+        dots: true,
+        centerMode: true,
+        focusOnSelect: true,
+        arrows: true,
+    });
+}
