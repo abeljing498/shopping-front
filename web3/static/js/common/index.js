@@ -31,7 +31,7 @@ function initData() {
               <input type="hidden" id="hidden-product-id" value="${product.id}"> 
                         <div class="product-grid-item">
                             <div class="product-element-top">
-                                <a href="product-detail-v1.html">
+                                <a href="product-detail-v3.html?id=${product.id}">
                                     <img class="thumbnail"
                                          src="${product.pic}"
                                          alt="${product.name}"> </a>
@@ -48,7 +48,7 @@ function initData() {
                             </div>
                             <div class="product-content">
                                 <div class="product-category-action">
-                                    <div class="product-title"><a href="product-detail-v1.html">${product.name}</a>
+                                    <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a>
                                     </div>
                                     <div class="product-rating d-flex">
                                         <ul class="d-flex">
@@ -104,7 +104,7 @@ function initData() {
                 var productHtml = `
                     <li> 
                         <div class="product-grid-item">
-                            <div class="product-element-top"><a href="product-detail-v1.html"> 
+                            <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> 
                             <img class="thumbnail"src="${product.pic}" alt="${product.name}"> </a>
                                 <span class="off product-label">20% off</span></div>
                             <div class="ayira-buttons">
@@ -118,7 +118,7 @@ function initData() {
                             </div>
                             <div class="product-content">
                                 <div class="product-category-action">
-                                    <div class="product-title"><a href="product-detail-v1.html">${product.name}</a>
+                                    <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a>
                                     </div>
                                     <div class="product-rating d-flex">
                                         <ul class="d-flex">
@@ -179,7 +179,7 @@ function initData() {
             <li>
                     <input type="hidden" id="hidden-product-id" value="${product.id}"> 
                         <div class="product-grid-item">
-                            <div class="product-element-top"><a href="product-detail-v1.html"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
+                            <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
                             </div>
                             <div class="ayira-buttons">
                                 <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
@@ -192,7 +192,7 @@ function initData() {
                             </div>
                             <div class="product-content">
                                 <div class="product-category-action">
-                                    <div class="product-title"><a href="product-detail-v1.html">${product.name}</a>
+                                    <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a>
                                     </div>
                                     <div class="product-rating d-flex">
                                         <ul class="d-flex">
@@ -259,7 +259,7 @@ function initData() {
             <li>
              <input type="hidden" id="hidden-product-id" value="${product.id}">  
                         <div class="product-grid-item">
-                            <div class="product-element-top"><a href="product-detail-v1.html"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
+                            <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
                             </div>
                             <div class="ayira-buttons">
                                 <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
@@ -272,7 +272,7 @@ function initData() {
                             </div>
                             <div class="product-content">
                                 <div class="product-category-action">
-                                    <div class="product-title"><a href="product-detail-v1.html">${product.name}</a>
+                                    <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a>
                                     </div>
                                     <div class="product-rating d-flex">
                                         <ul class="d-flex">

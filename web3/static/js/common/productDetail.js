@@ -104,6 +104,34 @@ function initProductDetail(productId) {
             tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
+            let sizeOptionsHtml = item.inputList.split(',').map(option => {
+                return `
+                    <li class="wc-size" onclick="changeSelectionAttr(this,'${item.name}','${option}','other')">
+                        <a href="#">${option}</a>
+                    </li> `;
+            }).join('');
+            var outAttrHtml = `
+                            <div class="widget-item d-flex"><h4 class="widget-title">${item.name}:</h4>
+                                        <div class="widget-size">
+                                            <ul class="d-flex p-0">
+                                               ${sizeOptionsHtml}
+                                            </ul>
+                                        </div>
+                              </div> `;
+            $("#div-product-attr").append(`${outAttrHtml}`);
+
+            $("#div-product-detail-img1").append(`${images1}`);
+            $("#div-product-detail-img2").append(`${images2}`);
+            let images1=' <div class="slick-slide" data-src="${item.pic}"><img src="${item.pic}" alt="Product"></div> ';
+            let images2='<div class="divide"><img src="${item.pic}" alt="Product"></div> ';
+             images1 = item.albumPics.split(',').map(option => {
+                return `<div class="slick-slide" data-src="${option}"><img src="${option}" alt="Product"></div>`;
+            }).join('');
+             images2 = item.albumPics.split(',').map(option => {
+                return `<div class="divide"><img src="${option}" alt="Product"></div>`;
+            }).join('');
+            $("#div-product-detail-img1").append(`${images1}`);
+            $("#div-product-detail-img2").append(`${images2}`);
         }
 
     })
@@ -127,6 +155,9 @@ function changeSelectionAttr(obj, attrsName, attrsValue, type) {
 }
 
 $(document).ready(function () {
+    var urlParams = new URLSearchParams(window.location.search);
+    var id = urlParams.get('id');
+    var data = initProductDetail(id);
     $('#btn_add_cart').click(function () {
         let allAttrsSelected = true;
         let msg = "";
