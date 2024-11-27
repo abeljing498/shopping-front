@@ -16,8 +16,8 @@
     <script src="static/js/common/common.js"></script>
     <script src="static/js/common/index.js"></script>
     <script src="static/js/common/product.js"></script>
+    <script src="static/js/common/login.js"></script>
     <title>ayira</title>
-
 </head>
 <body>
 <header class="header section">
@@ -65,7 +65,7 @@
                                 <li class="menu-item-has-children"><a href="#">Shop</a>
                                     <div class="sub-menu">
                                         <ul class="d-block">
-                                            <li><a href="shop-grid-left-sidebar.html">Shop Page 1</a></li>
+                                            <li><a href="shop.html">Shop Page 1</a></li>
                                             <li><a href="shop-list-left-sidebar.html">Shop Page 2</a></li>
                                             <li><a href="shop-fillters.html">Shop Page 3</a></li>
                                             <li><a href="product-detail-v1.html">Product Detail Page 1</a></li>
@@ -80,7 +80,7 @@
                                             <ul>
                                                 <li class="menu-item-has-children"><h3>Shop</h3>
                                                     <ul class="sub-sub-menu">
-                                                        <li><a href="shop-grid-left-sidebar.html">Shop Page 1</a></li>
+                                                        <li><a href="shop.html">Shop Page 1</a></li>
                                                         <li><a href="shop-list-left-sidebar.html">Shop Page 2</a></li>
                                                         <li><a href="shop-fillters.html">Shop Page 3</a></li>
                                                         <li><a href="product-detail-v1.html">Product Detail Page 1</a>
@@ -186,7 +186,7 @@
                     </li>
                     <li><a href="#">Shop</a>
                         <ul class="sub-menu">
-                            <li><a href="shop-grid-left-sidebar.html">Shop Page 1</a></li>
+                            <li><a href="shop.html">Shop Page 1</a></li>
                             <li><a href="shop-list-left-sidebar.html">Shop Page 2</a></li>
                             <li><a href="shop-fillters.html">Shop Page 3</a></li>
                             <li><a href="product-detail-v1.html">Product Detail Page 1</a></li>
@@ -198,7 +198,7 @@
                         <ul class="mega-sub-menu">
                             <li><a href="#">Shop</a>
                                 <ul class="menu-item">
-                                    <li><a href="shop-grid-left-sidebar.html">Shop Page 1</a></li>
+                                    <li><a href="shop.html">Shop Page 1</a></li>
                                     <li><a href="shop-list-left-sidebar.html">Shop Page 2</a></li>
                                     <li><a href="shop-fillters.html">Shop Page 3</a></li>
                                     <li><a href="product-detail-v1.html">Product Detail Page 1</a></li>
@@ -311,26 +311,22 @@
                 <div class="column-left">
                     <div class="login-wrpper"><h4 class="title title-small no_after mb-0">Login</h4>
                         <div class="comments-form">
-                            <form action="#">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="single-form"><input type="text" placeholder="Username or email">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="single-form"><input type="email" placeholder="Password"></div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="single-form d-flex justify-content-between submit_lost-password">
-                                            <button class="btn primary_dark_btn mt-0">Submit</button>
-                                            <a href="#" class="lost-password">Lost your password?</a></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="single-form"><input type="text" placeholder="Username or email"
+                                                                    id="textUserName">
                                     </div>
                                 </div>
-                            </form>
-                            <div class="or-divider"><h6>Or login with</h6></div>
-                            <div class="list-unstyled list-inline social-login d-flex"><a href="#" class="facebook"><i
-                                    class="fa fa-facebook-f"></i><span>Facbook</span></a><a href="#" class="google"><i
-                                    class="fa fa-google-plus"></i><span>Google</span></a></div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><input type="text" placeholder="Password"
+                                                                    id="textPassword"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form d-flex justify-content-between submit_lost-password">
+                                        <button class="btn primary_dark_btn mt-0" id="btnLogin">Submit</button>
+                                        <a href="#" class="lost-password">Lost your password?</a></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -358,27 +354,28 @@
                 <div class="column-left">
                     <div class="login-wrpper"><h4 class="title title-small no_after mb-0">Create an account</h4>
                         <div class="comments-form">
-                            <form action="#">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="single-form"><input type="text" placeholder="Username"></div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="single-form"><input type="text" placeholder="Email address"></div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="single-form"><input type="email" placeholder="Password"></div>
-                                    </div>
-                                    <div class="col-md-12"><p>Your personal data will be used to support your experience
-                                        throughout this website,to manage access to your account,and for other purposes
-                                        described in our <a href="#">privacy policy.</a></p></div>
-                                    <div class="col-md-12">
-                                        <div class="single-form">
-                                            <button class="btn primary_dark_btn mt-0">Register</button>
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="single-form"><input type="text" placeholder="Username"
+                                                                    id="textNewUsername"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><input type="email" placeholder="Email address"
+                                                                    id="textNewEmail"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><input type="text" placeholder="Password"
+                                                                    id="textNewPassword"></div>
+                                </div>
+                                <div class="col-md-12"><p>Your personal data will be used to support your experience
+                                    throughout this website,to manage access to your account,and for other purposes
+                                    described in our <a href="#">privacy policy.</a></p></div>
+                                <div class="col-md-12">
+                                    <div class="single-form">
+                                        <button class="btn primary_dark_btn mt-0" id="btnRegister">Register</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -455,8 +452,8 @@
                                             <input type="text" value="1" id="quantity">
                                             <button type="button" class="add">+</button>
                                         </div>
-                                        <div class="ayira-cart-btn"><a href="cart.html"
-                                                                       class="button add_to_cart_button" id="btn_add_cart">Add to cart</a>
+                                        <div class="ayira-cart-btn"><a class="button add_to_cart_button"
+                                                                       id="btn_add_cart">Add to cart</a>
                                         </div>
                                     </div>
                                     <div class="d-flex wishlist-compare">
@@ -486,7 +483,7 @@
                 <div class="carousel-caption text-start color-scheme-dark">
                     <div class="container"><h5 class="aos-init aos-animate">Winter Collection 2021 </h5>
                         <h3>Any variation<br>thats fits your <br><span>imagination</span></h3><a
-                                href="shop-grid-left-sidebar.html" class="slider-btn primary_dark_btn">Shop Now</a>
+                                href="shop.html" class="slider-btn primary_dark_btn">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -494,7 +491,7 @@
                 <div class="carousel-caption text-start color-scheme-dark">
                     <div class="container"><h5>Spring Sale 2021 </h5>
                         <h3>Shop Online<br>And Get Flat <br><span>50% Off</span></h3><a
-                                href="shop-grid-left-sidebar.html" class="slider-btn primary_dark_btn">Shop Now</a>
+                                href="shop.html" class="slider-btn primary_dark_btn">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -502,7 +499,7 @@
                 <div class="carousel-caption text-start color-scheme-dark">
                     <div class="container"><h5>Spring Sale 2021 </h5>
                         <h3>Passion for<br>Fashion Style <br><span>For Live</span></h3><a
-                                href="shop-grid-left-sidebar.html" class="slider-btn primary_dark_btn">Shop Now</a>
+                                href="shop.html" class="slider-btn primary_dark_btn">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -556,7 +553,7 @@
                 </ul>
             </div>
             <div class="col-md-12">
-                <div class="text-center"><a href="shop-grid-left-sidebar.html" class="load-more primary_dark_btn">View
+                <div class="text-center"><a href="shop.html" class="load-more primary_dark_btn">View
                     All Products</a></div>
             </div>
         </div>
@@ -573,7 +570,7 @@
                 </ul>
             </div>
             <div class="col-md-12">
-                <div class="text-center"><a href="shop-grid-left-sidebar.html" class="load-more primary_dark_btn">View
+                <div class="text-center"><a href="shop.html" class="load-more primary_dark_btn">View
                     All Products</a></div>
             </div>
         </div>
@@ -583,21 +580,21 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-lg-6">
-                <div class="banner-item banner-05"><a href="shop-grid-left-sidebar.html"> <img
+                <div class="banner-item banner-05"><a href="shop.html"> <img
                         src="static/picture/banner-08.jpg" alt="banner"> </a>
                     <div class="banner-text">
                         <h4 class="title no_after">Resort <b>Mans</b><br>
                             Collections</h4>
-                        <a class="banner-btn primary_dark_btn" href="shop-grid-left-sidebar.html">Shop Now</a></div>
+                        <a class="banner-btn primary_dark_btn" href="shop.html">Shop Now</a></div>
                 </div>
             </div>
             <div class="col-sm-6 col-lg-6">
-                <div class="banner-item banner-06 mb-m"><a href="shop-grid-left-sidebar.html"> <img
+                <div class="banner-item banner-06 mb-m"><a href="shop.html"> <img
                         src="static/picture/banner-09.jpg" alt="banner"> </a>
                     <div class="banner-text">
                         <h4 class="title no_after">New <b>Womans</b><br>
                             Collections</h4>
-                        <a class="banner-btn primary_dark_btn" href="shop-grid-left-sidebar.html">Shop Now</a></div>
+                        <a class="banner-btn primary_dark_btn" href="shop.html">Shop Now</a></div>
                 </div>
             </div>
         </div>
@@ -614,7 +611,7 @@
                 </ul>
             </div>
             <div class="col-md-12">
-                <div class="text-center"><a href="shop-grid-left-sidebar.html" class="load-more primary_dark_btn">View
+                <div class="text-center"><a href="shop.html" class="load-more primary_dark_btn">View
                     All Products</a></div>
             </div>
         </div>
@@ -631,7 +628,7 @@
                 </ul>
             </div>
             <div class="col-md-12">
-                <div class="text-center"><a href="shop-grid-left-sidebar.html" class="load-more primary_dark_btn">View
+                <div class="text-center"><a href="shop.html" class="load-more primary_dark_btn">View
                     All Products</a></div>
             </div>
         </div>
@@ -1023,12 +1020,12 @@
                 <div class="col-12 col-sm-6 col-lg-3 col-xl-3">
                     <div class="single-footer-widget mt-55"><h2 class="widget-title">Shop</h2>
                         <ul class="widget-list p-0">
-                            <li><a href="shop-grid-left-sidebar.html">Women</a></li>
-                            <li><a href="shop-grid-left-sidebar.html">Men</a></li>
-                            <li><a href="shop-grid-left-sidebar.html">Shoes</a></li>
-                            <li><a href="shop-grid-left-sidebar.html">Bags & Accessories</a></li>
-                            <li><a href="shop-grid-left-sidebar.html">Top Brands</a></li>
-                            <li><a href="shop-grid-left-sidebar.html">Sale & Special Offers</a></li>
+                            <li><a href="shop.html">Women</a></li>
+                            <li><a href="shop.html">Men</a></li>
+                            <li><a href="shop.html">Shoes</a></li>
+                            <li><a href="shop.html">Bags & Accessories</a></li>
+                            <li><a href="shop.html">Top Brands</a></li>
+                            <li><a href="shop.html">Sale & Special Offers</a></li>
                         </ul>
                     </div>
                 </div>

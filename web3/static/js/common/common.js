@@ -1,11 +1,17 @@
 // 设置全局 AJAX 配置
 window.requestUrl = "http://localhost:8085/api/";
 $.ajaxSetup({
+    beforeSend: function (xhr) {
+        var token = localStorage.getItem('token');
+        if (token) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        }
+    },
     complete: function (jqXHR, textStatus) {
         try {
             var response = JSON.parse(jqXHR.responseText);
             if (response.code === 401) {
-               alert("Please log in to your account!");
+                $('#login').modal('show');
             }
         } catch (e) {
             // 如果解析失败，忽略错误
@@ -19,11 +25,12 @@ $.ajaxSetup({
 });
 
 // 公共的 AJAX 请求函数
-function ajaxRequest(method, url, data, callback) {
+function ajaxRequest(method, url, data,contentType, callback) {
     $.ajax({
         type: method,
-        url: requestUrl+url,
+        url: requestUrl + url,
         data: data, // 传递参数
+        contentType : contentType,
         success: function (response) {
             // 成功回调
             callback(response);
@@ -34,26 +41,4 @@ function ajaxRequest(method, url, data, callback) {
         }
     });
 }
-// 绑定按钮点击事件
-// $(document).ready(function () {
-//     $('#getBtn').click(function () {
-//         // 定义 GET 请求的参数
-//         var getParams = {
-//             param1: 'value1',
-//             param2: 'value2'
-//         };
-//         ajaxRequest('GET', 'http://example.com/api/data', getParams, function (response) {
-//             console.log('GET Response:', response);
-//         });
-//     });
-//
-//     $('#postBtn').click(function () {
-//         // 定义 POST 请求的参数
-//         var postParams = {
-//             key: 'value'
-//         };
-//         ajaxRequest('POST', 'http://example.com/api/submit', postParams, function (response) {
-//             console.log('POST Response:', response);
-//         });
-//     });
-// });
+

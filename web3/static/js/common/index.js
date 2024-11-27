@@ -6,7 +6,7 @@ $(document).ready(function () {
 function initData() {
 
     // 定义 GET 请求的参数
-    ajaxRequest('GET', 'home/content', null, function (response) {
+    ajaxRequest('GET', 'home/content', null, 'application/json; charset=utf-8',function (response) {
         if (response.code !== 200) {
             return;
         }

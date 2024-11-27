@@ -20,7 +20,7 @@ const colorMap = {
 function initProductDetail(productId) {
     productAttr = [];
     changeSelectionState = {};
-    ajaxRequest('GET', 'product/detail/' + productId, null, function (response) {
+    ajaxRequest('GET', 'product/detail/' + productId, null, 'application/json; charset=utf-8',function (response) {
         if (response.code == 200) {
             productData = response;
             var pic = response.data.product.pic;
@@ -163,7 +163,7 @@ $(document).ready(function () {
         addCartVaule.productAttr = JSON.stringify(productAttr);
         addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
         // 发起POST请求到购物车添加端点
-        ajaxRequest('POST', 'cart/add', addCartVaule, function (response) {
+        ajaxRequest('POST', 'cart/add', addCartVaule,'application/json; charset=utf-8', function (response) {
             if (response.code == 200) {
 
 
