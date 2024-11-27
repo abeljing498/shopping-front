@@ -1,16 +1,25 @@
 $(document).ready(function () {
-    searchProduct(1,12,1);
+    searchProduct(1, 12, 1);
     initHotProductList();
     initCategoryList();
+    $('#selectOrder').on('change', function () {
+        // 获取选中的 value 值
+        var selectedValue = $(this).val();
+        // 调用查询方法并传递选中的值
+        searchProduct(1, 12, selectedValue);
+    });
 });
 
-function searchProduct(pageNum,pageSize,sort) {
+function searchProduct(pageNum, pageSize, sort, productCategoryId) {
     var urlParams = new URLSearchParams(window.location.search);
     var productType = urlParams.get('productType');
     var params = {};
     params.pageNum = pageNum
     params.pageSize = pageSize;
     params.sort = sort;
+    if (productCategoryId != null&&productCategoryId!=='all') {
+        params.productCategoryId = productCategoryId;
+    }
     ajaxRequest('GET', 'product/search', params, 'application/json; charset=utf-8', function (response) {
 
         $("#product-grid").empty();
@@ -77,7 +86,7 @@ function searchProduct(pageNum,pageSize,sort) {
             $("#product-grid").append(productHtml);
 
         });
-        renderPagination(response.data.totalPage,pageNum);
+        renderPagination(response.data.totalPage, pageNum);
     })
 }
 
@@ -159,16 +168,16 @@ function renderPagination(totalPages, currentPage) {
 // 添加“上一页”按钮
     $('.pagination').append('<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a></li>');
 
-        // 如果总页数小于等于5，则直接显示所有页码
-        for (var i = 1; i <= totalPages; i++) {
-            var activeClass = (i === currentPage) ? 'active' : ''; // 当前页的处理
-            $('.pagination').append('<li class="page-item ' + activeClass + '"><a class="page-link" href="#">' + i + '</a></li>');
-        }
+    // 如果总页数小于等于5，则直接显示所有页码
+    for (var i = 1; i <= totalPages; i++) {
+        var activeClass = (i === currentPage) ? 'active' : ''; // 当前页的处理
+        $('.pagination').append('<li class="page-item ' + activeClass + '"><a class="page-link" href="#">' + i + '</a></li>');
+    }
 // 添加“下一页”按钮
     $('.pagination').append('<li class="page-item"><a class="page-link" href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>');
 
 // 为分页链接添加点击事件处理器
-    $('.pagination .page-link').on('click', function(event) {
+    $('.pagination .page-link').on('click', function (event) {
         event.preventDefault();
         var page = $(this).text();
         if (page === '...' || !$.isNumeric(page)) {
@@ -178,23 +187,23 @@ function renderPagination(totalPages, currentPage) {
         // 更新当前页
         currentPage = parseInt(page, 10);
         // 在这里调用你的函数来加载新页面的内容
-        searchProduct(currentPage,12,1);
+        searchProduct(currentPage, 12, 1);
     });
     // 为“上一页”按钮添加点击事件处理器
-    $('.pagination [aria-label="Previous"]').on('click', function(event) {
+    $('.pagination [aria-label="Previous"]').on('click', function (event) {
         event.preventDefault();
         if (currentPage > 1) {
             currentPage--;
-            searchProduct(currentPage,12,1);
+            searchProduct(currentPage, 12, 1);
         }
     });
 
 // 为“下一页”按钮添加点击事件处理器
-    $('.pagination [aria-label="Next"]').on('click', function(event) {
+    $('.pagination [aria-label="Next"]').on('click', function (event) {
         event.preventDefault();
         if (currentPage < totalPages) {
             currentPage++;
-            searchProduct(currentPage,12,1);
+            searchProduct(currentPage, 12, 1);
         }
     });
 
@@ -203,16 +212,17 @@ function renderPagination(totalPages, currentPage) {
 
 function generateCategoryList(data) {
     var $categoryList = $('#category-List');
-    data.forEach(function(category) {
+    data.forEach(function (category) {
         var $categoryItem = $('<li></li>');
         var $categoryLink = $('<a href="#">' + category.name + '</a>');
         var $toggle = $('<div class="category-toggle collapsed" data-toggle="collapse" data-target="#category' + category.id + '"><span class="add"><i class="fa fa-angle-down"></i></span><span class="remove"><i class="fa fa-angle-up"></i></span></div>');
         var $subMenu = $('<div id="category' + category.id + '" class="collapse"></div>');
         var $subMenuList = $('<ul class="category-sub-menu list-unstyled"></ul>');
-
+        var $allItem = $('<li><a href="#" data-value="all">All</a></li>');
+        $subMenuList.append($allItem);
         if (category.children && category.children.length > 0) {
-            category.children.forEach(function(child) {
-                var $childItem = $('<li><a href="#">' + child.name + '</a></li>');
+            category.children.forEach(function (child) {
+                var $childItem = $('<li><a href="#" data-value="' + child.id + '">' + child.name + '</a></li>');
                 $subMenuList.append($childItem);
             });
             $subMenu.append($subMenuList);
@@ -220,11 +230,12 @@ function generateCategoryList(data) {
 
         $categoryItem.append($categoryLink, $toggle, $subMenu);
         $categoryList.append($categoryItem);
+
     });
 
     // 启用Bootstrap的折叠功能
     // 绑定点击事件处理函数
-    $('.category-toggle').on('click', function() {
+    $('.category-toggle').on('click', function () {
         var $this = $(this);
         var targetId = $this.data('target');
         var $target = $(targetId);
@@ -237,7 +248,19 @@ function generateCategoryList(data) {
             $this.removeClass('collapsed');
         }
     });
+    // 为所有子项添加点击事件
+    $categoryList.on('click', '.category-sub-menu a', function (event) {
+        event.preventDefault(); // 阻止默认的链接行为
+
+        var selectedValue = $(this).data('value'); // 获取自定义属性值
+        console.log('Selected value:', selectedValue);
+
+        // 在这里执行你的筛选逻辑或其他操作
+        // 例如，如果你想要根据选定的值来过滤内容
+        searchProduct(1, 12, 1, selectedValue);
+    });
 }
+
 function initCategoryList() {
     ajaxRequest('GET', 'product/categoryTreeList', null, 'application/json; charset=utf-8', function (response) {
         $("#category-List").empty();

@@ -38,14 +38,14 @@ function initData() {
                 //         </div>
                 //     </div>
                 // </div>`);
-                $.each(data.data.newProductList, function (i, newProduct) {
-                    setNewProductDiv('div-new-products', newProduct);
-
-                });
-                $.each(data.data.hotProductList, function (i, hotProduct) {
-                    setHotProductDiv('div-hot-product', hotProduct);
-
-                });
+                // $.each(data.data.newProductList, function (i, newProduct) {
+                //     setNewProductDiv('div-new-products', newProduct);
+                //
+                // });
+                // $.each(data.data.hotProductList, function (i, hotProduct) {
+                //     setHotProductDiv('div-hot-product', hotProduct);
+                //
+                // });
 
             }
         },

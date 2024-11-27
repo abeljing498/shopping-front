@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="header-action"><a href="javascript:void(0"
+                    <div class="header-action"><a href="javascript:void(0)"
                                                   class="action header-action-btn header-action-btn-search"><i
                             class="flaticon-search"></i></a><a href="#" class="action" data-bs-toggle="modal"
                                                                data-bs-target="#login"><i class="flaticon-user"></i></a><a
@@ -566,28 +566,6 @@
                         </div>
                     </div>
                     <div class="widget-item">
-                        <h4 class="widget-title">Price</h4>
-                        <fieldset class="filter-price">
-                            <div class="price-field">
-                                <input type="range" min="100" max="500" value="100" id="lower">
-                                <input type="range" min="100" max="500" value="500" id="upper">
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="price-wrap align-self-center"><span>Price:</span>
-                                    <div class="price-wrap-1">
-                                        <label for="one">$</label>
-                                        <input id="one">
-                                    </div>
-                                    <div class="price-wrap_line">-</div>
-                                    <div class="price-wrap-2">
-                                        <label for="two">$</label>
-                                        <input id="two">
-                                    </div>
-                                </div>
-                                <a href="" class="price-fillter">Filter</a></div>
-                        </fieldset>
-                    </div>
-                    <div class="widget-item">
                         <h4 class="widget-title">Tags</h4>
                         <div class="widget-tag">
                             <ul class="d-inline-block p-0">
@@ -728,12 +706,12 @@
                 <div class="shop-to-bar d-flex justify-content-between">
                     <div class="shop-top-right d-flex align-self-center">
                         <label>Sort By:</label>
-                        <select class="select">
-                            <option value="0">Most Relevant</option>
-                            <option value="1">Name, A to Z</option>
-                            <option value="2">Name, Z to A</option>
+                        <select class="select" id="selectOrder">
+                            <option value="2">Most Relevant</option>
                             <option value="3">Price, low to high</option>
                             <option value="4">Price, high to low</option>
+                            <option value="5">Name, A to Z</option>
+                            <option value="6">Name, Z to A</option>
                         </select>
                     </div>
                 </div>
@@ -844,38 +822,5 @@
 </footer>
 <script src="static/js/owl.carousel.min.js"></script>
 <script src="static/js/custom.js"></script>
-<script>
-    var lowerSlider = document.querySelector('#lower');
-    var upperSlider = document.querySelector('#upper');
-    document.querySelector('#two').value = upperSlider.value;
-    document.querySelector('#one').value = lowerSlider.value;
-    var lowerVal = parseInt(lowerSlider.value);
-    var upperVal = parseInt(upperSlider.value);
-    upperSlider.oninput = function () {
-        lowerVal = parseInt(lowerSlider.value);
-        upperVal = parseInt(upperSlider.value);
-        if (upperVal < lowerVal + 4) {
-            lowerSlider.value = upperVal - 4;
-            if (lowerVal === lowerSlider.min) {
-                upperSlider.value = 4
-            }
-        }
-        document.querySelector('#two').value = this.value
-    };
-    lowerSlider.oninput = function () {
-        lowerVal = parseInt(lowerSlider.value);
-        upperVal = parseInt(upperSlider.value);
-        if (lowerVal > upperVal - 4) {
-            upperSlider.value = lowerVal + 4;
-            if (upperVal === upperSlider.max) {
-                lowerSlider.value = parseInt(upperSlider.max) - 4
-            }
-        }
-        document.querySelector('#one').value = this.value
-
-    };
-
-
-</script>
 </body>
 </html>
