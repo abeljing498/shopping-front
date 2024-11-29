@@ -6,7 +6,7 @@ $(document).ready(function () {
 function initData() {
 
     // 定义 GET 请求的参数
-    ajaxRequest('GET', 'home/content', null, 'application/json; charset=utf-8',function (response) {
+    ajaxRequest('GET', 'home/content', null, null,function (response) {
         if (response.code !== 200) {
             return;
         }
@@ -69,7 +69,7 @@ function initData() {
                                                     <div class="sale-price">$${product.price}</div>
                                                 </div>
                                             </div>
-                                            <div class="btn-add header-action-btn-cart"><a href="javascript:void(0)"
+                                            <div class="btn-add header-action-btn-cart"><a href="product-detail-v3.html?id=${product.id}"
                                                                                            class="add_to_cart_button">
                                                 <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                         </div>
@@ -139,7 +139,7 @@ function initData() {
                                                     <div class="sale-price">$${product.price}</div>
                                                 </div>
                                             </div>
-                                            <div class="btn-add header-action-btn-cart"><a href="javascript:void(0)"
+                                            <div class="btn-add header-action-btn-cart"><a href="product-detail-v3.html?id=${product.id}"
                                                                                            class="add_to_cart_button">
                                                 <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                         </div> 
@@ -152,7 +152,7 @@ function initData() {
                 //动态给quick-view添加点击事件
                 $("#collections").append(productHtml);
             $('.open-quick-view', '#collections').last().on('click', function () {
-                initProductDetail(product.id);
+                initProductDetail(product.id,'open');
             });
             }
         );
@@ -213,7 +213,7 @@ function initData() {
                                                     <div class="sale-price">$${product.price}</div>
                                                 </div>
                                             </div>
-                                            <div class="btn-add header-action-btn-cart"><a href="javascript:void(0)"
+                                            <div class="btn-add header-action-btn-cart"><a href="product-detail-v3.html?id=${product.id}"
                                                                                            class="add_to_cart_button">
                                                 <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                         </div>
@@ -293,7 +293,7 @@ function initData() {
                                                     <div class="sale-price">$${product.price}</div>
                                                 </div>
                                             </div>
-                                            <div class="btn-add header-action-btn-cart"><a href="javascript:void(0)"
+                                            <div class="btn-add header-action-btn-cart"><a href="product-detail-v3.html?id=${product.id}"
                                                                                            class="add_to_cart_button">
                                                 <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                         </div>
@@ -346,3 +346,6 @@ function initData() {
     }
 
 }
+
+
+

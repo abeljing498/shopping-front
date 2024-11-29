@@ -60,7 +60,7 @@ function setNewProductDiv(divId, newProduct) {
                         </div>
                         <div class="cart-concern">
                             <div class="cart-button d-flex justify-content-between align-items-center">
-                                <button type="button" class="btn-wrap cart-link d-flex align-items-center"">add to cart
+                                <button type="button" class="btn-wrap cart-link d-flex align-items-center">add to cart
                                     <i class="icon icon-arrow-io"></i>
                                 </button>
                                 <button type="button" class="view-btn tooltip d-flex">

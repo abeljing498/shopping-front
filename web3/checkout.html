@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="static/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="static/css/flaticon.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=AbZiwEycr1FikyfGcvcVJ83riOB9zLtUo99g4ySohGz634gWAKjsXTzO0SbxFMqmG72fSC5eAI6r3gWk"></script>
     <title>ayira</title></head>
 <body>
 <header class="header section">
@@ -543,8 +544,7 @@
                                             class="form-check-label" for="exampleCheck3">I have read and agree to the
                                         website terms and conditions </label></div>
                                 </div>
-                                <div class="checkout-btn "><a class="btn btn-hover-dark d-block" href="#">Place
-                                    order</a></div>
+                                <div id="paypal-button-container"></div>
                             </div>
                         </div>
                     </div>
@@ -553,6 +553,12 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+    paypal.Buttons().render('#paypal-button-container')
+</script>
 <footer class="section footer-section color-scheme-dark">
     <div class="footer-top">
         <div class="container">

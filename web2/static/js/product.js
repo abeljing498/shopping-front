@@ -2,7 +2,7 @@ var productData = null;
 var productAttr = []; // 存储最终的JSON数组
 var currentSelection = {}; // 跟踪每个属性的当前选择值
 var changeSelectionState = {}; // 跟踪每个属性的当前选择值
-function initProductDetail(productId) {
+function initProductDetail(productId,type) {
     $.ajax({
         url: requestUrl + 'product/detail/' + productId,
         type: "GET",
@@ -62,6 +62,9 @@ function initProductDetail(productId) {
                                 // 如果只有一个值，直接添加到JSON数组中
                                 productAttr.push({"key": attrs.name, "value": attributeValueList[0]});
                                 currentSelection[attrs.name] = attributeValueList[0];
+                                if(type==='cart'){
+                                    $('#input-quantity').val(value.quantity);
+                                }
                             }
                             $.each(attributeValueList, function (i, attValue) {
                                 colorOptionsHtml += `

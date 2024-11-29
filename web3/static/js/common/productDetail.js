@@ -20,7 +20,7 @@ const colorMap = {
 function initProductDetail(productId) {
     productAttr = [];
     changeSelectionState = {};
-    ajaxRequest('GET', 'product/detail/' + productId, null, 'application/json; charset=utf-8',function (response) {
+    ajaxRequest('GET', 'product/detail/' + productId, null, null,function (response) {
         if (response.code == 200) {
             productData = response;
             var pic = response.data.product.pic;
@@ -144,7 +144,7 @@ $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
     var data = initProductDetail(id);
-    $('#btn_add_cart').click(function () {
+    $('.add_to_cart_button').click(function () {
         let allAttrsSelected = true;
         let msg = "";
         Object.keys(changeSelectionState).forEach(attrName => {
@@ -163,13 +163,14 @@ $(document).ready(function () {
         addCartVaule.productAttr = JSON.stringify(productAttr);
         addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
         // 发起POST请求到购物车添加端点
-        ajaxRequest('POST', 'cart/add', addCartVaule,'application/json; charset=utf-8', function (response) {
+        ajaxRequest('POST', 'cart/add', null,addCartVaule, function (response) {
             if (response.code == 200) {
 
 
             }
 
         })
+
     });
 
 });

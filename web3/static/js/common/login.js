@@ -16,7 +16,7 @@ $(document).ready(function () {
             password: $('#textPassword').val()
         };
         // 发起POST请求到购物车添加端点
-        ajaxRequest('POST', 'sso/login', getParams,'application/x-www-form-urlencoded; charset=UTF-8', function (response) {
+        ajaxRequest('POST', 'sso/login', getParams,null, function (response) {
             if (response.code == 200) {
                 localStorage.setItem('token', response.data.token);
                 alert("Login succeeded！");
@@ -50,7 +50,7 @@ $(document).ready(function () {
             password: $('#textNewPassword').val(),
         };
         // 发起POST请求到购物车添加端点
-        ajaxRequest('POST', 'sso/register', getParams, 'application/x-www-form-urlencoded; charset=UTF-8',function (response) {
+        ajaxRequest('POST', 'sso/register', getParams, null,function (response) {
             if (response.code == 200) {
                 localStorage.removeItem('token');
                 alert("register succeeded！");

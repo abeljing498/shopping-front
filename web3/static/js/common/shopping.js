@@ -20,7 +20,7 @@ function searchProduct(pageNum, pageSize, sort, productCategoryId) {
     if (productCategoryId != null&&productCategoryId!=='all') {
         params.productCategoryId = productCategoryId;
     }
-    ajaxRequest('GET', 'product/search', params, 'application/json; charset=utf-8', function (response) {
+    ajaxRequest('GET', 'product/search', params, null, function (response) {
 
         $("#product-grid").empty();
         $.each(response.data.list, function (index, product) {
@@ -62,7 +62,7 @@ function searchProduct(pageNum, pageSize, sort, productCategoryId) {
                                                             <div class="sale-price">$${product.price}</div>
                                                         </div>
                                                     </div>
-                                                    <div class="btn-add"><a href="javascript:void(0)"
+                                                    <div class="btn-add"><a href="product-detail-v3.html?id=${product.id}"
                                                                             class="add_to_cart_button"> <i
                                                             class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                                 </div>
@@ -95,7 +95,7 @@ function initHotProductList() {
     params.pageNum = 1;
     params.pageSize = 6;
     params.sort = 1;
-    ajaxRequest('GET', 'home/hotProductList', params, 'application/json; charset=utf-8', function (response) {
+    ajaxRequest('GET', 'home/hotProductList', params, null, function (response) {
         $("#widget_selling").empty();
         $.each(response.data, function (index, product) {
             var productHtml = `
@@ -113,7 +113,7 @@ function initHotProductList() {
                                                                        <div class="sale-price">$${product.price}</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="btn-add"><a href="javascript:void(0)"
+                                                            <div class="btn-add"><a href="product-detail-v3.html?id=${product.id}"
                                                                                     class="add_to_cart_button"> <i
                                                                     class="fa fa-shopping-cart"></i> Add to cart</a>
                                                             </div>
@@ -262,7 +262,7 @@ function generateCategoryList(data) {
 }
 
 function initCategoryList() {
-    ajaxRequest('GET', 'product/categoryTreeList', null, 'application/json; charset=utf-8', function (response) {
+    ajaxRequest('GET', 'product/categoryTreeList', null, null, function (response) {
         $("#category-List").empty();
         generateCategoryList(response.data);
     })
