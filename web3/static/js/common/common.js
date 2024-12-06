@@ -126,3 +126,13 @@ function isJsonString(str) {
     }
     return true;
 }
+function  addWish(productId){
+    var params = {
+        productId: productId
+    }
+    ajaxRequest('POST', 'member/productCollection/add', null, params, function (response) {
+        if (response.code == 200) {
+            alert("Added to wishlist successfully")
+        }
+    })
+}
