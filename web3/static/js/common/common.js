@@ -9,13 +9,13 @@ $.ajaxSetup({
     },
     complete: function (jqXHR, textStatus) {
         try {
-           var isJson = isJsonString(jqXHR.responseText);
-           if(isJson){
-            var response = JSON.parse(jqXHR.responseText);
-            if (response.code === 401) {
-                $('#login').modal('show');
+            var isJson = isJsonString(jqXHR.responseText);
+            if (isJson) {
+                var response = JSON.parse(jqXHR.responseText);
+                if (response.code === 401) {
+                    $('#login').modal('show');
+                }
             }
-           }
         } catch (e) {
             // 如果解析失败，忽略错误
             console.error('Failed to parse response:', e);
@@ -118,6 +118,7 @@ function deleteCart(id) {
 
     }
 }
+
 function isJsonString(str) {
     try {
         JSON.parse(str);
@@ -126,7 +127,8 @@ function isJsonString(str) {
     }
     return true;
 }
-function  addWish(productId){
+
+function addWish(productId) {
     var params = {
         productId: productId
     }
@@ -135,4 +137,24 @@ function  addWish(productId){
             alert("Added to wishlist successfully")
         }
     })
+}
+
+function getUserInfo() {
+
+    ajaxRequest('GET', 'sso/info', null, null, function (response) {
+        if (response.code == 200) {
+            window.location.href = "my-acount-dashboard.html?username=" + response.data.username + "&nickname=" + response.data.nickname;
+        }
+    })
+}
+
+function logout() {
+    var result = window.confirm("Are you sure you want to log out?");
+    if (result) {
+        localStorage.removeItem('token');
+        window.location.href = "index.html";
+    } else {
+    }
+
+
 }
