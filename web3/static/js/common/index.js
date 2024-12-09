@@ -38,7 +38,7 @@ function initData() {
                                 <span class="new product-label">New</span>
                             </div>
                             <div class="ayira-buttons">
-                                <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
+                                <div class="ayira-wishlist-btn"><a class="" onclick="addWish(${product.id})"><i
                                         class="flaticon-heart"></i></a></div>
                                 <div class="ayira-compare-btn"><a class="button ayira-tooltip" href="compare.html"><i
                                         class="flaticon-reload"></i></a></div>
@@ -108,7 +108,7 @@ function initData() {
                             <img class="thumbnail"src="${product.pic}" alt="${product.name}"> </a>
                                 <span class="off product-label">20% off</span></div>
                             <div class="ayira-buttons">
-                                <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
+                                <div class="ayira-wishlist-btn"><a class="" onclick="addWish(${product.id})"><i
                                         class="flaticon-heart"></i></a></div>
                                 <div class="ayira-compare-btn"><a class="button ayira-tooltip" href="compare.html"><i
                                         class="flaticon-reload"></i></a></div>
@@ -182,7 +182,7 @@ function initData() {
                             <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
                             </div>
                             <div class="ayira-buttons">
-                                <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
+                                <div class="ayira-wishlist-btn"><a class="" onclick="addWish(${product.id})"><i
                                         class="flaticon-heart"></i></a></div>
                                 <div class="ayira-compare-btn"><a class="button ayira-tooltip" href="compare.html"><i
                                         class="flaticon-reload"></i></a></div>
@@ -262,7 +262,7 @@ function initData() {
                             <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
                             </div>
                             <div class="ayira-buttons">
-                                <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
+                                <div class="ayira-wishlist-btn"><a class="" onclick="addWish(${product.id})"><i
                                         class="flaticon-heart"></i></a></div>
                                 <div class="ayira-compare-btn"><a class="button ayira-tooltip" href="compare.html"><i
                                         class="flaticon-reload"></i></a></div>

@@ -69,11 +69,12 @@ function ajaxRequest(method, url, params, json, callback) {
 }
 
 function getCartInfo() {
-    $('.cart-offcanvas-wrapper').addClass('open');
+    var $cartBody = $('#div_cart_dialog');
+    $cartBody.empty(); // 清空现有的表格行
+    $('#s_total_money').html('$' + 0.00)
     ajaxRequest('GET', 'cart/list', null, null, function (response) {
         if (response.code == 200) {
-            var $cartBody = $('#div_cart_dialog');
-            $cartBody.empty(); // 清空现有的表格行
+            $('.cart-offcanvas-wrapper').addClass('open');
             var total = 0
             $.each(response.data, function (index, item) {
                 var row = `

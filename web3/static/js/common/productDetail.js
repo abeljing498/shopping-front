@@ -30,6 +30,9 @@ function initProductDetail(productId) {
             $("#s-product-price").text("$ " + response.data.product.price);
             $("#s-product-old-price").text("$" + response.data.product.originalPrice);
             $("#div-product-attr").empty();
+            $('#a_add_wish').click(function () {
+                addWish(response.data.product.id);
+            });
             // 商品属性
             $.each(response.data.productAttributeList, function (index, item) {
                 // 添加属性选择框
