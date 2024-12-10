@@ -135,13 +135,13 @@ function addWish(productId) {
     }
     ajaxRequest('POST', 'member/productCollection/add', null, params, function (response) {
         if (response.code == 200) {
+            getMemberTotal();
             alert("Added to wishlist successfully")
         }
     })
 }
 
 function getUserInfo() {
-
     ajaxRequest('GET', 'sso/info', null, null, function (response) {
         if (response.code == 200) {
             window.location.href = "my-acount-dashboard.html?username=" + response.data.username + "&nickname=" + response.data.nickname;
@@ -156,6 +156,13 @@ function logout() {
         window.location.href = "index.html";
     } else {
     }
-
-
+}
+function getMemberTotal(){
+    ajaxRequest('GET', 'sso/getCartTotal', null, null, function (response) {
+        if (response.code == 200) {
+            $('#s_m_wishCount').html(response.data.collectTotal);
+            $('#s_pc_wishCount').html(response.data.collectTotal);
+            $('#s_common_cart_total_price').html(response.data.carInfo.cartTotalPrice);
+        }
+    })
 }

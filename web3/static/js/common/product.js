@@ -18,9 +18,9 @@ const colorMap = {
 };
 
 function initProductDetail(productId) {
-    productAttr=[];
-    changeSelectionState={};
-    ajaxRequest('GET', 'product/detail/' + productId, null, null,function (response) {
+    productAttr = [];
+    changeSelectionState = {};
+    ajaxRequest('GET', 'product/detail/' + productId, null, null, function (response) {
         if (response.code == 200) {
             productData = response;
             var pic = response.data.product.pic;
@@ -64,7 +64,7 @@ function initProductDetail(productId) {
                     </div>
                 </div>
             `;
-        $("#div-product-attr").append(`${outAttrHtml}`);
+                        $("#div-product-attr").append(`${outAttrHtml}`);
                     } else {
                         let sizeOptionsHtml = item.inputList.split(',').map(option => {
                             return `
@@ -146,10 +146,10 @@ $(document).ready(function () {
         addCartVaule.productAttr = JSON.stringify(productAttr);
         addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
         // 发起POST请求到购物车添加端点
-        ajaxRequest('POST', 'cart/add', null, addCartVaule,function (response) {
+        ajaxRequest('POST', 'cart/add', null, addCartVaule, function (response) {
             if (response.code == 200) {
-
-
+                getMemberTotal();
+                alert("Add shopping cart successfully！");
             }
 
         })

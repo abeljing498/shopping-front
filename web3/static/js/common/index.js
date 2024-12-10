@@ -1,12 +1,13 @@
 // 绑定按钮点击事件
 $(document).ready(function () {
     initData();
+    getMemberTotal();
 });
 
 function initData() {
 
     // 定义 GET 请求的参数
-    ajaxRequest('GET', 'home/content', null, null,function (response) {
+    ajaxRequest('GET', 'home/content', null, null, function (response) {
         if (response.code !== 200) {
             return;
         }
@@ -81,6 +82,9 @@ function initData() {
         `;
 
             $("#new_arrivals").append(productHtml);
+            $('.open-quick-view', '#new_arrivals').last().on('click', function () {
+                initProductDetail(product.id, 'open');
+            });
         });
         $('#new_arrivals').trigger('destroy.owl.carousel');
         $('#new_arrivals').owlCarousel({
@@ -151,9 +155,9 @@ function initData() {
         `;
                 //动态给quick-view添加点击事件
                 $("#collections").append(productHtml);
-            $('.open-quick-view', '#collections').last().on('click', function () {
-                initProductDetail(product.id,'open');
-            });
+                $('.open-quick-view', '#collections').last().on('click', function () {
+                    initProductDetail(product.id, 'open');
+                });
             }
         );
         $('#collections').trigger('destroy.owl.carousel');
@@ -173,6 +177,7 @@ function initData() {
                 1000: {items: 4, loop: true,},
             }
         });
+
         $("#trending_products").empty();
         $.each(response.data.trendingProductList, function (index, product) {
             var productHtml = `
@@ -234,7 +239,9 @@ function initData() {
                     </li>
         `;
             $("#trending_products").append(productHtml);
-
+            $('.open-quick-view', '#trending_products').last().on('click', function () {
+                initProductDetail(product.id,'open');
+            });
         });
         $('#trending_products').trigger('destroy.owl.carousel');
         $("#trending_products").owlCarousel({
@@ -314,6 +321,9 @@ function initData() {
                     </li>
         `;
             $("#best_selling").append(productHtml);
+            $('.open-quick-view', '#best_selling').last().on('click', function () {
+                initProductDetail(product.id,'open');
+            });
         });
         $('#best_selling').trigger('destroy.owl.carousel');
         $('#best_selling').owlCarousel({

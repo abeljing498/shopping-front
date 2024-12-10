@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    loadCartData();
+    loadWishData();
 
 
 });
 
-function loadCartData() {
+function loadWishData() {
 
     ajaxRequest('GET', 'cart/list', null, null, function (response) {
         if (response.code == 200) {

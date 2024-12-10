@@ -139,10 +139,10 @@
                                                   class="action header-action-btn header-action-btn-search"><i
                             class="flaticon-search"></i></a><a href="#" class="action" onclick="getUserInfo()"><i class="flaticon-user"></i></a><a
                             href="my-wishlist.html" class="action"><i class="flaticon-like"></i><span
-                            class="nt_count_wishlist">0</span></a>
+                            class="nt_count_wishlist" id="s_pc_wishCount">0</span></a>
                         <div class="dropdown"><a class="action cart d-flex header-action-btn header-action-btn-cart"
-                                                 onclick="getCartInfo()"><i class="flaticon-shopping-bag"></i><span
-                                class="num">0</span>
+                                                 onclick="getCartInfo()"><i class="flaticon-shopping-bag" onclick="getCartInfo()"></i><span
+                                class="num" id="s_pc_cart_num">0</span>
                             <span class="ayira-cart-subtotal">
                                <span class="Price-amount">
                                    <span class="Price-currencySymbol">$</span>
@@ -164,9 +164,9 @@
             </div>
             <div class="col-8">
                 <div class="header-action"><a href="my-wishlist.html" class="action"><i class="flaticon-like"></i><span
-                        class="nt_count_wishlist">0</span></a><a href="javascript:void(0)"
-                                                                 class="action cart header-action-btn header-action-btn-cart"><i
-                        class="flaticon-shopping-bag"></i><span class="num">0</span></a><a href="javascript:;"
+                        class="nt_count_wishlist" id="s_m_wishCount">0</span></a><a href="javascript:void(0)"
+                                                                 class="action cart header-action-btn header-action-btn-cart" onclick="getCartInfo()"><i
+                        class="flaticon-shopping-bag" ></i><span class="num" id="s_m_cart_num">0</span></a><a href="javascript:;"
                                                                                            class="action mobile-menu-open"><i
                         class="flaticon-menu"></i></a></div>
             </div>
