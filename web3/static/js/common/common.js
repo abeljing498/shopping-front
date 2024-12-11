@@ -1,4 +1,5 @@
 // 设置全局 AJAX 配置
+
 window.requestUrl = "http://localhost:8085/api/";
 $.ajaxSetup({
     beforeSend: function (xhr) {
