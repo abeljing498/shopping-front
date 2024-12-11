@@ -435,8 +435,6 @@
                                 class="flaticon-download"></i>Download</a></li>
                         <li><a data-bs-toggle="pill" href="#pills-address"><i class="flaticon-address"></i>Address</a>
                         </li>
-                        <li><a data-bs-toggle="pill" href="#pills-payment"><i class="flaticon-credit-card-1"></i>Payment
-                            Method</a></li>
                         <li><a data-bs-toggle="pill" href="#pills-account"><i class="flaticon-account"></i>Account
                             Details</a></li>
                         <li><a href="#"><i class="flaticon-power-button-1"></i>Logout</a></li>
@@ -675,52 +673,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-payment">
-                        <div class="my-account-payment account-wrapper mt-6"><h4 class="account-title">Payment
-                            methods</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card-optcion"><input type="radio" id="test1" name="radio-group"
-                                                                     checked=""><label for="test1">Mastercard <span
-                                            class="card-number mb-0">123456*******789 </span><br><span
-                                            class="ex-date mb-0">(12/2022)</span></label>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">Detete</span></button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card-optcion"><input type="radio" id="test2" name="radio-group"><label
-                                            for="test2">Visacard <span class="card-number mb-0">123456*******789 </span><br><span
-                                            class="ex-date mb-0">(12/2022)</span></label>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">Detete</span></button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card-optcion"><input type="radio" id="test3" name="radio-group"><label
-                                            for="test3">Mastercard <span
-                                            class="card-number mb-0">123456*******789 </span><br><span
-                                            class="ex-date mb-0">(12/2022)</span></label>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">Detete</span></button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card-optcion"><input type="radio" id="test4" name="radio-group"><label
-                                            for="test4">Visacard <span class="card-number mb-0">123456*******789 </span><br><span
-                                            class="ex-date mb-0">(12/2022)</span></label>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">Detete</span></button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="single-form"><a href="javascript:;"
-                                                                class="load-more primary_dark_btn mt-2">Add new card</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="tab-pane fade" id="pills-account">
                         <div class="my-account-address my-account-details account-wrapper mt-6"><h4
                                 class="account-title">Account Details</h4>
@@ -728,31 +680,31 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Nickname<span
-                                                class="required">*</span></label><input type="text" class="mb-2">
+                                                class="required">*</span></label><input type="text" class="mb-2" id="inpt_user_info_nickname">
                                             <p>This will be how your name will be displayed in the account section and
                                                 in review</p></div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Email address<span
-                                                class="required">*</span></label><input type="text"></div>
+                                                class="required">*</span></label><input type="text" id="inpt_user_info_email"></div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><h4 class="password-title">Password change</h4></div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Current password(leave blank
-                                            to leave unchanged)</label><input type="password"></div>
+                                            to leave unchanged)</label><input type="password" id="input_original_password"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form"><label class="form-label">New password(leave blank to
-                                            leave unchanged)</label><input type="password"></div>
+                                            leave unchanged)</label><input type="password" id="input_new_password"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form"><label class="form-label">Confirm new password </label><input
-                                                type="password"></div>
+                                                type="password" id="input_confirm_password"></div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="single-form"><a href="#" class="load-more primary_dark_btn mt-3">Save
+                                        <div class="single-form"><a class="load-more primary_dark_btn mt-3" id="a_user_info_save">Save
                                             Change</a></div>
                                     </div>
                                 </div>

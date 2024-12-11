@@ -90,8 +90,34 @@ $(document).ready(function () {
         }
         addUserAddress();
     });
+    $('#a_user_info_save').click(function () {
+        if ($('#inpt_user_info_nickname').val() === '') {
+            alert("First Name cannot be empty！");
+            $('#inpt_user_info_nickname').focus();
+            return false
+        }
+
+        if ($('#inpt_user_info_email').val() === '') {
+            alert("Email cannot be empty");
+            $('#inpt_user_info_email').focus();
+            return false
+        } else {
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            var email = $('#inpt_user_info_email').val();
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address！");
+                $('#inpt_user_info_email').focus();
+                return false;
+            }
+        }
+
+
+        updateUserInfo();
+    });
+
 
     initAddressDetail();
+    getUserInfoDetail();
 });
 
 // 辅助函数：更新 <datalist> 中的国家选项
@@ -128,6 +154,26 @@ function addUserAddress() {
 
 }
 
+function updateUserInfo() {
+    var address = {};
+    address.firstName = $('#inpt_user_info_nickname').val();
+    address.name = $('#inpt_user_info_email').val();
+    address.company = $('#cname').val();
+    address.country = $('#country-input').val();
+    address.detailAddress = $('#text_address_name').val()+$('#inpt_unit_optional').val();
+    address.city = $('#text_address_city').val();
+    address.postCode = $('#text_zip').val();
+    address.phoneNumber = $('#text_phone').val();
+    address.email = $('#text_email').val();
+    // 发起POST请求到购物车添加端点
+    ajaxRequest('POST', 'member/address/add', null, address, function (response) {
+        if (response.code == 200) {
+            alert("save address successfully！")
+        }
+
+    })
+
+}
 
 function initAddressDetail() {
     ajaxRequest('GET', 'member/address/list', null, null, function (response) {
@@ -154,7 +200,13 @@ function initAddressDetail() {
         }
 
     })
+}
 
-
-
+function getUserInfoDetail() {
+    ajaxRequest('GET', 'sso/info', null, null, function (response) {
+        if (response.code == 200) {
+            $('#inpt_user_info_nickname').val(response.data.nickname)
+            $('#inpt_user_info_email').val(response.data.email)
+        }
+    })
 }
