@@ -18,6 +18,35 @@
     <script src="static/js/common/userAccountDashboard.js"></script>
     <title>ayira</title>
     <style>
+        .input-group {
+            position: relative;
+            display: inline-block;
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #999;
+            display: none; /* 默认隐藏 */
+        }
+
+        /* 当输入框有内容时显示清除按钮 */
+        #country-input:not(:placeholder-shown) + .clear-btn {
+            display: block;
+        }
+        .order-border {
+            border: 1px solid #ddd; /* 边框颜色 */
+            padding: 15px; /* 内边距 */
+            margin-bottom: 20px; /* 下边距，使得订单之间有间距 */
+            background-color: #fff; /* 背景颜色，根据需要调整 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 可选：阴影效果 */
+        }
         /* 自定义样式 */
         .coupon-card {
             border-radius: 10px;
