@@ -11,42 +11,76 @@
     <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="static/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="static/css/flaticon.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script src="static/js/jquery-2.2.4.js"></script>
     <script src="static/js/bootstrap.bundle.min.js"></script>
     <script src="static/js/common/common.js"></script>
     <script src="static/js/common/userAccountDashboard.js"></script>
     <title>ayira</title>
-<style>
-    .input-group {
-        position: relative;
-        display: inline-block;
-    }
+    <style>
+        /* 自定义样式 */
+        .coupon-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
 
-    .clear-btn {
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        font-size: 16px;
-        cursor: pointer;
-        color: #999;
-        display: none; /* 默认隐藏 */
-    }
+        .coupon-card:hover {
+            transform: scale(1.05);
+        }
 
-    /* 当输入框有内容时显示清除按钮 */
-    #country-input:not(:placeholder-shown) + .clear-btn {
-        display: block;
-    }
-    .order-border {
-        border: 1px solid #ddd; /* 边框颜色 */
-        padding: 15px; /* 内边距 */
-        margin-bottom: 20px; /* 下边距，使得订单之间有间距 */
-        background-color: #fff; /* 背景颜色，根据需要调整 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 可选：阴影效果 */
-    }
-</style>
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .coupon-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .coupon-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .coupon-info i {
+            margin-right: 0.5rem;
+        }
+
+        .coupon-value {
+            font-weight: bold;
+        }
+
+        .valid-date {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .copy-button {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (min-width: 768px) {
+            .coupon-card {
+                max-width: 300px;
+            }
+        }
+    </style>
 
 </head>
 <body>
@@ -444,7 +478,7 @@
                         </li>
                         <li><a data-bs-toggle="pill" href="#pills-account"><i class="flaticon-account"></i>Account
                             Details</a></li>
-                        <li><a ><i class="flaticon-power-button-1" onclick="logout()"></i>Logout</a></li>
+                        <li><a onclick="logout()"><i class="flaticon-power-button-1"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -456,18 +490,11 @@
                                     href="#"
                                     class="text_dark">Logout</a>)
                             </p></div>
-                            <div class="my-account-links">
-                                <div class="orders-link"><a href="#pills-order"><i class="flaticon-delivery-box"></i><br>Orders</a>
-                                </div>
-                                <div class="downloads-link"><a href="#pills-download"><i
-                                        class="flaticon-download"></i><br>Downloads</a></div>
-                                <div class="edit-address-link"><a href="#pills-address"><i class="flaticon-address"></i><br>Addresses</a>
-                                </div>
-                                <div class="edit-account-link mb-0"><a href="#pills-account"><i class="flaticon-account"></i><br>Account
-                                    Details</a></div>
-                                <div class="customer-logout-link mb-0"><a onclick="logout()"><i
-                                        class="flaticon-power-button-1"></i><br>Logout</a></div>
+                            <div class="container mt-5 text-center">
+                                <h2 class="mb-5">优惠券列表</h2>
+                                <div id="coupon-list" class="row row-cols-1 row-cols-md-2 g-4"></div>
                             </div>
+
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-order">
@@ -505,8 +532,11 @@
                                         <div class="single-form"><label class="form-label">Country / Region<span
                                                 class="required">*</span></label>
                                             <div class="input-group">
-                                                <input list="country-list" id="country-input" placeholder="Type to search..." />
-                                                <button type="button" id="clear-button" class="clear-btn" title="Clear input">x</button>
+                                                <input list="country-list" id="country-input"
+                                                       placeholder="Type to search..."/>
+                                                <button type="button" id="clear-button" class="clear-btn"
+                                                        title="Clear input">x
+                                                </button>
                                             </div>
                                             <datalist id="country-list">
                                                 <!-- 国家选项将会被JavaScript动态插入到这里 -->
@@ -515,36 +545,43 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Street Address<span
-                                                class="required">*</span></label><input  id="text_address_name" type="text"
-                                                                                        placeholder="House no and street name" >
+                                                class="required">*</span></label><input id="text_address_name"
+                                                                                        type="text"
+                                                                                        placeholder="House no and street name">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><input type="text"
-                                                                        placeholder="Apartment, suite, unit etc. (optional)" id="inpt_unit_optional">
+                                                                        placeholder="Apartment, suite, unit etc. (optional)"
+                                                                        id="inpt_unit_optional">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form"><label class="form-label">Town / City<span
-                                                class="required">*</span></label><input type="text" id="text_address_city"></div>
+                                                class="required">*</span></label><input type="text"
+                                                                                        id="text_address_city"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form"><label class="form-label">Postcode / Zip<span
-                                                class="required">*</span></label><input type="number" id="text_zip"></div>
+                                                class="required">*</span></label><input type="number" id="text_zip">
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Phone<span
-                                                class="required">*</span></label><input type="number" placeholder="" id="text_phone">
+                                                class="required">*</span></label><input type="number" placeholder=""
+                                                                                        id="text_phone">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Email Address<span
                                                 class="required">*</span></label><input type="text"
-                                                                                        placeholder="Demoname@gmail.com" id="text_email">
+                                                                                        placeholder="Demoname@gmail.com"
+                                                                                        id="text_email">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="single-form"><a href="#" class="load-more primary_dark_btn mt-3" id="a_save_address">Save
+                                        <div class="single-form"><a href="#" class="load-more primary_dark_btn mt-3"
+                                                                    id="a_save_address">Save
                                             address</a></div>
                                     </div>
                                 </div>
@@ -558,31 +595,36 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Nickname<span
-                                                class="required">*</span></label><input type="text" class="mb-2" id="inpt_user_info_nickname">
+                                                class="required">*</span></label><input type="text" class="mb-2"
+                                                                                        id="inpt_user_info_nickname">
                                             <p>This will be how your name will be displayed in the account section and
                                                 in review</p></div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Email address<span
-                                                class="required">*</span></label><input type="text" id="inpt_user_info_email"></div>
+                                                class="required">*</span></label><input type="text"
+                                                                                        id="inpt_user_info_email"></div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><h4 class="password-title">Password change</h4></div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form"><label class="form-label">Current password(leave blank
-                                            to leave unchanged)</label><input type="password" id="input_original_password"></div>
+                                            to leave unchanged)</label><input type="password"
+                                                                              id="input_original_password"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form"><label class="form-label">New password(leave blank to
-                                            leave unchanged)</label><input type="password" id="input_new_password"></div>
+                                            leave unchanged)</label><input type="password" id="input_new_password">
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form"><label class="form-label">Confirm new password </label><input
                                                 type="password" id="input_confirm_password"></div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="single-form"><a class="load-more primary_dark_btn mt-3" id="a_user_info_save">Save
+                                        <div class="single-form"><a class="load-more primary_dark_btn mt-3"
+                                                                    id="a_user_info_save">Save
                                             Change</a></div>
                                     </div>
                                 </div>

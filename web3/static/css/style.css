@@ -7349,6 +7349,47 @@ blockquote p {
     margin-right: 8px;
     background: #d34b56
 }
+.pending_payment {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: none;
+    border: 2px solid red;
+    display: inline-block;
+    margin-right: 8px;
+    background: red
+}
+.pending_shipment {
+    height: 5px;
+    width: 5px;
+    border-radius: 30%;
+    background-color: none;
+    border: 2px solid orange;
+    display: inline-block;
+    margin-right: 8px;
+    background: orange
+}
+.shipped {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: none;
+    border: 2px solid blue;
+    display: inline-block;
+    margin-right: 8px;
+    background: blue
+}
+.invalid {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: none;
+    border: 2px solid darkred;
+    display: inline-block;
+    margin-right: 8px;
+    background: darkred
+}
+
 
 .order-rate .fa {
     font-size: 12px;

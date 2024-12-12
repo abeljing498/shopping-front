@@ -145,7 +145,8 @@ $(document).ready(function () {
 
     initAddressDetail();
     getUserInfoDetail();
-    getOrderList('1');
+    getOrderList('-1');
+    getCouponList()
 });
 
 // 辅助函数：更新 <datalist> 中的国家选项
@@ -241,133 +242,158 @@ function getUserInfoDetail() {
 }
 
 function getOrderList(status) {
-    var orders = [
-        {
-            "orderSn": "202407250100000022",
-            "orderCreateTime": "2024-07-25T14:30:00Z",
-            "items": [
-
-                {
-                    "id": 134,
-                    "orderId": 101,
-                    "productId": 29,
-                    "productPic": "http://localhost:9000/mall/20241119/p-38.jpg",
-                    "productName": "Stylish Grey T-Shirt",
-                    "productBrand": "苹果",
-                    "productPrice": 5499,
-                    "productQuantity": 1,
-                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"}]"
-                }, {
-                    "id": 134,
-                    "orderId": 101,
-                    "productId": 29,
-                    "productPic": "http://localhost:9000/mall/20241119/p-38.jpg",
-                    "productName": "Stylish Grey T-Shirt",
-                    "productBrand": "苹果",
-                    "productPrice": 5499,
-                    "productQuantity": 1,
-                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
-                }, {
-                    "id": 134,
-                    "orderId": 101,
-                    "productId": 29,
-                    "productPic": "http://localhost:9000/mall/20241119/p-38.jpg",
-                    "productName": "Stylish Grey T-Shirt",
-                    "productBrand": "苹果",
-                    "productPrice": 5499,
-                    "productQuantity": 1,
-                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
-                }
-            ]
-        },
-        {
-            "orderSn": "202407250100000033",
-            "orderCreateTime": "2024-07-25T14:30:00Z",
-            "items": [
-
-                {
-                    "id": 134,
-                    "orderId": 101,
-                    "productId": 29,
-                    "productPic": "http://localhost:9000/mall/20241112/p-03.jpg",
-                    "productName": "Stylish Grey T-Shirt",
-                    "productBrand": "苹果",
-                    "productPrice": 5499,
-                    "productQuantity": 1,
-                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
-                }, {
-                    "id": 134,
-                    "orderId": 101,
-                    "productId": 29,
-                    "productPic": "http://localhost:9000/mall/20241112/p-03.jpg",
-                    "productName": "Stylish Grey T-Shirt",
-                    "productBrand": "苹果",
-                    "productPrice": 5499,
-                    "productQuantity": 1,
-                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
-                }, {
-                    "id": 134,
-                    "orderId": 101,
-                    "productId": 29,
-                    "productPic": "http://localhost:9000/mall/20241112/p-03.jpg",
-                    "productName": "Stylish Grey T-Shirt",
-                    "productBrand": "苹果",
-                    "productPrice": 5499,
-                    "productQuantity": 1,
-                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
-                }
-            ]
-        }
-    ];
     let params = {
         pageNum: 1, // 默认值为1
         pageSize: 100
     };
     params.status = status;
-    $('#div_oder_list').empty();
-    $.each(orders, function(orderIndex, order){
-        var $orderDiv = $('<div class="my-account-order order-border"><h3 class="widget-title">Order # ' + order.orderSn + '</h3></div>');
-        $.each(order.items, function(itemIndex, item){
-            var unitPrice = formatPrice(item.productPrice);
-            var totalPrice = formatPrice(item.productPrice * item.productQuantity);
+    ajaxRequest('GET', 'order/list', params, null, function (data) {
+        if (data.code == 200 && data.data.total !== 0) {
+            $('#div_oder_list').empty();
+            $.each(data.data.list, function(orderIndex, order){
+                var $orderDiv = $('<div class="my-account-order order-border"><h3 class="widget-title">Order # ' + order.orderSn + '</h3></div>');
+                $.each(order.orderItemList, function(itemIndex, item){
+                    var unitPrice = formatPrice(item.productPrice);
+                    var totalPrice = formatPrice(item.productPrice * item.productQuantity);
 
-            var $row = $('<div class="row"></div>').appendTo($orderDiv);
+                    var $row = $('<div class="row"></div>').appendTo($orderDiv);
 
-            // 商品图片和信息
-            var $colInfo = $('<div class="col-md-6"><div class="row"></div></div>').appendTo($row);
-            var $imgCol = $('<div class="col-md-3"></div>').appendTo($colInfo.find('.row'));
-            var $infoCol = $('<div class="col-md-8"></div>').appendTo($colInfo.find('.row'));
+                    // 商品图片和信息
+                    var $colInfo = $('<div class="col-md-6"><div class="row"></div></div>').appendTo($row);
+                    var $imgCol = $('<div class="col-md-3"></div>').appendTo($colInfo.find('.row'));
+                    var $infoCol = $('<div class="col-md-8"></div>').appendTo($colInfo.find('.row'));
 
-            $('<div class="order-img"><img class="w-100" src="' + item.productPic + '" alt="' + item.productName + '"></div>')
-                .appendTo($imgCol);
-            $('<div class="product-info"></div>')
-                .append('<div class="product-title"><a>' + item.productName + '</a></div>')
-                .appendTo($infoCol);
+                    $('<div class="order-img"><img class="w-100" src="' + item.productPic + '" alt="' + item.productName + '"></div>')
+                        .appendTo($imgCol);
+                    $('<div class="product-info"></div>')
+                        .append('<div class="product-title"><a>' + item.productName + '</a></div>')
+                        .appendTo($infoCol);
 
-            // 商品属性
-            var attrs = parseAttrs(item.productAttr);
-            $.each(attrs, function(attrIndex, attr){
-                var $attrDiv = $('<div class="widget-item d-flex"></div>').appendTo($infoCol);
-                $attrDiv.append('<h4 class="widget-title">' + attr.key + ':</h4>');
-                $attrDiv.append('<div class="wc-size ms-1">' + attr.value + '</div>');
+                    // 商品属性
+                    var attrs = parseAttrs(item.productAttr);
+                    $.each(attrs, function(attrIndex, attr){
+                        var $attrDiv = $('<div class="widget-item d-flex"></div>').appendTo($infoCol);
+                        $attrDiv.append('<h4 class="widget-title">' + attr.key + ':</h4>');
+                        $attrDiv.append('<div class="wc-size ms-1">' + attr.value + '</div>');
+                    });
+                    // 商品数量、单价、总价
+                    var $priceCol = $('<div class="col-md-2"></div>').appendTo($row);
+                    $priceCol.append('<span class="sale-price">Quantity:' + item.productQuantity + '</span>');
+                    $priceCol.append('<span class="sale-price">Unit Price:'+ unitPrice+ '</span>');
+                    $priceCol.append('<span class="sale-price">Total Price:'+ totalPrice +'</span>');
+                    // 订单状态等信息
+                    var $statusCol = $('<div class="col-md-4"></div>').appendTo($row);
+                    var $deliveredStatus = $('<div class="delivered_status"></div>').appendTo($statusCol);
+                    switch (order.status) {
+                        case 0:
+                            var formattedDate = formatDate(order.createTime);
+                            $deliveredStatus.append('<div class="delivered-date">' + formattedDate + '</div>');
+                            $deliveredStatus.append('<div class="order-status">  <div class="pending_payment"></div>Your item  pending payment </div>') ;
+                            var $payButton = $('<button class="btn btn-primary pay-now">Pay Now</button>')
+                                .appendTo($deliveredStatus)
+                                .on('click', function() {
+                                    window.location.href = "checkout.html?oderId=" + order.id;
+                                });
+                            break;
+                        case 1:
+                            var formattedDate = formatDate(order.paymentTime);
+                            $deliveredStatus.append('<div class="delivered-date">' + formattedDate + '</div>')
+                            $deliveredStatus.append('<div class="order-status">  <div class="pending_shipment"></div>Your item pending shipment</div>');
+                            break;
+                        case 2:
+                            var formattedDate = formatDate(order.createTime);
+                            $deliveredStatus.append('<div class="delivered-date">' + formattedDate + '</div>');
+                            $deliveredStatus.append('<div class="order-status">  <div class="shipped"></div>Your item has been shipped</div>');
+                            break;
+                        case 3:
+                            var formattedDate = formatDate(order.createTime);
+                            $deliveredStatus.append('<div class="delivered-date">' + formattedDate + '</div>');
+                            $deliveredStatus.append('<div class="order-status">  <div class="delivered"></div>Your item has been completed </div>');
+                            break;
+                        case 4:
+                            var formattedDate = formatDate(order.createTime);
+                            $deliveredStatus.append('<div class="delivered-date">' + formattedDate + '</div>');
+                            $deliveredStatus.append('<div class="order-status">  <div class="invalid"></div>Your item has been closed </div>');
+                            break;
+                        case 5:
+                            var formattedDate = formatDate(order.createTime);
+                            $deliveredStatus.append('<div class="delivered-date">' + formattedDate + '</div>');
+                            $deliveredStatus.append('<div class="order-status">  <div class="canceled"></div>Your item is Invalid order </div>');
+                            break;
+                        default:
+                            var formattedDate = formatDate(order.createTime);
+                            $deliveredStatus.append('<div class="delivered-date">' + formattedDate + '</div>');
+                            $deliveredStatus.append('<div class="order-status">  <div class="canceled"></div>Your item is Invalid order</div>');
+                            break;
+                    }
+
+                    $deliveredStatus.append('<div class="order-rate"><a><i class="fa fa-star"></i>Rate &amp;Review Product</a></div>');
+                });
+
+                $('#div_oder_list').append($orderDiv);
             });
-            // 商品数量、单价、总价
-            var $priceCol = $('<div class="col-md-2"></div>').appendTo($row);
-            $priceCol.append('<span class="sale-price">Quantity:' + item.productQuantity + '</span>');
-            $priceCol.append('<span class="sale-price">Unit Price:'+ unitPrice+ '</span>');
-            $priceCol.append('<span class="sale-price">Total Price:'+ totalPrice +'</span>');
-            // 订单状态等信息
-            var $statusCol = $('<div class="col-md-4"></div>').appendTo($row);
-            var $deliveredStatus = $('<div class="delivered_status"></div>').appendTo($statusCol);
-            $deliveredStatus.append('<div class="delivered-date">Delivered on Sun, Jan 31</div>');
-            $deliveredStatus.append('<div class="order-status">  <div class="canceled"></div>Your item has been delivered</div>');
-            $deliveredStatus.append('<div class="order-rate"><a><i class="fa fa-star"></i>Rate &amp;Review Product</a></div>');
-        });
+        }
+    })
 
-        $('#div_oder_list').append($orderDiv);
-    });
 }
 
+function getCouponList() {
+    let params = {
+        pageNum: 1, // 默认值为1
+        pageSize: 100
+    };
+    params.status = status;
+    ajaxRequest('GET', 'member/coupon/list', params, null, function (data) {
+        if (data.code == 200 && data.data.total !== 0) {
+            $.each(data.data, function(orderIndex, coupon){
+                var $card = $('<div></div>').addClass('col');
+                var $cardInner = $('<div></div>').addClass('card coupon-card bg-light');
+
+                var $CardBody = $('<div></div>').addClass('card-body');
+
+                // 创建优惠券详情列表
+                var details = [
+                    { icon: 'fas ', label: '名称', value: coupon.name },
+                    { icon: 'fas fa-yen-sign', label: '金额', value: `￥${coupon.amount}` },
+                    { icon: 'fas fa-money-bill-wave', label: '最低消费', value: `￥${coupon.minPoint}` },
+                    { icon: 'fas fa-calendar-alt', label: '有效期', value: `${new Date(coupon.startTime).toLocaleDateString()} 至 ${new Date(coupon.endTime).toLocaleDateString()}` }
+                ];
+
+                // 添加标题
+                var titleText = `<h3 class="coupon-title">${coupon.name}</h3>`;
+                $CardBody.append(titleText);
+
+                // 将详情添加到卡片中
+                details.forEach(detail => {
+                    var listItem = `<div class="coupon-info"><i class="${detail.icon}"></i>${detail.label}: <span class="coupon-value">${detail.value}</span></div>`;
+                    $CardBody.append(listItem);
+                });
+
+                // 添加有效日期
+                var validDate = `<p class="valid-date">有效期限：${details[3].value}</p>`;
+                $CardBody.append(validDate);
+
+                // 添加复制按钮
+                var copyButton = `<button class="copy-button" data-code="${coupon.couponCode}" onclick="copyCouponCode(this)">Copy Coupon</button>`;
+                $CardBody.append(copyButton);
+
+                // 组装卡片并添加到页面
+                $cardInner.append($CardBody);
+                $card.append($cardInner);
+                $('#coupon-list').append($card);
+            });
+        }
+    })
+
+}
+function copyCouponCode(button) {
+    var code = button.getAttribute('data-code');
+    navigator.clipboard.writeText(code).then(() => {
+        alert('优惠券代码已复制！');
+    }).catch(err => {
+        console.error('无法复制文本: ', err);
+    });
+}
 // 辅助函数：格式化日期
 function formatDate(isoString) {
     var date = new Date(isoString);
