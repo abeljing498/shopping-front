@@ -50,7 +50,7 @@ $(document).ready(function () {
             password: $('#textNewPassword').val(),
         };
         // 发起POST请求到购物车添加端点
-        ajaxRequest('POST', 'sso/updateUserInfo', getParams, null,function (response) {
+        ajaxRequest('POST', 'sso/register', getParams, null,function (response) {
             if (response.code == 200) {
                 localStorage.removeItem('token');
                 alert("register succeeded！");

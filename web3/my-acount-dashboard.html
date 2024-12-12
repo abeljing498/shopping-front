@@ -39,6 +39,13 @@
     #country-input:not(:placeholder-shown) + .clear-btn {
         display: block;
     }
+    .order-border {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 15px; /* 内边距 */
+        margin-bottom: 20px; /* 下边距，使得订单之间有间距 */
+        background-color: #fff; /* 背景颜色，根据需要调整 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 可选：阴影效果 */
+    }
 </style>
 
 </head>
@@ -437,7 +444,7 @@
                         </li>
                         <li><a data-bs-toggle="pill" href="#pills-account"><i class="flaticon-account"></i>Account
                             Details</a></li>
-                        <li><a href="#"><i class="flaticon-power-button-1"></i>Logout</a></li>
+                        <li><a ><i class="flaticon-power-button-1" onclick="logout()"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -450,152 +457,23 @@
                                     class="text_dark">Logout</a>)
                             </p></div>
                             <div class="my-account-links">
-                                <div class="orders-link"><a href="#"><i class="flaticon-delivery-box"></i><br>Orders</a>
+                                <div class="orders-link"><a href="#pills-order"><i class="flaticon-delivery-box"></i><br>Orders</a>
                                 </div>
-                                <div class="downloads-link"><a href="#"><i
+                                <div class="downloads-link"><a href="#pills-download"><i
                                         class="flaticon-download"></i><br>Downloads</a></div>
-                                <div class="edit-address-link"><a href="#"><i class="flaticon-address"></i><br>Addresses</a>
+                                <div class="edit-address-link"><a href="#pills-address"><i class="flaticon-address"></i><br>Addresses</a>
                                 </div>
-                                <div class="payment-account-link"><a href="#"><i class="flaticon-credit-card-1"></i><br>Payment
-                                    Method</a></div>
-                                <div class="edit-account-link mb-0"><a href="#"><i class="flaticon-account"></i><br>Account
+                                <div class="edit-account-link mb-0"><a href="#pills-account"><i class="flaticon-account"></i><br>Account
                                     Details</a></div>
-                                <div class="customer-logout-link mb-0"><a href="#"><i
+                                <div class="customer-logout-link mb-0"><a onclick="logout()"><i
                                         class="flaticon-power-button-1"></i><br>Logout</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-order">
                         <div class="my-account-order account-wrapper mt-6"><h4 class="account-title">My orders</h4>
-                            <div class="account-table">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="order-img"><img class="w-100" src="static/picture/p-01.jpg"
-                                                                            alt="ayira"></div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-info">
-                                                    <div class="product-title"><a href="javascript:;">Women floral
-                                                        dress</a></div>
-                                                    <div class="widget-item d-flex"><h4 class="widget-title">Size:</h4>
-                                                        <div class="wc-size ms-1">S</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2"><span class="sale-price">$99.00</span></div>
-                                    <div class="col-md-4">
-                                        <div class="delivered_status">
-                                            <div class="delivered-date">
-                                                <div class="delivered"></div>
-                                                Delivered on Sun,Jan 31
-                                            </div>
-                                            <div class="order-status">Your item has been delivered</div>
-                                            <div class="order-rate"><a><i class="fa fa-star"></i>Rate &amp;Review
-                                                Product</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="account-table">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="order-img"><img class="w-100" src="static/picture/p-02.jpg"
-                                                                            alt="ayira"></div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-info">
-                                                    <div class="product-title"><a href="javascript:;">Women floral
-                                                        dress</a></div>
-                                                    <div class="widget-item d-flex"><h4 class="widget-title">Size:</h4>
-                                                        <div class="wc-size ms-1">S</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2"><span class="sale-price">$99.00</span></div>
-                                    <div class="col-md-4">
-                                        <div class="delivered_status">
-                                            <div class="delivered-date">
-                                                <div class="delivered"></div>
-                                                Delivered on Sun,Jan 31
-                                            </div>
-                                            <div class="order-status">Your item has been delivered</div>
-                                            <div class="order-rate"><a><i class="fa fa-star"></i>Rate &amp;Review
-                                                Product</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="account-table">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="order-img"><img class="w-100" src="static/picture/p-03.jpg"
-                                                                            alt="ayira"></div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-info">
-                                                    <div class="product-title"><a href="javascript:;">Women floral
-                                                        dress</a></div>
-                                                    <div class="widget-item d-flex"><h4 class="widget-title">Size:</h4>
-                                                        <div class="wc-size ms-1">S</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2"><span class="sale-price">$99.00</span></div>
-                                    <div class="col-md-4">
-                                        <div class="delivered_status">
-                                            <div class="delivered-date">
-                                                <div class="delivered"></div>
-                                                Delivered on Sun,Jan 31
-                                            </div>
-                                            <div class="order-status">Your item has been delivered</div>
-                                            <div class="order-rate"><a><i class="fa fa-star"></i>Rate &amp;Review
-                                                Product</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="account-table">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="order-img"><img class="w-100" src="static/picture/p-01.jpg"
-                                                                            alt="ayira"></div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-info">
-                                                    <div class="product-title"><a href="javascript:;">Women floral
-                                                        dress</a></div>
-                                                    <div class="widget-item d-flex"><h4 class="widget-title">Size:</h4>
-                                                        <div class="wc-size ms-1">S</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2"><span class="sale-price">$99.00</span></div>
-                                    <div class="col-md-4">
-                                        <div class="delivered_status">
-                                            <div class="delivered-date">
-                                                <div class="canceled"></div>
-                                                Canceled on Aug 8 2020
-                                            </div>
-                                            <div class="order-status">Your item has been delivered</div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div id="div_oder_list">
+
                             </div>
                         </div>
                     </div>

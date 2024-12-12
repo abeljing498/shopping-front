@@ -110,14 +110,42 @@ $(document).ready(function () {
                 return false;
             }
         }
-
-
+        if ($('#input_original_password').val().length > 0) {
+            if ($('#input_new_password').val() === '') {
+                alert("The new password cannot be empty！");
+                $('#input_new_password').focus();
+                return false
+            }
+            if ($('#input_confirm_password').val() === '') {
+                alert("Confirm password cannot be empty！");
+                $('#input_confirm_password').focus();
+                return false
+            }
+            if ($('#input_new_password').val().length < 8) {
+                console.info($('#input_new_password').val().length);
+                alert("The new password cannot be less than 8 characters！");
+                $('#input_new_password').focus();
+                return false
+            }
+            if ($('#input_confirm_password').val().length < 8) {
+                console.info($('#input_confirm_password').val().length);
+                alert("The Confirm password cannot be less than 8 characters！");
+                $('#input_confirm_password').focus();
+                return false
+            }
+            if ($('#input_new_password').val() != $('#input_confirm_password').val()) {
+                alert("The two password inputs are inconsistent！");
+                $('#input_new_password').focus();
+                return false
+            }
+        }
         updateUserInfo();
     });
 
 
     initAddressDetail();
     getUserInfoDetail();
+    getOrderList('1');
 });
 
 // 辅助函数：更新 <datalist> 中的国家选项
@@ -139,7 +167,7 @@ function addUserAddress() {
     address.name = $('#lname').val();
     address.company = $('#cname').val();
     address.country = $('#country-input').val();
-    address.detailAddress = $('#text_address_name').val()+$('#inpt_unit_optional').val();
+    address.detailAddress = $('#text_address_name').val() + $('#inpt_unit_optional').val();
     address.city = $('#text_address_city').val();
     address.postCode = $('#text_zip').val();
     address.phoneNumber = $('#text_phone').val();
@@ -147,7 +175,7 @@ function addUserAddress() {
     // 发起POST请求到购物车添加端点
     ajaxRequest('POST', 'member/address/add', null, address, function (response) {
         if (response.code == 200) {
-            alert("save address successfully！")
+            alert("save successfully！");
         }
 
     })
@@ -155,20 +183,23 @@ function addUserAddress() {
 }
 
 function updateUserInfo() {
-    var address = {};
-    address.firstName = $('#inpt_user_info_nickname').val();
-    address.name = $('#inpt_user_info_email').val();
-    address.company = $('#cname').val();
-    address.country = $('#country-input').val();
-    address.detailAddress = $('#text_address_name').val()+$('#inpt_unit_optional').val();
-    address.city = $('#text_address_city').val();
-    address.postCode = $('#text_zip').val();
-    address.phoneNumber = $('#text_phone').val();
-    address.email = $('#text_email').val();
+    var userInfo = {};
+    userInfo.nickname = $('#inpt_user_info_nickname').val();
+    userInfo.password = $('#input_confirm_password').val();
+    userInfo.email = $('#inpt_user_info_email').val();
+    userInfo.originalPassword = $('#input_original_password').val();
     // 发起POST请求到购物车添加端点
-    ajaxRequest('POST', 'member/address/add', null, address, function (response) {
+    ajaxRequest('POST', 'sso/updateUserInfo', userInfo, null, function (response) {
         if (response.code == 200) {
-            alert("save address successfully！")
+            if ($('#input_original_password').val().length > 0) {
+                localStorage.removeItem('token');
+                alert("password changed successfully!");
+            } else {
+                alert("save successfully！")
+            }
+
+        } else {
+            alert(response.message);
         }
 
     })
@@ -195,8 +226,6 @@ function initAddressDetail() {
                 $('#input_hidden_address_id').val(addressDetail.id ?? '');
 
             });
-
-
         }
 
     })
@@ -209,4 +238,152 @@ function getUserInfoDetail() {
             $('#inpt_user_info_email').val(response.data.email)
         }
     })
+}
+
+function getOrderList(status) {
+    var orders = [
+        {
+            "orderSn": "202407250100000022",
+            "orderCreateTime": "2024-07-25T14:30:00Z",
+            "items": [
+
+                {
+                    "id": 134,
+                    "orderId": 101,
+                    "productId": 29,
+                    "productPic": "http://localhost:9000/mall/20241119/p-38.jpg",
+                    "productName": "Stylish Grey T-Shirt",
+                    "productBrand": "苹果",
+                    "productPrice": 5499,
+                    "productQuantity": 1,
+                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"}]"
+                }, {
+                    "id": 134,
+                    "orderId": 101,
+                    "productId": 29,
+                    "productPic": "http://localhost:9000/mall/20241119/p-38.jpg",
+                    "productName": "Stylish Grey T-Shirt",
+                    "productBrand": "苹果",
+                    "productPrice": 5499,
+                    "productQuantity": 1,
+                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
+                }, {
+                    "id": 134,
+                    "orderId": 101,
+                    "productId": 29,
+                    "productPic": "http://localhost:9000/mall/20241119/p-38.jpg",
+                    "productName": "Stylish Grey T-Shirt",
+                    "productBrand": "苹果",
+                    "productPrice": 5499,
+                    "productQuantity": 1,
+                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
+                }
+            ]
+        },
+        {
+            "orderSn": "202407250100000033",
+            "orderCreateTime": "2024-07-25T14:30:00Z",
+            "items": [
+
+                {
+                    "id": 134,
+                    "orderId": 101,
+                    "productId": 29,
+                    "productPic": "http://localhost:9000/mall/20241112/p-03.jpg",
+                    "productName": "Stylish Grey T-Shirt",
+                    "productBrand": "苹果",
+                    "productPrice": 5499,
+                    "productQuantity": 1,
+                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
+                }, {
+                    "id": 134,
+                    "orderId": 101,
+                    "productId": 29,
+                    "productPic": "http://localhost:9000/mall/20241112/p-03.jpg",
+                    "productName": "Stylish Grey T-Shirt",
+                    "productBrand": "苹果",
+                    "productPrice": 5499,
+                    "productQuantity": 1,
+                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
+                }, {
+                    "id": 134,
+                    "orderId": 101,
+                    "productId": 29,
+                    "productPic": "http://localhost:9000/mall/20241112/p-03.jpg",
+                    "productName": "Stylish Grey T-Shirt",
+                    "productBrand": "苹果",
+                    "productPrice": 5499,
+                    "productQuantity": 1,
+                    "productAttr": "[{\"key\":\"颜色\",\"value\":\"银色\"},{\"key\":\"屏幕尺寸\",\"value\":\"4.7\"},{\"key\":\"网络\",\"value\":\"4G\"},{\"key\":\"系统\",\"value\":\"IOS\"},{\"key\":\"电池容量\",\"value\":\"1960ml\"}]"
+                }
+            ]
+        }
+    ];
+    let params = {
+        pageNum: 1, // 默认值为1
+        pageSize: 100
+    };
+    params.status = status;
+    $('#div_oder_list').empty();
+    $.each(orders, function(orderIndex, order){
+        var $orderDiv = $('<div class="my-account-order order-border"><h3 class="widget-title">Order # ' + order.orderSn + '</h3></div>');
+        $.each(order.items, function(itemIndex, item){
+            var unitPrice = formatPrice(item.productPrice);
+            var totalPrice = formatPrice(item.productPrice * item.productQuantity);
+
+            var $row = $('<div class="row"></div>').appendTo($orderDiv);
+
+            // 商品图片和信息
+            var $colInfo = $('<div class="col-md-6"><div class="row"></div></div>').appendTo($row);
+            var $imgCol = $('<div class="col-md-3"></div>').appendTo($colInfo.find('.row'));
+            var $infoCol = $('<div class="col-md-8"></div>').appendTo($colInfo.find('.row'));
+
+            $('<div class="order-img"><img class="w-100" src="' + item.productPic + '" alt="' + item.productName + '"></div>')
+                .appendTo($imgCol);
+            $('<div class="product-info"></div>')
+                .append('<div class="product-title"><a>' + item.productName + '</a></div>')
+                .appendTo($infoCol);
+
+            // 商品属性
+            var attrs = parseAttrs(item.productAttr);
+            $.each(attrs, function(attrIndex, attr){
+                var $attrDiv = $('<div class="widget-item d-flex"></div>').appendTo($infoCol);
+                $attrDiv.append('<h4 class="widget-title">' + attr.key + ':</h4>');
+                $attrDiv.append('<div class="wc-size ms-1">' + attr.value + '</div>');
+            });
+            // 商品数量、单价、总价
+            var $priceCol = $('<div class="col-md-2"></div>').appendTo($row);
+            $priceCol.append('<span class="sale-price">Quantity:' + item.productQuantity + '</span>');
+            $priceCol.append('<span class="sale-price">Unit Price:'+ unitPrice+ '</span>');
+            $priceCol.append('<span class="sale-price">Total Price:'+ totalPrice +'</span>');
+            // 订单状态等信息
+            var $statusCol = $('<div class="col-md-4"></div>').appendTo($row);
+            var $deliveredStatus = $('<div class="delivered_status"></div>').appendTo($statusCol);
+            $deliveredStatus.append('<div class="delivered-date">Delivered on Sun, Jan 31</div>');
+            $deliveredStatus.append('<div class="order-status">  <div class="canceled"></div>Your item has been delivered</div>');
+            $deliveredStatus.append('<div class="order-rate"><a><i class="fa fa-star"></i>Rate &amp;Review Product</a></div>');
+        });
+
+        $('#div_oder_list').append($orderDiv);
+    });
+}
+
+// 辅助函数：格式化日期
+function formatDate(isoString) {
+    var date = new Date(isoString);
+    return date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+// 辅助函数：获取产品属性值
+function formatPrice(price) {
+    return '$' + (price).toFixed(2); // 如果价格是以分为单位存储的
+}
+
+function parseAttrs(attrsStr) {
+    try {
+        return JSON.parse(attrsStr);
+    } catch (e) {
+        console.error('Error parsing product attributes:', e);
+        return [];
+    }
 }
