@@ -11,8 +11,39 @@
     <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="static/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="static/css/flaticon.css">
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/jquery-2.2.4.js"></script>
+    <script src="static/js/common/common.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AbZiwEycr1FikyfGcvcVJ83riOB9zLtUo99g4ySohGz634gWAKjsXTzO0SbxFMqmG72fSC5eAI6r3gWk"></script>
-    <title>ayira</title></head>
+    <script src="static/js/common/checkout.js"></script>
+    <title>ayira</title>
+
+
+</head>
+<style>
+    .input-group {
+        position: relative;
+        display: inline-block;
+    }
+
+    .clear-btn {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        color: #999;
+        display: none; /* 默认隐藏 */
+    }
+
+    /* 当输入框有内容时显示清除按钮 */
+    #country-input:not(:placeholder-shown) + .clear-btn {
+        display: block;
+    }
+</style>
 <body>
 <header class="header section">
     <div class="header-top primary_dark color-scheme-white">
@@ -405,50 +436,73 @@
                         <div class="checkout-form">
                             <div class="checkout-title"><h4 class="title no_after">Billing details</h4></div>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="single-form"><label class="form-label">Email Address<span
-                                            class="required">*</span></label><input type="text"></div>
+                                <div class="col-md-6">
+                                    <div class="single-form"><label class="form-label mt-0">First Name<span
+                                            class="required">*</span></label><input type="text" id="fname"></div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="single-form"><label class="form-label">First name<span class="required">*</span></label><input
-                                            type="text"></div>
+                                <div class="col-md-6">
+                                    <div class="single-form"><label class="form-label mt-0">Last Name<span
+                                            class="required">*</span></label><input type="text" id="lname"></div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="single-form"><label class="form-label">Company
-                                        name(optional)</label><input type="text"></div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label mt-0">Company
+                                        name(optional)</label><input type="text" id="cname"></div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="single-select2"><label class="form-label">Country / Region<span
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label">Country / Region<span
                                             class="required">*</span></label>
-                                        <div class="form-select2"><select class="select2">
-                                            <option value="0">Select a country…</option>
-                                            <option value="1">Bangladesh</option>
-                                            <option value="2">Canada</option>
-                                            <option value="3">Colombia</option>
-                                            <option value="4">Indonesia</option>
-                                            <option value="5">Italy</option>
-                                            <option value="6">India</option>
-                                            <option value="7">Turkey</option>
-                                        </select></div>
+                                        <div class="input-group">
+                                            <input list="country-list" id="country-input"
+                                                   placeholder="Type to search..."/>
+                                            <button type="button" id="clear-button" class="clear-btn"
+                                                    title="Clear input">x
+                                            </button>
+                                        </div>
+                                        <datalist id="country-list">
+                                            <!-- 国家选项将会被JavaScript动态插入到这里 -->
+                                        </datalist>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="single-form"><label class="form-label">Street address<span
-                                            class="required">*</span></label><input type="text"
-                                                                                    placeholder="House no and street name"><input
-                                            type="text" placeholder="Apartment, suite, unit etc. (optional)"></div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label">Street Address<span
+                                            class="required">*</span></label><input id="text_address_name"
+                                                                                    type="text"
+                                                                                    placeholder="House no and street name">
+                                    </div>
                                 </div>
-                                <div class="col-sm-12">
+                                <div class="col-md-12">
+                                    <div class="single-form"><input type="text"
+                                                                    placeholder="Apartment, suite, unit etc. (optional)"
+                                                                    id="inpt_unit_optional">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="single-form"><label class="form-label">Town / City<span
-                                            class="required">*</span></label><input type="text"></div>
+                                            class="required">*</span></label><input type="text"
+                                                                                    id="text_address_city"></div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="single-form"><label class="form-label">Postcode / ZIP<span
-                                            class="required">*</span></label><input type="text"></div>
+                                <div class="col-md-6">
+                                    <div class="single-form"><label class="form-label">Postcode / Zip<span
+                                            class="required">*</span></label><input type="number" id="text_zip">
+                                    </div>
                                 </div>
-                                <div class="col-sm-12">
+                                <div class="col-md-12">
                                     <div class="single-form"><label class="form-label">Phone<span
-                                            class="required">*</span></label><input type="text"></div>
+                                            class="required">*</span></label><input type="number" placeholder=""
+                                                                                    id="text_phone">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label">Email Address<span
+                                            class="required">*</span></label><input type="text"
+                                                                                    placeholder="Demoname@gmail.com"
+                                                                                    id="text_email">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-form"><a href="#" class="load-more primary_dark_btn mt-3"
+                                                                id="a_save_address">Save
+                                        address</a></div>
                                 </div>
                             </div>
                             <div class="single-form mt-3">
@@ -476,7 +530,7 @@
                                         <th class="product-price">Subtotal</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="cartBody">
                                     <tr>
                                         <td class="product-name"><p>Bodysuit With Long Sleeves × 1</p></td>
                                         <td class="product-price"><p>$150.00</p></td>
@@ -494,13 +548,9 @@
                                         <td class="product-name"><p>Shipping</p></td>
                                         <td class="product-price">
                                             <ul class="shipping-list">
-                                                <li class="radio"><input type="radio" name="shipping" id="radio1"
-                                                                         checked=""><label for="radio1"><span></span>Flat
-                                                    Rate:$4.00</label></li>
+
                                                 <li class="radio"><input type="radio" name="shipping" id="radio2"><label
                                                         for="radio2"><span></span>Free Shipping</label></li>
-                                                <li class="radio"><input type="radio" name="shipping" id="radio3"><label
-                                                        for="radio3"><span></span>Local Delivery</label></li>
                                             </ul>
                                             <p>Shipping options will be updated during checkout.</p></td>
                                     </tr>
@@ -635,8 +685,6 @@
         </div>
     </div>
 </footer>
-<script src="static/js/bootstrap.bundle.min.js"></script>
-<script src="static/js/jquery-2.2.4.js"></script>
 <script src="static/js/owl.carousel.min.js"></script>
 <script src="static/js/custom.js"></script>
 </body>

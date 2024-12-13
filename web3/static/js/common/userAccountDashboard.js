@@ -146,7 +146,7 @@ $(document).ready(function () {
     initAddressDetail();
     getUserInfoDetail();
     getOrderList('-1');
-    getCouponList()
+    getCouponList(-1)
 });
 
 // 辅助函数：更新 <datalist> 中的国家选项
@@ -250,9 +250,9 @@ function getOrderList(status) {
     ajaxRequest('GET', 'order/list', params, null, function (data) {
         if (data.code == 200 && data.data.total !== 0) {
             $('#div_oder_list').empty();
-            $.each(data.data.list, function(orderIndex, order){
+            $.each(data.data.list, function (orderIndex, order) {
                 var $orderDiv = $('<div class="my-account-order order-border"><h3 class="widget-title">Order # ' + order.orderSn + '</h3></div>');
-                $.each(order.orderItemList, function(itemIndex, item){
+                $.each(order.orderItemList, function (itemIndex, item) {
                     var unitPrice = formatPrice(item.productPrice);
                     var totalPrice = formatPrice(item.productPrice * item.productQuantity);
 
@@ -271,7 +271,7 @@ function getOrderList(status) {
 
                     // 商品属性
                     var attrs = parseAttrs(item.productAttr);
-                    $.each(attrs, function(attrIndex, attr){
+                    $.each(attrs, function (attrIndex, attr) {
                         var $attrDiv = $('<div class="widget-item d-flex"></div>').appendTo($infoCol);
                         $attrDiv.append('<h4 class="widget-title">' + attr.key + ':</h4>');
                         $attrDiv.append('<div class="wc-size ms-1">' + attr.value + '</div>');
@@ -279,8 +279,8 @@ function getOrderList(status) {
                     // 商品数量、单价、总价
                     var $priceCol = $('<div class="col-md-2"></div>').appendTo($row);
                     $priceCol.append('<span class="sale-price">Quantity:' + item.productQuantity + '</span>');
-                    $priceCol.append('<span class="sale-price">Unit Price:'+ unitPrice+ '</span>');
-                    $priceCol.append('<span class="sale-price">Total Price:'+ totalPrice +'</span>');
+                    $priceCol.append('<span class="sale-price">Unit Price:' + unitPrice + '</span>');
+                    $priceCol.append('<span class="sale-price">Total Price:' + totalPrice + '</span>');
                     // 订单状态等信息
                     var $statusCol = $('<div class="col-md-4"></div>').appendTo($row);
                     var $deliveredStatus = $('<div class="delivered_status"></div>').appendTo($statusCol);
@@ -288,10 +288,10 @@ function getOrderList(status) {
                         case 0:
                             var formattedDate = formatDate(order.createTime);
                             $deliveredStatus.append('<div class="delivered-date">' + formattedDate + '</div>');
-                            $deliveredStatus.append('<div class="order-status">  <div class="pending_payment"></div>Your item  pending payment </div>') ;
+                            $deliveredStatus.append('<div class="order-status">  <div class="pending_payment"></div>Your item  pending payment </div>');
                             var $payButton = $('<button class="btn btn-primary pay-now">Pay Now</button>')
                                 .appendTo($deliveredStatus)
-                                .on('click', function() {
+                                .on('click', function () {
                                     window.location.href = "checkout.html?oderId=" + order.id;
                                 });
                             break;
@@ -337,55 +337,46 @@ function getOrderList(status) {
 
 }
 
-function getCouponList() {
+function getCouponList(status) {
     let params = {
         pageNum: 1, // 默认值为1
         pageSize: 100
     };
-    params.status = status;
     ajaxRequest('GET', 'member/coupon/list', params, null, function (data) {
         if (data.code == 200 && data.data.total !== 0) {
-            $.each(data.data, function(orderIndex, coupon){
-                var $card = $('<div></div>').addClass('col');
-                var $cardInner = $('<div></div>').addClass('card coupon-card bg-light');
-
-                var $CardBody = $('<div></div>').addClass('card-body');
-
-                // 创建优惠券详情列表
-                var details = [
-                    { icon: 'fas ', label: '名称', value: coupon.name },
-                    { icon: 'fas fa-yen-sign', label: '金额', value: `￥${coupon.amount}` },
-                    { icon: 'fas fa-money-bill-wave', label: '最低消费', value: `￥${coupon.minPoint}` },
-                    { icon: 'fas fa-calendar-alt', label: '有效期', value: `${new Date(coupon.startTime).toLocaleDateString()} 至 ${new Date(coupon.endTime).toLocaleDateString()}` }
-                ];
-
-                // 添加标题
-                var titleText = `<h3 class="coupon-title">${coupon.name}</h3>`;
-                $CardBody.append(titleText);
-
-                // 将详情添加到卡片中
-                details.forEach(detail => {
-                    var listItem = `<div class="coupon-info"><i class="${detail.icon}"></i>${detail.label}: <span class="coupon-value">${detail.value}</span></div>`;
-                    $CardBody.append(listItem);
+            $.each(data.data, (i, c) => {
+                let $c = $('<div></div>').addClass('col'), $ci = $('<div></div>').addClass('paper-card'),
+                    $h = $('<div></div>').addClass('card-header').text(c.name),
+                    $cb = $('<div></div>').addClass('card-body');
+                [{'lbl': 'Amt', 'val': `￥${c.amount}`}, {
+                    'lbl': 'Min Spnd',
+                    'val': `￥${c.minPoint}`
+                }, {
+                    'lbl': 'Valid Per',
+                    'val': `${formatDate(c.startTime)} - ${formatDate(c.endTime)}`
+                }].forEach(d => {
+                    $cb.append(`<p><strong>${d.lbl}:</strong> <span class="no-wrap"> ${d.val}</span></p>`)
                 });
-
-                // 添加有效日期
-                var validDate = `<p class="valid-date">有效期限：${details[3].value}</p>`;
-                $CardBody.append(validDate);
-
-                // 添加复制按钮
-                var copyButton = `<button class="copy-button" data-code="${coupon.couponCode}" onclick="copyCouponCode(this)">Copy Coupon</button>`;
-                $CardBody.append(copyButton);
-
-                // 组装卡片并添加到页面
-                $cardInner.append($CardBody);
-                $card.append($cardInner);
-                $('#coupon-list').append($card);
+                let endTimeStr = new Date(c.endTime).toISOString(),
+                    countdown = $(`<p class="countdown-container" data-enddate="${endTimeStr}"><strong>Rem Time:</strong><span></span></p>`);
+                $cb.append(countdown);
+                let expired = new Date() > new Date(c.endTime);
+                let copyBtn = $(`<button class="copy-button" data-code="${c.code}" onclick="copyCouponCode(this)">Copy</button>`);
+                if (expired) {
+                    copyBtn.prop('disabled', true).css('opacity', 0.5).attr('title', 'Expired')
+                }
+                $cb.append(copyBtn);
+                $ci.append($h);
+                $ci.append($cb);
+                $c.append($ci);
+                $('#coupon-list').append($c);
+                updateCountdown(countdown)
             });
         }
     })
 
 }
+
 function copyCouponCode(button) {
     var code = button.getAttribute('data-code');
     navigator.clipboard.writeText(code).then(() => {
@@ -394,10 +385,11 @@ function copyCouponCode(button) {
         console.error('无法复制文本: ', err);
     });
 }
+
 // 辅助函数：格式化日期
 function formatDate(isoString) {
     var date = new Date(isoString);
-    return date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    return date.toLocaleDateString('en-US', {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'});
 }
 
 // 辅助函数：获取产品属性值
@@ -412,4 +404,31 @@ function parseAttrs(attrsStr) {
         console.error('Error parsing product attributes:', e);
         return [];
     }
+}
+
+function updateCountdown($element) {
+    function update() {
+        const endDateStr = $element.attr('data-enddate');
+        const endDate = new Date(endDateStr).getTime();
+        const now = new Date().getTime();
+        let distance = endDate - now;
+
+        if (distance < 0) {
+            clearInterval(timer);
+            $element.find('span').html("Expired");
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+        const minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+        const seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+
+        $element.find('span').html(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+
+        // 设置定时器每秒调用一次update函数
+        var timer = setInterval(update, 1000);
+    }
+
+    update(); // 初始化时立即调用一次
 }

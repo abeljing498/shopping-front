@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="static/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="static/css/flaticon.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script src="static/js/jquery-2.2.4.js"></script>
     <script src="static/js/bootstrap.bundle.min.js"></script>
     <script src="static/js/common/common.js"></script>
@@ -40,72 +39,126 @@
         #country-input:not(:placeholder-shown) + .clear-btn {
             display: block;
         }
-        .order-border {
-            border: 1px solid #ddd; /* 边框颜色 */
-            padding: 15px; /* 内边距 */
-            margin-bottom: 20px; /* 下边距，使得订单之间有间距 */
-            background-color: #fff; /* 背景颜色，根据需要调整 */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 可选：阴影效果 */
-        }
-        /* 自定义样式 */
-        .coupon-card {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s;
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding-top: 2rem;
         }
 
-        .coupon-card:hover {
-            transform: scale(1.05);
+        .container {
+            max-width: 1200px;
+        }
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #ffbb42;
+        }
+
+        .paper-card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+        }
+
+        .paper-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: #ffbb42;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-bottom: 4px solid #ffbb42;
         }
 
         .card-body {
             padding: 1.5rem;
+            text-align: left;
         }
 
-        .coupon-title {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
+        .card-body p {
+            margin: 0 0 1rem;
+            line-height: 1.5;
+            font-size: 1rem;
         }
 
-        .coupon-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .coupon-info i {
-            margin-right: 0.5rem;
-        }
-
-        .coupon-value {
-            font-weight: bold;
-        }
-
-        .valid-date {
-            font-size: 0.9rem;
-            color: #6c757d;
+        .card-body strong {
+            display: inline-block;
+            width: 80px;
+            color: #ffbb42;
         }
 
         .copy-button {
             display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: #007bff;
+            width: 100%;
+            padding: 12px 24px;
+            text-align: center;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
             color: white;
-            border-radius: 5px;
+            border: none;
+            border-radius: 30px; /* 更圆润的圆角 */
+            box-shadow: 0 8px 16px rgba(106, 17, 203, 0.4);
+            font-size: 1em;
+            transition: all 0.3s ease-in-out;
             cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.3s ease-in-out;
         }
 
         .copy-button:hover {
-            background-color: #0056b3;
+            box-shadow: 0 12px 24px rgba(106, 17, 203, 0.6);
+            transform: translateY(-2px); /* 略微向上提升 */
         }
 
+        .copy-button:hover::before {
+            transform: translate(-50%, -50%) scale(40);
+            opacity: 0;
+        }
+
+        .copy-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 8px rgba(106, 17, 203, 0.5);
+        }
+
+        /* 如果您想要在按钮内添加图标，可以使用下面的样式 */
+        .copy-button span {
+            margin-left: 8px;
+        }
+
+        .copy-button i {
+            margin-right: 8px;
+        }
+        .no-wrap {
+            white-space: nowrap;
+        }
+
+
+        .countdown-container span {
+            font-size: 1.1em;
+            color: #ff4d4d; /* 可以选择一个更吸引人的颜色 */
+        }
         @media (min-width: 768px) {
-            .coupon-card {
+            .paper-card {
                 max-width: 300px;
             }
         }
@@ -498,7 +551,7 @@
                 <div class="my-account-menu mt-6"><h3 class="myaccount-title">My Account </h3>
                     <ul class="nav account-menu-list flex-column">
                         <li><a class="active" data-bs-toggle="pill" href="#pills-dashboard"><i
-                                class="flaticon-id-card"></i>Dashboard</a></li>
+                                class="flaticon-money"></i>coupon</a></li>
                         <li><a data-bs-toggle="pill" href="#pills-order"><i class="flaticon-delivery-box"></i>Order</a>
                         </li>
                         <li><a data-bs-toggle="pill" href="#pills-download"><i
@@ -520,7 +573,7 @@
                                     class="text_dark">Logout</a>)
                             </p></div>
                             <div class="container mt-5 text-center">
-                                <h2 class="mb-5">优惠券列表</h2>
+                                <h2 class="mb-5">coupon list</h2>
                                 <div id="coupon-list" class="row row-cols-1 row-cols-md-2 g-4"></div>
                             </div>
 
