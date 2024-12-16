@@ -549,39 +549,29 @@
                                         <td class="product-price">
                                             <ul class="shipping-list">
 
-                                                <li class="radio"><input type="radio" name="shipping" id="radio2"><label
+                                                <li class="radio"><input type="radio" name="shipping" id="radio2"
+                                                                         checked="true"><label
                                                         for="radio2"><span></span>Free Shipping</label></li>
                                             </ul>
-                                            <p>Shipping options will be updated during checkout.</p></td>
+                                        </td>
                                     </tr>
+
                                     <tr class="product-subtotal">
                                         <td class="product-name"><p>Total</p></td>
-                                        <td class="total-price"><p>$600.00</p></td>
+                                        <td class="total-price" ><p id="p_total_price">$600.00</p></td>
                                     </tr>
                                 </table>
                             </div>
+                            <div class="cart-btn">
+                                <div class="cart-btn-left">
+                                    <div class="coupon_code"><input type="text" placeholder="Apply coupon code">
+                                        <button class="apply">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="checkout-payment">
                                 <ul class="p-0 m-0">
-                                    <li>
-                                        <div class="single-payment">
-                                            <div class="payment-radio radio"><input type="radio" name="radio" id="bank"
-                                                                                    checked="checked"><label for="bank"><span></span>Direct
-                                                bank transfer </label>
-                                                <div class="payment-details"><p>Make your payment directly into our bank
-                                                    account. Please use your Order ID as the payment reference. Your
-                                                    order wont be shipped until the funds have cleared in our
-                                                    account.</p></div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="single-payment">
-                                            <div class="payment-radio radio"><input type="radio" name="radio" id="cash"><label
-                                                    for="cash"><span></span>Cash on Delivery</label>
-                                                <div class="payment-details"><p>Pay with cash upon delivery.</p></div>
-                                            </div>
-                                        </div>
-                                    </li>
                                     <li>
                                         <div class="single-payment"><p>Your personal data will be used to process your
                                             order,support your experience throughout this website,and for other purposes
@@ -590,7 +580,7 @@
                                 </ul>
                                 <div class="single-form mt-3">
                                     <div class="form-check d-flex"><input type="checkbox" class="form-check-input"
-                                                                          id="exampleCheck3"><label
+                                                                          id="exampleCheck3" checked="true"><label
                                             class="form-check-label" for="exampleCheck3">I have read and agree to the
                                         website terms and conditions </label></div>
                                 </div>
@@ -603,7 +593,6 @@
         </div>
     </div>
 </div>
-
 
 
 <script>
