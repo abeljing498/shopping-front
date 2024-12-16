@@ -118,7 +118,6 @@ function loadCartData() {
                 <td class="product-price"><p>-$${total.toFixed(2)}</p></td>
             </tr>`;
             $cartBody.append(subtotalRow);
-            $('#p_total_price').html("$"+total.toFixed(2));
         }
     });
 
