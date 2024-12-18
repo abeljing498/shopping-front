@@ -1,4 +1,4 @@
-var cartIds=[];
+var cartIds = [];
 $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
     var orderId = urlParams.get('orderId');
@@ -26,6 +26,7 @@ $(document).ready(function () {
             $('#clear-button').hide();
         }
     });
+
 
     // 当输入框获得焦点时，如果有内容则显示清除按钮
     $('#country-input').focus(function () {
@@ -71,7 +72,9 @@ function updateCountryList(countries) {
             .val(country.name) // 你可以选择使用 `country.chinese_name` 或 `country.name`
             .text(`${country.name} (${country.code}) - ${country.calling_code}`) // 显示更多信息可选
             .appendTo(datalist);
-    });}
+    });
+}
+
 function loadCartData() {
 
     ajaxRequest('GET', 'cart/list', null, null, function (response) {
@@ -123,17 +126,18 @@ function loadCartData() {
     });
 
 }
+
 function validateFormFields() {
     // 定义验证规则
     const validationRules = [
-        { selector: '#fname', minLength: 3, message: 'First name must be at least 3 characters long.' },
-        { selector: '#lname', minLength: 3, message: 'Last name must be at least 3 characters long.' },
-        { selector: '#cname', minLength: 3, message: 'Company name must be at least 3 characters long.' },
-        { selector: '#country-input', minLength: 1, message: 'Please select a country.' },
-        { selector: '#text_address_name', minLength: 10, message: 'Address name must be at least 10 characters long.' },
-        { selector: '#text_address_city', minLength: 3, message: 'City must be at least 3 characters long.' },
-        { selector: '#text_zip', minLength: 5, message: 'ZIP code must be at least 5 characters long.' },
-        { selector: '#text_phone', minLength: 8, message: 'Phone number must be at least 8 digits long.' },
+        {selector: '#fname', minLength: 3, message: 'First name must be at least 3 characters long.'},
+        {selector: '#lname', minLength: 3, message: 'Last name must be at least 3 characters long.'},
+        {selector: '#cname', minLength: 3, message: 'Company name must be at least 3 characters long.'},
+        {selector: '#country-input', minLength: 1, message: 'Please select a country.'},
+        {selector: '#text_address_name', minLength: 10, message: 'Address name must be at least 10 characters long.'},
+        {selector: '#text_address_city', minLength: 3, message: 'City must be at least 3 characters long.'},
+        {selector: '#text_zip', minLength: 5, message: 'ZIP code must be at least 5 characters long.'},
+        {selector: '#text_phone', minLength: 8, message: 'Phone number must be at least 8 digits long.'},
         {
             selector: '#text_email',
             rule: (value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) && value.length >= 5,
@@ -172,6 +176,7 @@ function validateFormFields() {
     // 返回所有验证是否通过的结果
     return results.every(Boolean); // 如果所有验证都通过，则返回 true
 }
+
 // 确保这段代码在DOM完全加载后执行
 document.addEventListener("DOMContentLoaded", function (event) {
     paypal.Buttons({
@@ -186,35 +191,33 @@ document.addEventListener("DOMContentLoaded", function (event) {
         // 创建订单时调用此函数
         createOrder: function (data, actions) {
             if (validateFormFields()) {
+                var order = {};
                 var address = {};
                 address.firstName = $('#fname').val();
                 address.name = $('#lname').val();
                 address.company = $('#cname').val();
-                address.country = $('#country-input\'').val();
-                address.detailAddress = $('#text_address_name').val();
+                address.country = $('#country-input').val();
+                address.detailAddress = $('#text_address_name').val()+$('#inpt_unit_optional').val();
                 address.city = $('#text_address_city').val();
                 address.postCode = $('#text_zip').val();
                 address.phoneNumber = $('#text_phone').val();
                 address.email = $('#text_email').val();
+                order.umsMemberReceiveAddress=address;
+                order.cartIds = cartIds
+                order.payType = 0;
                 var token = localStorage.getItem('token');
-                return fetch(requestUrl+'order/generateOrder', {
+                return fetch(requestUrl + 'order/generateOrder', {
                     method: 'post',
                     headers: {
                         'content-type': 'application/json',
-                        'Authorization':'Bearer ' + token
+                        'Authorization': 'Bearer ' + token
                     },
-                    body: JSON.stringify({
-                        // 这里发送必要的参数给服务器端，例如总价、货币类型等
-                        total: '10.00', // 示例金额
-                        currency: 'USD',
-                        cancelUrl: 'http://localhost:8080/cancel',
-                        successUrl: 'http://localhost:8080/success'
-                    })
+                    body: JSON.stringify(order)
                 }).then(function (res) {
                     return res.json();
                 }).then(function (orderData) {
                     // 返回订单ID以进行下一步
-                    return orderData.id;
+                    return orderData.orderId;
                 });
             }
 
@@ -222,20 +225,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         // 当用户批准付款时调用此函数
         onApprove: function (data, actions) {
-            return fetch(requestUrl+'/api/paypal/capture-payment', {
-                method: 'post',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    orderID: data.orderID
-                })
-            }).then(function (res) {
-                return res.json();
-            }).then(function (details) {
-                alert('Transaction completed by ' + details.payer.name.given_name);
-                // 此处可以重定向到成功的页面或者更新UI
-            });
+           console(JSON.stringify(data));
+            // return fetch(requestUrl + '/pay/' + data.order.id, {
+            //     method: 'post',
+            //     headers: {
+            //         'content-type': 'application/json',
+            //         'Authorization': 'Bearer ' + token
+            //     }
+            // }).then(function (res) {
+            //     return res.json();
+            // }).then(function (details) {
+            //     alert('Transaction completed by ' + details.payer.name.given_name);
+            //     // 此处可以重定向到成功的页面或者更新UI
+            // });
         },
 
         // 如果用户取消付款，则调用此函数
