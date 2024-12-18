@@ -1,4 +1,4 @@
-
+var cartIds=[];
 $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
     var orderId = urlParams.get('orderId');
@@ -104,7 +104,7 @@ function loadCartData() {
                     </td>
                 </tr>`;
                 $cartBody.append(row);
-
+                cartIds.push(item.id);
                 total += item.price * item.quantity;
             });
 
