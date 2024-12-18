@@ -167,3 +167,19 @@ function getMemberTotal(){
         }
     })
 }
+
+function validateEmail(email) {
+    // 定义一个正则表达式来匹配电子邮件格式
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // 测试输入的email是否匹配正则表达式
+    return emailRegex.test(email);
+}
+
+// 使用方法：
+const emailInput = $('#text_email').val();
+if (validateEmail(emailInput)) {
+    console.log('The email address is valid.');
+} else {
+    console.log('The email address is not valid.');
+}

@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
     var orderId = urlParams.get('orderId');
@@ -122,3 +123,132 @@ function loadCartData() {
     });
 
 }
+function validateFormFields() {
+    // 定义验证规则
+    const validationRules = [
+        { selector: '#fname', minLength: 3, message: 'First name must be at least 3 characters long.' },
+        { selector: '#lname', minLength: 3, message: 'Last name must be at least 3 characters long.' },
+        { selector: '#cname', minLength: 3, message: 'Company name must be at least 3 characters long.' },
+        { selector: '#country-input', minLength: 1, message: 'Please select a country.' },
+        { selector: '#text_address_name', minLength: 10, message: 'Address name must be at least 10 characters long.' },
+        { selector: '#text_address_city', minLength: 3, message: 'City must be at least 3 characters long.' },
+        { selector: '#text_zip', minLength: 5, message: 'ZIP code must be at least 5 characters long.' },
+        { selector: '#text_phone', minLength: 8, message: 'Phone number must be at least 8 digits long.' },
+        {
+            selector: '#text_email',
+            rule: (value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) && value.length >= 5,
+            message: 'Invalid email address format.'
+        }
+    ];
+
+    // 验证函数
+    function validateField(rule) {
+        const value = $(rule.selector).val();
+        let isValid;
+
+        if (rule.rule) {
+            isValid = rule.rule(value);
+        } else {
+            isValid = value && value.length >= rule.minLength;
+        }
+
+        handleValidationResult(rule.selector, isValid, rule.message);
+        return isValid;
+    }
+
+    // 处理验证结果
+    function handleValidationResult(selector, isValid, errorMsg) {
+        if (!isValid) {
+            console.log(`Error in field ${selector}: ${errorMsg}`);
+            $(selector).focus(); // 假设有样式 .error 表示错误状态
+            alert(errorMsg);
+            return false;
+        }
+    }
+
+    // 遍历并验证每个字段
+    const results = validationRules.map(validateField);
+
+    // 返回所有验证是否通过的结果
+    return results.every(Boolean); // 如果所有验证都通过，则返回 true
+}
+// 确保这段代码在DOM完全加载后执行
+document.addEventListener("DOMContentLoaded", function (event) {
+    paypal.Buttons({
+        // 设置样式选项 (可选)
+        style: {
+            layout: 'vertical', // vertical | horizontal
+            color: 'gold',      // gold | blue | silver | black
+            shape: 'rect',      // pill | rect
+            label: 'pay'        // pay | checkout | buynow | paywith | installment
+        },
+
+        // 创建订单时调用此函数
+        createOrder: function (data, actions) {
+            if (validateFormFields()) {
+                var address = {};
+                address.firstName = $('#fname').val();
+                address.name = $('#lname').val();
+                address.company = $('#cname').val();
+                address.country = $('#country-input\'').val();
+                address.detailAddress = $('#text_address_name').val();
+                address.city = $('#text_address_city').val();
+                address.postCode = $('#text_zip').val();
+                address.phoneNumber = $('#text_phone').val();
+                address.email = $('#text_email').val();
+                var token = localStorage.getItem('token');
+                return fetch(requestUrl+'order/generateOrder', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json',
+                        'Authorization':'Bearer ' + token
+                    },
+                    body: JSON.stringify({
+                        // 这里发送必要的参数给服务器端，例如总价、货币类型等
+                        total: '10.00', // 示例金额
+                        currency: 'USD',
+                        cancelUrl: 'http://localhost:8080/cancel',
+                        successUrl: 'http://localhost:8080/success'
+                    })
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (orderData) {
+                    // 返回订单ID以进行下一步
+                    return orderData.id;
+                });
+            }
+
+        },
+
+        // 当用户批准付款时调用此函数
+        onApprove: function (data, actions) {
+            return fetch(requestUrl+'/api/paypal/capture-payment', {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    orderID: data.orderID
+                })
+            }).then(function (res) {
+                return res.json();
+            }).then(function (details) {
+                alert('Transaction completed by ' + details.payer.name.given_name);
+                // 此处可以重定向到成功的页面或者更新UI
+            });
+        },
+
+        // 如果用户取消付款，则调用此函数
+        onCancel: function (data) {
+            // 用户点击取消按钮后的逻辑
+            console.log('The payment was cancelled');
+        },
+
+        // 发生错误时调用此函数
+        onError: function (err) {
+            // 错误处理逻辑
+            console.error('An error occurred:', err);
+        }
+    }).render('#paypal-button-container'); // 渲染按钮到页面上的特定位置
+});
+
