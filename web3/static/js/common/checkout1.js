@@ -177,74 +177,80 @@ function validateFormFields() {
     return results.every(Boolean); // 如果所有验证都通过，则返回 true
 }
 
-paypal.Buttons({
+// 确保这段代码在DOM完全加载后执行
+document.addEventListener("DOMContentLoaded", function (event) {
+    paypal.Buttons({
+        // 设置样式选项 (可选)
+        style: {
+            layout: 'vertical', // vertical | horizontal
+            color: 'gold',      // gold | blue | silver | black
+            shape: 'rect',      // pill | rect
+            label: 'pay'        // pay | checkout | buynow | paywith | installment
+        },
 
-    createOrder: function (data, actions) {
-        if(cartIds.length==0){
-            alert("Please select products to shopping cart");
-            return false;
-        }
-        // 创建订单
-        if (validateFormFields()) {
-            var order = {};
-            var address = {};
-            address.firstName = $('#fname').val();
-            address.name = $('#lname').val();
-            address.company = $('#cname').val();
-            address.country = $('#country-input').val();
-            address.detailAddress = $('#text_address_name').val() + $('#inpt_unit_optional').val();
-            address.city = $('#text_address_city').val();
-            address.postCode = $('#text_zip').val();
-            address.phoneNumber = $('#text_phone').val();
-            address.email = $('#text_email').val();
-            order.umsMemberReceiveAddress = address;
-            order.cartIds = cartIds
-            order.payType = 3;
-            var token = localStorage.getItem('token');
-            return fetch(requestUrl + 'order/generateOrder', {
-                method: 'post',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }, body: JSON.stringify(order)
-            }).then(function (res) {
-                return res.json();
-            }).then(function (orderData) {
-                console.info(orderData)
-                return orderData.data.orderId;
-            });
-        }
-    },
-    onApprove: function (data, actions) {
-        // 执行支付
-        return fetch(requestUrl + 'paypal/execute-payment', {
-            method: 'post',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(function (res) {
-            return res.json();
-        }).then(function (details) {
-            if (details.code == 200) {
-                alert("You have completed payment");
+        // 创建订单时调用此函数
+        createOrder: function (data, actions) {
+            if (validateFormFields()) {
+                var order = {};
+                var address = {};
+                address.firstName = $('#fname').val();
+                address.name = $('#lname').val();
+                address.company = $('#cname').val();
+                address.country = $('#country-input').val();
+                address.detailAddress = $('#text_address_name').val()+$('#inpt_unit_optional').val();
+                address.city = $('#text_address_city').val();
+                address.postCode = $('#text_zip').val();
+                address.phoneNumber = $('#text_phone').val();
+                address.email = $('#text_email').val();
+                order.umsMemberReceiveAddress=address;
+                order.cartIds = cartIds
+                order.payType = 0;
+                var token = localStorage.getItem('token');
+                return fetch(requestUrl + 'paypal/create-payment', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(order)
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (orderData) {
+                    // 返回订单ID以进行下一步
+                    return orderData.orderId;
+                });
             }
-        });
-    }, onCancel: function (data) {
-        return fetch(requestUrl + 'paypal/cancelPayment', {
-            method: 'post',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(function (res) {
-            return res.json();
-        }).then(function (details) {
-            if (details.code == 200) {
-                alert("Payment was cancelled by the user.");
-            }
-        });
-    }
-}).render('#paypal-button-container');
 
+        },
+
+        // 当用户批准付款时调用此函数
+        onApprove: function (data, actions) {
+           console(JSON.stringify(data));
+            // return fetch(requestUrl + '/pay/' + data.order.id, {
+            //     method: 'post',
+            //     headers: {
+            //         'content-type': 'application/json',
+            //         'Authorization': 'Bearer ' + token
+            //     }
+            // }).then(function (res) {
+            //     return res.json();
+            // }).then(function (details) {
+            //     alert('Transaction completed by ' + details.payer.name.given_name);
+            //     // 此处可以重定向到成功的页面或者更新UI
+            // });
+        },
+
+        // 如果用户取消付款，则调用此函数
+        onCancel: function (data) {
+            // 用户点击取消按钮后的逻辑
+            console.log('The payment was cancelled');
+        },
+
+        // 发生错误时调用此函数
+        onError: function (err) {
+            // 错误处理逻辑
+            console.error('An error occurred:', err);
+        }
+    }).render('#paypal-button-container'); // 渲染按钮到页面上的特定位置
+});
 
