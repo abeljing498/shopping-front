@@ -87,9 +87,15 @@ $(document).ready(function () {
         var addCartVaule = {};
         addCartVaule.productId = id;
         addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
-        if(matchingSku.skuCode!==null){
-            addCartVaule.productAttr = matchingSku.spData;
-            addCartVaule.productSkuId=matchingSku.id;
+        if (matchingSku && matchingSku.id !== undefined && matchingSku.id !== null) {
+            // 如果 matchingSku 包含 spData 和 id 字段，则添加到 addCartVaule
+            if (Array.isArray(matchingSku.spData)) {
+                addCartVaule.productAttr = matchingSku.spData;
+            }
+
+            if (matchingSku.id !== null) {
+                addCartVaule.productSkuId = matchingSku.id;
+            }
         }
 
         // 发起POST请求到购物车添加端点
