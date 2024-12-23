@@ -182,21 +182,21 @@ function renderOtherAttributes(data) {
             let $title = $('<span>', {'class': 'widget-title', text: attribute.name + ': '});
             let $listContainer = $('<div>');
             if (attribute.inputList !== "") {
-                $.each(attribute.inputList.split(','), function (i, value) {
-                    let $tag = $('<span>', {
-                        'class': `wc-tag ${i === 0 ? 'active' : ''}`, // 默认选中第一个
-                        click: function (e) {
-                            $(this).toggleClass('active').siblings().removeClass('active');
-                            handleSelection($(this), attribute.name, value.trim());
-                        }
-                    }).text(value.trim());
-                    $listContainer.append($tag);
-                    // 如果是第一个元素，则设置为默认选中
-                    if (i === 0) {
-                        selectedValues[attribute.name] = value.trim();
-                        $tag.addClass('active'); // 确保视觉上也显示为选中状态
+            $.each(attribute.inputList.split(','), function (i, value) {
+                let $tag = $('<span>', {
+                    'class': `wc-tag ${i === 0 ? 'active' : ''}`, // 默认选中第一个
+                    click: function (e) {
+                        $(this).toggleClass('active').siblings().removeClass('active');
+                        handleSelection($(this), attribute.name, value.trim());
                     }
-                });
+                }).text(value.trim());
+                $listContainer.append($tag);
+                // 如果是第一个元素，则设置为默认选中
+                if (i === 0) {
+                    selectedValues[attribute.name] = value.trim();
+                    $tag.addClass('active'); // 确保视觉上也显示为选中状态
+                }
+            });
                 $attributeRow.append($title, $listContainer);
                 $('#otherAttributes').append($attributeRow);
             }
