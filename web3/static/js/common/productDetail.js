@@ -86,8 +86,12 @@ $(document).ready(function () {
         var spuValue=JSON.stringify(matchingSku);
         var addCartVaule = {};
         addCartVaule.productId = id;
-        addCartVaule.productAttr = JSON.stringify(spuValue).spData;
         addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
+        if(matchingSku.skuCode!==null){
+            addCartVaule.productAttr = matchingSku.spData;
+            addCartVaule.productSkuId=matchingSku.id;
+        }
+
         // 发起POST请求到购物车添加端点
         ajaxRequest('POST', 'cart/add', null, addCartVaule, function (response) {
             if (response.code == 200) {
