@@ -56,7 +56,6 @@ function initProductDetail(productId) {
                     return acc;
                 }, {});
                 sku.attributes = attributes;
-
                 // 将 SKU 按照其属性组合存入 map 中
                 const key = Object.entries(attributes).sort().map(([k, v]) => `${k}-${v}`).join('_');
                 skuMap[key] = sku;
@@ -84,9 +83,10 @@ $(document).ready(function () {
         const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
         const matchingSku = skuMap[key];
         console.info(matchingSku);
+        var spuValue=JSON.stringify(matchingSku);
         var addCartVaule = {};
         addCartVaule.productId = id;
-        addCartVaule.productAttr = JSON.stringify(selectedValues);
+        addCartVaule.productAttr = JSON.stringify(spuValue).spData;
         addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
         // 发起POST请求到购物车添加端点
         ajaxRequest('POST', 'cart/add', null, addCartVaule, function (response) {
