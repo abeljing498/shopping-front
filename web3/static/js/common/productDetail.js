@@ -1,6 +1,7 @@
 var productData = null;
 var productAttr = []; // 存储最终的JSON数组
 var changeSelectionState = {}; // 跟踪每个属性的当前选择值
+let selectedValues = {};
 const colorMap = {
     Black: '#000000',
     Blue: '#1C9BB5',
@@ -33,75 +34,9 @@ function initProductDetail(productId) {
             $('#a_add_wish').click(function () {
                 addWish(response.data.product.id);
             });
-            // 商品属性
-            $.each(response.data.productAttributeList, function (index, item) {
-                // 添加属性选择框
-                if (item.type == 0) {
-                    var attributeValueList = item.inputList.split(',');
-                    if (attributeValueList.length > 1) {
-                        // 默认选择第一个值
-                        changeSelectionState[item.name] = false;
-                        productAttr.push({"key": item.name, "value": attributeValueList[0]});
-                    } else {
-                        // 如果只有一个值，直接添加到JSON数组中
-                        productAttr.push({"key": item.name, "value": attributeValueList[0]});
-                    }
-                    if (item.name === 'Color' || item.name === 'color') {
-                        let colorOptionsHtml = item.inputList.split(',').map(option => {
-                            // 获取颜色值
-                            let colorValue = colorMap[option] || '#FFFFFF';
-                            return `<li class="active ms-0" data-tooltip="tooltip"
-                     data-placement="top" title="" data-color="${colorValue}" 
-                     data-bs-original-title="${option}" 
-                     aria-label="${option}" 
-                     style="background-color:${colorValue};" onclick="changeSelectionAttr(this,'${item.name}','${option}','color')"></li>
-                `;
-                        }).join('');
-                        var outAttrHtml = `
-                <div class="widget-item d-flex">
-                    <h4 class="widget-title">${item.name}:</h4>
-                    <div class="widget-color">
-                        <ul class="color-list ps-0">
-                            ${colorOptionsHtml}
-                        </ul>
-                    </div>
-                </div>
-            `;
-                        $("#div-product-attr").append(`${outAttrHtml}`);
-                    } else {
-                        let sizeOptionsHtml = item.inputList.split(',').map(option => {
-                            return `
-                    <li class="wc-size" onclick="changeSelectionAttr(this,'${item.name}','${option}','other')">
-                        <a href="#">${option}</a>
-                    </li> `;
-                        }).join('');
-                        var outAttrHtml = `
-                            <div class="widget-item d-flex"><h4 class="widget-title">${item.name}:</h4>
-                                        <div class="widget-size">
-                                            <ul class="d-flex p-0">
-                                               ${sizeOptionsHtml}
-                                            </ul>
-                                        </div>
-                              </div> `;
-                        $("#div-product-attr").append(`${outAttrHtml}`);
-                    }
-                } else {
-                    const result = response.data.productAttributeValueList.find(itemAttr => itemAttr.productAttributeId === item.id);
-                    if (result) {
-                        var outAttrHtml = `
-                            <div class="widget-item d-flex"><h4 class="widget-title">${item.name}:</h4>
-                                        <div class="widget-size">
-                                            <ul class="d-flex p-0">
-                                              ${result.value}
-                                            </ul>
-                                        </div>
-                              </div> `;
-                        $("#div-product-attr").append(`${outAttrHtml}`);
-                    }
 
-
-                }
-            })
+       renderColors(response.data);
+       renderOtherAttributes(response.data);
             // 初始化所有的 tooltip
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-tooltip="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -208,5 +143,63 @@ function initializeSlick() {
         centerMode: true,
         focusOnSelect: true,
         arrows: true,
+    });
+}
+
+function renderColors(data) {
+    $('#colors').empty();
+    const colorAttribute = data.productAttributeList.find(attr => attr.name === 'Color');
+    if (colorAttribute) {
+        let $attributeRow = $('<div>', { 'class': 'attribute-row' });
+        let $title = $('<span>', { 'class': 'widget-title', text: colorAttribute.name + ': ' });
+
+        let $listContainer = $('<div>');
+
+        $.each(colorAttribute.inputList.split(','), function(i, value) {
+            let colorImageSrc = `static/picture/p-09.jpg`; // 假设图片路径是 images/颜色名.png
+
+            let $tag = $('<span>', {
+                'class': `wc-tag ${selectedValues[colorAttribute.name] === value.trim() ? 'active' : ''}`,
+                click: function(e) {
+                    $(this).toggleClass('active').siblings().removeClass('active');
+                    selectedValues[colorAttribute.name] = $(this).text().trim();
+                }
+            }).append(
+                $('<img>', { src: colorImageSrc, alt: value.trim(), 'class': 'me-1' }),
+                value.trim()
+            );
+
+            $listContainer.append($tag);
+        });
+
+        $attributeRow.append($title, $listContainer);
+        $('#colors').append($attributeRow);
+    }
+}
+
+function renderOtherAttributes(data) {
+    $('#otherAttributes').empty();
+    const otherAttribute = data.productAttributeList;
+    $.each(otherAttribute, function(index, attribute) {
+        if (attribute.name !== 'Color'&& attribute.type===0) {
+            let $attributeRow = $('<div>', { 'class': 'attribute-row' });
+            let $title = $('<span>', { 'class': 'widget-title', text: attribute.name + ': ' });
+            let $listContainer = $('<div>');
+
+            $.each(attribute.inputList.split(','), function(i, value) {
+                let $tag = $('<span>', {
+                    'class': `wc-tag ${selectedValues[attribute.name] === value.trim() ? 'active' : ''}`,
+                    click: function(e) {
+                        $(this).toggleClass('active').siblings().removeClass('active');
+                        selectedValues[attribute.name] = $(this).text().trim();
+                    }
+                }).text(value.trim());
+
+                $listContainer.append($tag);
+            });
+
+            $attributeRow.append($title, $listContainer);
+            $('#otherAttributes').append($attributeRow);
+        }
     });
 }
