@@ -16,61 +16,118 @@ const colorMap = {
 
 };
 
-function initProductDetail(productId) {
+function initializeProductDetail(productId) {
     ajaxRequest('GET', 'product/detail/' + productId, null, null, function (response) {
         if (response.code == 200) {
+            // 更新产品信息
             var pic = response.data.product.pic;
             $('#img-main-pic').attr('src', pic);
             $("#a-product-name").text(response.data.product.name);
             $("#p-product-dsc").text(response.data.product.description);
             $("#s-product-price").text("$ " + response.data.product.price);
             $("#s-product-old-price").text("$" + response.data.product.originalPrice);
-            $("#div-product-attr").empty();
+
+            // 添加到愿望单点击事件
             $('#a_add_wish').click(function () {
                 addWish(response.data.product.id);
             });
 
+            // 渲染颜色和其他属性
             renderColors(response.data);
             renderOtherAttributes(response.data);
+
             // 初始化所有的 tooltip
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-tooltip="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
 
+            // 清空并重新填充图片展示区域
             $("#div-product-detail-img1").empty();
             $("#div-product-detail-img2").empty();
-            let images1 = ' <div class="slick-slide" data-src="${item.pic}"><img src="${item.pic}" alt="Product"></div> ';
-            let images2 = '<div class="divide"><img src="${item.pic}" alt="Product"></div> ';
-            images1 = response.data.product.albumPics.split(',').map(option => {
-                return `<div class="slick-slide" data-src="${option}"><img src="${option}" alt="Product"></div>`;
-            }).join('');
-            images2 = response.data.product.albumPics.split(',').map(option => {
-                return `<div class="divide"><img src="${option}" alt="Product"></div>`;
-            }).join('');
-            $("#div-product-detail-img1").append(`${images1}`);
-            $("#div-product-detail-img2").append(`${images2}`);
-            response.data.skuStockList.forEach(sku => {
-                const attributes = JSON.parse(sku.spData).reduce((acc, curr) => {
-                    acc[curr.key] = curr.value;
-                    return acc;
-                }, {});
-                sku.attributes = attributes;
-                // 将 SKU 按照其属性组合存入 map 中
-                const key = Object.entries(attributes).sort().map(([k, v]) => `${k}-${v}`).join('_');
-                skuMap[key] = sku;
-            });
 
+            // 构建主图和缩略图HTML字符串
+            let mainImages = `<img src="${pic}" alt="Product" class="main-image">`;
+            let thumbnailImages = `<div class="divide"><img src="${pic}" alt="Product" class="thumbnail"></div>`;
+
+            // 如果有额外的相册图片，则追加它们
+            if (response.data.product.albumPics) {
+                const albumPics = response.data.product.albumPics.split(',');
+                albumPics.forEach((option, index) => {
+                    thumbnailImages += `<div class="divide"><img src="${option}" alt="Product" class="thumbnail"></div>`;
+                    mainImages += `<img src="${pic}" alt="Product" class="main-image">`;
+                });
+            }
+
+            // 将构建好的HTML插入到DOM中
+            $("#div-product-detail-img1").html(mainImages);
+            $("#div-product-detail-img2").html(thumbnailImages);
+
+            let tempImageStorage = {};
+            // SKU处理逻辑（保持不变）
+            if (response.data.skuStockList) {
+                response.data.skuStockList.forEach(sku => {
+                    const attributes = JSON.parse(sku.spData).reduce((acc, curr) => {
+                        acc[curr.key] = curr.value;
+                        return acc;
+                    }, {});
+                    sku.attributes = attributes;
+                    // 提取SKU中的图片信息，并存储在临时对象中
+                    if (sku.pic && !tempImageStorage[sku.pic]) {
+                        tempImageStorage[sku.pic] = {skuId: sku.id};
+                    }
+                    const key = Object.entries(attributes).sort().map(([k, v]) => `${k}-${v}`).join('_');
+                    skuMap[key] = sku;
+                });
+                for (let imgSrc in tempImageStorage) {
+                    thumbnailImages += `<div class="divide"><img src="${imgSrc}" alt="Product" class="thumbnail"></div>`;
+                    mainImages += `<img src="${imgSrc}" alt="Product" class="main-image">`
+                }
+                $("#div-product-detail-img1").html(mainImages);
+                $("#div-product-detail-img2").html(thumbnailImages);
+            }
+            // 绑定缩略图点击事件，在Slick初始化之后进行
             initializeSlick();
-        }
 
-    })
+            // 点击缩略图时更新主图
+            $("#div-product-detail-img2").on('click', '.thumbnail', function (event) {
+                event.preventDefault(); // 防止默认行为
+                const newSrc = $(this).attr('src');
+                $(".main-image").attr('src', newSrc);
+                // 移动焦点到主图
+                $(".main-image").focus();
+                $(".main-image").css('opacity', ''); // 清除内联样式中的 opacity
+            });
+        }
+    });
+}
+
+// Slick Slider 初始化函数
+function initializeSlick() {
+    ('#div-product-detail-img1').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '#div-product-detail-img2',
+        focusOnSelect: true // 当选择一个幻灯片时自动聚焦
+    });
+    $('#div-product-detail-img2').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        asNavFor: '#div-product-detail-img1',
+        dots: false,
+        centerMode: true,
+        focusOnSelect: true // 当选择一个幻灯片时自动聚焦
+    });
 }
 
 function handleSelection($element, attributeName, value) {
+
     selectedValues[attributeName] = value;
     const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
     const matchingSku = skuMap[key];
+    $('#div-product-detail-img1').html(`<img src="${matchingSku.pic}" class="main-image">`);
     console.info(matchingSku)
 }
 
@@ -78,21 +135,16 @@ function handleSelection($element, attributeName, value) {
 $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
-    var data = initProductDetail(id);
+    initializeProductDetail(id);
+    initializeSlick();
     $('.add_to_cart_button').click(function () {
         const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
         const matchingSku = skuMap[key];
-        console.info(matchingSku);
-        var spuValue=JSON.stringify(matchingSku);
         var addCartVaule = {};
         addCartVaule.productId = id;
         addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
         if (matchingSku && matchingSku.id !== undefined && matchingSku.id !== null) {
-            // 如果 matchingSku 包含 spData 和 id 字段，则添加到 addCartVaule
-            if (Array.isArray(matchingSku.spData)) {
-                addCartVaule.productAttr = matchingSku.spData;
-            }
-
+            addCartVaule.productAttr = matchingSku.spData;
             if (matchingSku.id !== null) {
                 addCartVaule.productSkuId = matchingSku.id;
             }
