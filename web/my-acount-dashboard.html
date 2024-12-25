@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon"
+          href="https://www.17sucai.com/2021/4/sehu10051/assets/images/favicon.png">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="static/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/flaticon.css">
+    <script src="static/js/jquery-2.2.4.js"></script>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/common/common.js"></script>
+    <script src="static/js/common/userAccountDashboard.js"></script>
+    <title>ayira</title>
+    <style>
+        .input-group {
+            position: relative;
+            display: inline-block;
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #999;
+            display: none; /* 默认隐藏 */
+        }
+
+        /* 当输入框有内容时显示清除按钮 */
+        #country-input:not(:placeholder-shown) + .clear-btn {
+            display: block;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding-top: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #ffbb42;
+        }
+
+        .paper-card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+        }
+
+        .paper-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: #ffbb42;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-bottom: 4px solid #ffbb42;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .card-body p {
+            margin: 0 0 1rem;
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+
+        .card-body strong {
+            display: inline-block;
+            width: 80px;
+            color: #ffbb42;
+        }
+
+        .copy-button {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 24px;
+            text-align: center;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 30px; /* 更圆润的圆角 */
+            box-shadow: 0 8px 16px rgba(106, 17, 203, 0.4);
+            font-size: 1em;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .copy-button:hover {
+            box-shadow: 0 12px 24px rgba(106, 17, 203, 0.6);
+            transform: translateY(-2px); /* 略微向上提升 */
+        }
+
+        .copy-button:hover::before {
+            transform: translate(-50%, -50%) scale(40);
+            opacity: 0;
+        }
+
+        .copy-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 8px rgba(106, 17, 203, 0.5);
+        }
+
+        /* 如果您想要在按钮内添加图标，可以使用下面的样式 */
+        .copy-button span {
+            margin-left: 8px;
+        }
+
+        .copy-button i {
+            margin-right: 8px;
+        }
+        .no-wrap {
+            white-space: nowrap;
+        }
+
+
+        .countdown-container span {
+            font-size: 1.1em;
+            color: #ff4d4d; /* 可以选择一个更吸引人的颜色 */
+        }
+        @media (min-width: 768px) {
+            .paper-card {
+                max-width: 300px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+<div id="head_div"></div>
+<div class="page-banner blog-page-banner section">
+    <div class="container">
+        <div class="page-banner-wrapper text-center"><h2 class="page-title">My Account</h2>
+            <ul class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i>Home</a></li>
+                <li class="breadcrumb-item active">My Account</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section section-padding-04 section-padding-03">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="my-account-menu mt-6"><h3 class="myaccount-title">My Account </h3>
+                    <ul class="nav account-menu-list flex-column">
+                        <li><a class="active" data-bs-toggle="pill" href="#pills-dashboard"><i
+                                class="flaticon-money"></i>coupon</a></li>
+                        <li><a data-bs-toggle="pill" href="#pills-order"><i class="flaticon-delivery-box"></i>Order</a>
+                        </li>
+                        <li><a data-bs-toggle="pill" href="#pills-download"><i
+                                class="flaticon-download"></i>Download</a></li>
+                        <li><a data-bs-toggle="pill" href="#pills-address"><i class="flaticon-address"></i>Address</a>
+                        </li>
+                        <li><a data-bs-toggle="pill" href="#pills-account"><i class="flaticon-account"></i>Account
+                            Details</a></li>
+                        <li><a onclick="logout()"><i class="flaticon-power-button-1"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="tab-content my-account-tab" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-dashboard">
+                        <div class="my-account-dashboard account-wrapper">
+                            <div class="welcome-dashboard" id="div_user_info"><p>Hello demoname(not demoname? <a
+                                    href="#"
+                                    class="text_dark">Logout</a>)
+                            </p></div>
+                            <div class="container mt-5 text-center">
+                                <h2 class="mb-5">coupon list</h2>
+                                <div id="coupon-list" class="row row-cols-1 row-cols-md-2 g-4"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-order">
+                        <div class="my-account-order account-wrapper mt-6"><h4 class="account-title">My orders</h4>
+                            <div id="div_oder_list">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-download">
+                        <div class="my-account-download account-wrapper">
+                            <div class="exclamation"><img src="static/picture/exclamation.png" alt="ariya">No downloads
+                                available yet.
+                            </div>
+                        </div>
+                        <div class="text-start"><a href="#" class="load-more primary_dark_btn">Browse products</a></div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-address">
+                        <div class="my-account-address account-wrapper">
+                            <div class="account-details">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="single-form"><label class="form-label mt-0">First Name<span
+                                                class="required">*</span></label><input type="text" id="fname"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-form"><label class="form-label mt-0">Last Name<span
+                                                class="required">*</span></label><input type="text" id="lname"></div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><label class="form-label mt-0">Company
+                                            name(optional)</label><input type="text" id="cname"></div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><label class="form-label">Country / Region<span
+                                                class="required">*</span></label>
+                                            <div class="input-group">
+                                                <input list="country-list" id="country-input"
+                                                       placeholder="Type to search..."/>
+                                                <button type="button" id="clear-button" class="clear-btn"
+                                                        title="Clear input">x
+                                                </button>
+                                            </div>
+                                            <datalist id="country-list">
+                                                <!-- 国家选项将会被JavaScript动态插入到这里 -->
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><label class="form-label">Street Address<span
+                                                class="required">*</span></label><input id="text_address_name"
+                                                                                        type="text"
+                                                                                        placeholder="House no and street name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><input type="text"
+                                                                        placeholder="Apartment, suite, unit etc. (optional)"
+                                                                        id="inpt_unit_optional">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-form"><label class="form-label">Town / City<span
+                                                class="required">*</span></label><input type="text"
+                                                                                        id="text_address_city"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-form"><label class="form-label">Postcode / Zip<span
+                                                class="required">*</span></label><input type="number" id="text_zip">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><label class="form-label">Phone<span
+                                                class="required">*</span></label><input type="number" placeholder=""
+                                                                                        id="text_phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><label class="form-label">Email Address<span
+                                                class="required">*</span></label><input type="text"
+                                                                                        placeholder="Demoname@gmail.com"
+                                                                                        id="text_email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-form"><a href="#" class="load-more primary_dark_btn mt-3"
+                                                                    id="a_save_address">Save
+                                            address</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-account">
+                        <div class="my-account-address my-account-details account-wrapper mt-6"><h4
+                                class="account-title">Account Details</h4>
+                            <div class="account-details">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="single-form"><label class="form-label">Nickname<span
+                                                class="required">*</span></label><input type="text" class="mb-2"
+                                                                                        id="inpt_user_info_nickname">
+                                            <p>This will be how your name will be displayed in the account section and
+                                                in review</p></div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><label class="form-label">Email address<span
+                                                class="required">*</span></label><input type="text"
+                                                                                        id="inpt_user_info_email"></div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><h4 class="password-title">Password change</h4></div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form"><label class="form-label">Current password(leave blank
+                                            to leave unchanged)</label><input type="password"
+                                                                              id="input_original_password"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-form"><label class="form-label">New password(leave blank to
+                                            leave unchanged)</label><input type="password" id="input_new_password">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-form"><label class="form-label">Confirm new password </label><input
+                                                type="password" id="input_confirm_password"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-form"><a class="load-more primary_dark_btn mt-3"
+                                                                    id="a_user_info_save">Save
+                                            Change</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer-placeholder"></div>
+<script src="static/js/owl.carousel.min.js"></script>
+
+</body>
+</html>

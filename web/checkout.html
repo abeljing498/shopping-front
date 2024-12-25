@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon"
+          href="https://www.17sucai.com/2021/4/sehu10051/assets/images/favicon.png">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="static/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/flaticon.css">
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/jquery-2.2.4.js"></script>
+    <script src="static/js/common/common.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AbZiwEycr1FikyfGcvcVJ83riOB9zLtUo99g4ySohGz634gWAKjsXTzO0SbxFMqmG72fSC5eAI6r3gWk"></script>
+    <script src="static/js/common/checkout.js"></script>
+    <title>ayira</title>
+
+
+</head>
+<style>
+    .input-group {
+        position: relative;
+        display: inline-block;
+    }
+
+    .clear-btn {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        color: #999;
+        display: none; /* 默认隐藏 */
+    }
+
+    /* 当输入框有内容时显示清除按钮 */
+    #country-input:not(:placeholder-shown) + .clear-btn {
+        display: block;
+    }
+</style>
+<body>
+<div id="head_div"></div>
+<div class="page-banner blog-page-banner section">
+    <div class="container">
+        <div class="page-banner-wrapper text-center"><h2 class="page-title">Checkout</h2>
+            <ul class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i>Home</a></li>
+                <li class="breadcrumb-item active">Checkout</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section section-padding-03 checkout-section">
+    <div class="container">
+        <div class="checkout-info"><p class="info-header">Do you already have an account? <a href="#">Click here to
+            login</a></p></div>
+        <div class="checkout-info"><p class="info-header">Have a coupon? <a href="#">Click here to enter your code</a>
+        </p></div>
+        <div class="checkout-wrapper">
+            <form action="#">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="checkout-form">
+                            <div class="checkout-title"><h4 class="title no_after">Billing details</h4></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="single-form"><label class="form-label mt-0">First Name<span
+                                            class="required">*</span></label><input type="text" id="fname"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-form"><label class="form-label mt-0">Last Name<span
+                                            class="required">*</span></label><input type="text" id="lname"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label mt-0">Company
+                                        name(optional)</label><input type="text" id="cname"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label">Country / Region<span
+                                            class="required">*</span></label>
+                                        <div class="input-group">
+                                            <input list="country-list" id="country-input"
+                                                   placeholder="Type to search..."/>
+                                            <button type="button" id="clear-button" class="clear-btn"
+                                                    title="Clear input">x
+                                            </button>
+                                        </div>
+                                        <datalist id="country-list">
+                                            <!-- 国家选项将会被JavaScript动态插入到这里 -->
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label">Street Address<span
+                                            class="required">*</span></label><input id="text_address_name"
+                                                                                    type="text"
+                                                                                    placeholder="House no and street name">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><input type="text"
+                                                                    placeholder="Apartment, suite, unit etc. (optional)"
+                                                                    id="inpt_unit_optional">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-form"><label class="form-label">Town / City<span
+                                            class="required">*</span></label><input type="text"
+                                                                                    id="text_address_city"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-form"><label class="form-label">Postcode / Zip<span
+                                            class="required">*</span></label><input type="number" id="text_zip">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label">Phone<span
+                                            class="required">*</span></label><input type="number" placeholder=""
+                                                                                    id="text_phone">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form"><label class="form-label">Email Address<span
+                                            class="required">*</span></label><input type="text"
+                                                                                    placeholder="Demoname@gmail.com"
+                                                                                    id="text_email">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-form"><a href="#" class="load-more primary_dark_btn mt-3"
+                                                                id="a_save_address">Save
+                                        address</a></div>
+                                </div>
+                            </div>
+                            <div class="single-form mt-3">
+                                <div class="form-check d-flex"><input type="checkbox" class="form-check-input"
+                                                                      id="exampleCheck1"><label class="form-check-label"
+                                                                                                for="exampleCheck1">Creat
+                                    an acount</label></div>
+                                <div class="form-check d-flex"><input type="checkbox" class="form-check-input"
+                                                                      id="exampleCheck2"><label class="form-check-label"
+                                                                                                for="exampleCheck2">Ship
+                                    to a different address?</label></div>
+                            </div>
+                            <div class="single-form checkout-note"><label class="form-label">Notes about your order,e.g.
+                                special notes for delivery.</label><textarea placeholder=""></textarea></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="checkout-order">
+                            <div class="checkout-title"><h4 class="title no_after">Review order</h4></div>
+                            <div class="checkout-order-table table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="product-subtotal">
+                                        <th class="product-name">Product</th>
+                                        <th class="product-price">Subtotal</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="cartBody">
+                                    <tr>
+                                        <td class="product-name"><p>Bodysuit With Long Sleeves × 1</p></td>
+                                        <td class="product-price"><p>$150.00</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product-name"><p>Classic Polo Shirt × 1</p></td>
+                                        <td class="product-price"><p>$150.00</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product-name"><p>Subtotal</p></td>
+                                        <td class="product-price"><p>$150.00</p></td>
+                                    </tr>
+                                    </tbody>
+                                    <tr>
+                                        <td class="product-name"><p>Shipping</p></td>
+                                        <td class="product-price">
+                                            <ul class="shipping-list">
+
+                                                <li class="radio"><input type="radio" name="shipping" id="radio2"
+                                                                         checked="true"><label
+                                                        for="radio2"><span></span>Free Shipping</label></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="product-subtotal">
+                                        <td class="product-name"><p>Total</p></td>
+                                        <td class="total-price"><p id="p_total_price">$600.00</p></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="cart-btn">
+                                <div class="cart-btn-left">
+                                    <div class="coupon_code"><input type="text" placeholder="Apply coupon code">
+                                        <button class="apply">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="checkout-payment">
+                                <ul class="p-0 m-0">
+                                    <li>
+                                        <div class="single-payment"><p>Your personal data will be used to process your
+                                            order,support your experience throughout this website,and for other purposes
+                                            described in our <a href="#" class="text_dark">privacy policy.</a></p></div>
+                                    </li>
+                                </ul>
+                                <div class="single-form mt-3">
+                                    <div class="form-check d-flex"><input type="checkbox" class="form-check-input"
+                                                                          id="exampleCheck3" checked="true"><label
+                                            class="form-check-label" for="exampleCheck3">I have read and agree to the
+                                        website terms and conditions </label></div>
+                                </div>
+                                <div id="paypal-button-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="footer-placeholder"></div>
+<script src="static/js/owl.carousel.min.js"></script>
+
+</body>
+</html>
