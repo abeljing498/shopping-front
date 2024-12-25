@@ -17,6 +17,8 @@ const colorMap = {
 };
 
 function initializeProductDetail(productId) {
+    $("#div_product_detail_description").empty();
+    $("#div_another_note").empty();
     ajaxRequest('GET', 'product/detail/' + productId, null, null, function (response) {
         if (response.code == 200) {
             // 更新产品信息
@@ -26,6 +28,8 @@ function initializeProductDetail(productId) {
             $("#p-product-dsc").text(response.data.product.description);
             $("#s-product-price").text("$ " + response.data.product.price);
             $("#s-product-old-price").text("$" + response.data.product.originalPrice);
+            $("#div_product_detail_description").html( response.data.product.detailHtml);
+            $("#div_another_note").html( response.data.product.note);
 
             // 添加到愿望单点击事件
             $('#a_add_wish').click(function () {
