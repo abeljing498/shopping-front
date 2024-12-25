@@ -28,8 +28,8 @@ function initializeProductDetail(productId) {
             $("#p-product-dsc").text(response.data.product.description);
             $("#s-product-price").text("$ " + response.data.product.price);
             $("#s-product-old-price").text("$" + response.data.product.originalPrice);
-            $("#div_product_detail_description").html( response.data.product.detailHtml);
-            $("#div_another_note").html( response.data.product.note);
+            $("#div_product_detail_description").html(response.data.product.detailHtml);
+            $("#div_another_note").html(response.data.product.note);
 
             // 添加到愿望单点击事件
             $('#a_add_wish').click(function () {
@@ -141,6 +141,7 @@ $(document).ready(function () {
     var id = urlParams.get('id');
     initializeProductDetail(id);
     initializeSlick();
+    userReview(1,10,id);
     $('.add_to_cart_button').click(function () {
         const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
         const matchingSku = skuMap[key];
@@ -268,4 +269,61 @@ function renderOtherAttributes(data) {
             }
         }
     });
+}
+
+function userReview(pageNum, pageSize,productId) {
+    // 获取或创建要插入评论的目标容器
+    var $commentsContainer = $('.reviews-comment .comment-items');
+
+    // 清空当前评论（如果有的话）
+    $commentsContainer.empty();
+    $('#h_review_total').empty();
+    $('#a_review_total').empty();
+
+    var params = {};
+    params.pageNum = pageNum
+    params.pageSize = pageSize;
+    params.productId = productId;
+    ajaxRequest('GET', 'product/userReview', params, null, function (response) {
+        $('#h_review_total').html(`${response.data.total} Reviews`);
+        $('#a_review_total').html(` Reviews (${response.data.total})`);
+        // 遍历评论列表
+        $.each(response.data.list, function (index, review) {
+            // 创建单条评论的HTML结构
+            var $commentItem = $(`
+      <li>
+        <div class="single-comment">
+          <div class="comment-thumb"><img src="static/picture/thumb-01.jpg" alt=""></div>
+          <div class="comment-content">
+            <div class="comment-name-date d-flex">
+              <h5 class="name">${review.nickName} - </h5>
+              <span class="date">${new Date(review.createTime).toLocaleDateString()}</span>
+            </div>
+             <div class="product-rating d-flex">
+            <ul class="d-flex ps-0">
+            ${generateStars(review.score)}
+            </ul></div> 
+            <p>${review.review}</p>
+          </div>
+        </div>
+      </li>
+    `);
+
+            // 将新创建的评论项添加到评论容器中
+            $commentsContainer.append($commentItem);
+        });
+    });
+}
+
+function generateStars(score) {
+    var starHtml = '';
+    var fullStar = ' <li><i class="fa fa-star"></i></li>'; // 实心星
+
+    // 遍历5次，为每个星生成HTML
+    for (var i = 1; i <= score; i++) {
+            starHtml += fullStar;
+
+    }
+
+    return starHtml;
 }
