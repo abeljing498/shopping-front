@@ -32,7 +32,7 @@ function initData() {
               <input type="hidden" id="hidden-product-id" value="${product.id}"> 
                         <div class="product-grid-item">
                             <div class="product-element-top">
-                                <a href="product-detail-v3.html?id=${product.id}">
+                                <a href="product-detail.html?id=${product.id}">
                                     <img class="thumbnail"
                                          src="${product.pic}"
                                          alt="${product.name}"> </a>
@@ -49,7 +49,7 @@ function initData() {
                             </div>
                             <div class="product-content">
                                 <div class="product-category-action">
-                                    <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a>
+                                    <div class="product-title"><a href="product-detail.html?id=${product.id}">${product.name}</a>
                                     </div>
                                     <div class="product-rating d-flex">
                                         <ul class="d-flex">
@@ -70,7 +70,7 @@ function initData() {
                                                     <div class="sale-price">$${product.price}</div>
                                                 </div>
                                             </div>
-                                            <div class="btn-add header-action-btn-cart"><a href="product-detail-v3.html?id=${product.id}"
+                                            <div class="btn-add header-action-btn-cart"><a href="product-detail.html?id=${product.id}"
                                                                                            class="add_to_cart_button">
                                                 <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                         </div>
@@ -108,7 +108,7 @@ function initData() {
                 var productHtml = `
                     <li> 
                         <div class="product-grid-item">
-                            <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> 
+                            <div class="product-element-top"><a href="product-detail.html?id=${product.id}"> 
                             <img class="thumbnail"src="${product.pic}" alt="${product.name}"> </a>
                                 <span class="off product-label">20% off</span></div>
                             <div class="ayira-buttons">
@@ -122,7 +122,7 @@ function initData() {
                             </div>
                             <div class="product-content">
                                 <div class="product-category-action">
-                                    <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a>
+                                    <div class="product-title"><a href="product-detail.html?id=${product.id}">${product.name}</a>
                                     </div>
                                     <div class="product-rating d-flex">
                                         <ul class="d-flex">
@@ -143,7 +143,7 @@ function initData() {
                                                     <div class="sale-price">$${product.price}</div>
                                                 </div>
                                             </div>
-                                            <div class="btn-add header-action-btn-cart"><a href="product-detail-v3.html?id=${product.id}"
+                                            <div class="btn-add header-action-btn-cart"><a href="product-detail.html?id=${product.id}"
                                                                                            class="add_to_cart_button">
                                                 <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                         </div> 
@@ -184,7 +184,7 @@ function initData() {
             <li>
                     <input type="hidden" id="hidden-product-id" value="${product.id}"> 
                         <div class="product-grid-item">
-                            <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
+                            <div class="product-element-top"><a href="product-detail.html?id=${product.id}"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
                             </div>
                             <div class="ayira-buttons">
                                 <div class="ayira-wishlist-btn"><a class="" onclick="addWish(${product.id})"><i
@@ -197,7 +197,7 @@ function initData() {
                             </div>
                             <div class="product-content">
                                 <div class="product-category-action">
-                                    <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a>
+                                    <div class="product-title"><a href="product-detail.html?id=${product.id}">${product.name}</a>
                                     </div>
                                     <div class="product-rating d-flex">
                                         <ul class="d-flex">
@@ -218,7 +218,7 @@ function initData() {
                                                     <div class="sale-price">$${product.price}</div>
                                                 </div>
                                             </div>
-                                            <div class="btn-add header-action-btn-cart"><a href="product-detail-v3.html?id=${product.id}"
+                                            <div class="btn-add header-action-btn-cart"><a href="product-detail.html?id=${product.id}"
                                                                                            class="add_to_cart_button">
                                                 <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                         </div>
@@ -266,7 +266,7 @@ function initData() {
             <li>
              <input type="hidden" id="hidden-product-id" value="${product.id}">  
                         <div class="product-grid-item">
-                            <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
+                            <div class="product-element-top"><a href="product-detail.html?id=${product.id}"> <img class="thumbnail" src="${product.pic}" alt="${product.name}"> </a>
                             </div>
                             <div class="ayira-buttons">
                                 <div class="ayira-wishlist-btn"><a class="" onclick="addWish(${product.id})"><i
@@ -279,7 +279,7 @@ function initData() {
                             </div>
                             <div class="product-content">
                                 <div class="product-category-action">
-                                    <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a>
+                                    <div class="product-title"><a href="product-detail.html?id=${product.id}">${product.name}</a>
                                     </div>
                                     <div class="product-rating d-flex">
                                         <ul class="d-flex">
@@ -300,7 +300,7 @@ function initData() {
                                                     <div class="sale-price">$${product.price}</div>
                                                 </div>
                                             </div>
-                                            <div class="btn-add header-action-btn-cart"><a href="product-detail-v3.html?id=${product.id}"
+                                            <div class="btn-add header-action-btn-cart"><a href="product-detail.html?id=${product.id}"
                                                                                            class="add_to_cart_button">
                                                 <i class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                         </div>

@@ -27,7 +27,7 @@ function searchProduct(pageNum, pageSize, sort, productCategoryId) {
             var productHtml = `
            <div class="col-lg-4 col-sm-6">
                                 <div class="product-grid-item">
-                                    <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> <img
+                                    <div class="product-element-top"><a href="product-detail.html?id=${product.id}"> <img
                                             class="thumbnail" src="${product.pic}" alt="${product.name}"> </a></div>
                                     <div class="ayira-buttons">
                                         <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
@@ -42,7 +42,7 @@ function searchProduct(pageNum, pageSize, sort, productCategoryId) {
                                     </div>
                                     <div class="product-content">
                                         <div class="product-category-action">
-                                            <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</a></div>
+                                            <div class="product-title"><a href="product-detail.html?id=${product.id}">${product.name}</a></div>
                                             <div class="product-rating d-flex">
                                                 <ul class="d-flex">
                                                     <li><i class="fa fa-star"></i></li>
@@ -62,7 +62,7 @@ function searchProduct(pageNum, pageSize, sort, productCategoryId) {
                                                             <div class="sale-price">$${product.price}</div>
                                                         </div>
                                                     </div>
-                                                    <div class="btn-add"><a href="product-detail-v3.html?id=${product.id}"
+                                                    <div class="btn-add"><a href="product-detail.html?id=${product.id}"
                                                                             class="add_to_cart_button"> <i
                                                             class="fa fa-shopping-cart"></i> Add to cart</a></div>
                                                 </div>
@@ -100,11 +100,11 @@ function initHotProductList() {
         $.each(response.data, function (index, product) {
             var productHtml = `
               <li><div class="product-grid-item">
-                                        <div class="product-element-top"><a href="product-detail-v3.html?id=${product.id}"> <img
+                                        <div class="product-element-top"><a href="product-detail.html?id=${product.id}"> <img
                                                 class="thumbnail" src="${product.pic}" alt="${product.name}"> </a></div>
                                         <div class="product-content">
                                             <div class="product-category-action d-block">
-                                                <div class="product-title"><a href="product-detail-v3.html?id=${product.id}">${product.name}</div>
+                                                <div class="product-title"><a href="product-detail.html?id=${product.id}">${product.name}</div>
                                                 <div class="wrap-price">
                                                     <div class="wrapp-swap">
                                                         <div class="swap-elements">
@@ -113,7 +113,7 @@ function initHotProductList() {
                                                                        <div class="sale-price">$${product.price}</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="btn-add"><a href="product-detail-v3.html?id=${product.id}"
+                                                            <div class="btn-add"><a href="product-detail.html?id=${product.id}"
                                                                                     class="add_to_cart_button"> <i
                                                                     class="fa fa-shopping-cart"></i> Add to cart</a>
                                                             </div>
