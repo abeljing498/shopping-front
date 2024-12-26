@@ -1,21 +1,5 @@
 let selectedValues = {};
 let skuMap = {}; // 存储解析后的 SKU 数据，方便查找
-const colorMap = {
-    Black: '#000000',
-    Blue: '#1C9BB5',
-    Green: '#63A809',
-    Red: '#ff0000',
-    Yellow: '#ffd700',
-    Purple: '#800080',
-    Orange: '#ffa500',
-    Gray: '#808080',
-    White: '#ffffff',
-    Brown: '#a52a2a',
-    Pink: '#ffc0cb',
-    Cyan: '#00ffff'
-
-};
-
 function initializeProductDetail(productId) {
     $("#div_product_detail_description").empty();
     $("#div_another_note").empty();
@@ -35,11 +19,6 @@ function initializeProductDetail(productId) {
             $('#a_add_wish').click(function () {
                 addWish(response.data.product.id);
             });
-
-            // 渲染颜色和其他属性
-            renderColors(response.data);
-            renderOtherAttributes(response.data);
-
             // 初始化所有的 tooltip
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-tooltip="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -92,7 +71,9 @@ function initializeProductDetail(productId) {
             }
             // 绑定缩略图点击事件，在Slick初始化之后进行
             initializeSlick();
-
+            // 渲染颜色和其他属性
+            renderColors(response.data);
+            renderOtherAttributes(response.data);
             // 点击缩略图时更新主图
             $("#div-product-detail-img2").on('click', '.thumbnail', function (event) {
                 event.preventDefault(); // 防止默认行为
@@ -134,14 +115,20 @@ function handleSelection($element, attributeName, value) {
     $('#div-product-detail-img1').html(`<img src="${matchingSku.pic}" class="main-image">`);
     console.info(matchingSku)
 }
-
+function getColorPic(attributeName, value) {
+    var filterValue = {};
+    filterValue[attributeName] = value;
+    const key = Object.entries(filterValue).sort().map(([k, v]) => `${k}-${v}`).join('_');
+    const matchingSku = skuMap[key];
+    return matchingSku.pic;
+}
 
 $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
     initializeProductDetail(id);
     initializeSlick();
-    userReview(1,10,id);
+    userReview(1, 20, id);
     $('.add_to_cart_button').click(function () {
         const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
         const matchingSku = skuMap[key];
@@ -164,6 +151,21 @@ $(document).ready(function () {
 
         })
 
+    });
+    $('#btn_add_review').click(function () {
+        addUserReview(id);
+    });
+
+
+
+    var stars = document.querySelectorAll('.star');
+    var scoreInput = document.getElementById('text_nick_score');
+    // 为每个星级元素添加点击事件监听器
+    stars.forEach(function (star) {
+        star.addEventListener('click', function () {
+            // 设置隐藏输入字段的值为当前星级的数据值
+            scoreInput.value = this.getAttribute('data-value');
+        });
     });
 
 });
@@ -213,7 +215,7 @@ function renderColors(data) {
 
         let $listContainer = $('<div>');
         $.each(colorAttribute.inputList.split(','), function (i, value) {
-            let colorImageSrc = `static/picture/p-09.jpg`; // 假设图片路径是 images/颜色名.png
+            var colorImageSrc = getColorPic(colorAttribute.name, value.trim()); // 假设图片路径是 images/颜色名.png
             let $tag = $('<span>', {
                 'class': `wc-tag ${i === 0 ? 'active' : ''}`, // 默认选中第一个
                 click: function (e) {
@@ -271,14 +273,73 @@ function renderOtherAttributes(data) {
     });
 }
 
-function userReview(pageNum, pageSize,productId) {
+
+function addUserReview(productId) {
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    var name = $('#text_nick_name').val().trim();
+    var email = $('#text_nick_email').val().trim();
+    var review = $('#text_nick_review').val().trim();
+    // Validate Name field
+    if (!name) {
+        alert('Name is required.');
+        $('#text_nick_name').focus();
+        return;
+    }
+
+    // Validate Email field
+    if (!email) {
+        alert('Please enter a valid email address.');
+        $('#text_nick_email').focus();
+        return;
+    } else if (!emailPattern.test(email)) {
+        $('#text_nick_email').focus();
+        alert('Please enter a valid email address.');
+        return;
+    }
+
+    // Validate Review field
+    if (!review) {
+        $('#text_nick_review').focus();
+        alert('Review is required.');
+        return;
+    }
+    var review = {};
+    review.productId = productId;
+    review.nickName = $('#text_nick_name').val();
+    review.score = $('#text_nick_score').val();
+    review.review = $('#text_nick_review').val();
+    review.email = $('#text_nick_email').val();
+    // 获取或创建要插入评论的目标容器
+    ajaxRequest('POST', 'product/addUserReview', null, review, function (response) {
+        if (response.code == 200) {
+            alert("thank you for your feedback!");
+            userReview(1, 10, productId);
+        }
+    });
+}
+
+// 更新星形显示以反映当前选择的分数
+function updateStarDisplay() {
+    var currentScore = parseInt(scoreInput.value);
+    stars.forEach(function (star, index) {
+        if (index < currentScore - 1) {
+            star.querySelector('i').classList.replace('fa-star-o', 'fa-star');
+        } else {
+            star.querySelector('i').classList.replace('fa-star', 'fa-star-o');
+        }
+    });
+}
+
+
+function userReview(pageNum, pageSize, productId) {
     // 获取或创建要插入评论的目标容器
     var $commentsContainer = $('.reviews-comment .comment-items');
-
     // 清空当前评论（如果有的话）
     $commentsContainer.empty();
     $('#h_review_total').empty();
     $('#a_review_total').empty();
+    $('#span_reviews_total').empty();
+    $('#span_reviews_total_pc').empty();
 
     var params = {};
     params.pageNum = pageNum
@@ -287,31 +348,31 @@ function userReview(pageNum, pageSize,productId) {
     ajaxRequest('GET', 'product/userReview', params, null, function (response) {
         $('#h_review_total').html(`${response.data.total} Reviews`);
         $('#a_review_total').html(` Reviews (${response.data.total})`);
-        // 遍历评论列表
-        $.each(response.data.list, function (index, review) {
-            // 创建单条评论的HTML结构
-            var $commentItem = $(`
-      <li>
-        <div class="single-comment">
-          <div class="comment-thumb"><img src="static/picture/thumb-01.jpg" alt=""></div>
-          <div class="comment-content">
-            <div class="comment-name-date d-flex">
-              <h5 class="name">${review.nickName} - </h5>
-              <span class="date">${new Date(review.createTime).toLocaleDateString()}</span>
-            </div>
-             <div class="product-rating d-flex">
-            <ul class="d-flex ps-0">
-            ${generateStars(review.score)}
-            </ul></div> 
-            <p>${review.review}</p>
-          </div>
-        </div>
-      </li>
-    `);
+        $('#span_reviews_total').html(`(${response.data.total} customer reviews)`);
+        $('#span_reviews_total_pc').html(`(${response.data.total} customer reviews)`);
+            $.each(response.data.list, function (index, review) {
+                // 创建单条评论的HTML结构
+                var $commentItem = $(`
+                  <li>
+                    <div class="single-comment">
+                      <div class="comment-thumb"><img src="static/picture/user.png" alt=""></div>
+                      <div class="comment-content">
+                        <div class="comment-name-date d-flex">
+                          <h5 class="name">${review.nickName} - </h5>
+                          <span class="date">${new Date(review.createTime).toLocaleDateString()}</span>
+                        </div>
+                         <div class="product-rating d-flex">
+                        <ul class="d-flex ps-0">
+                        ${generateStars(review.score)}
+                        </ul></div> 
+                        <p>${review.review}</p>
+                      </div>
+                    </div>
+                  </li>
+                `);
+                $commentsContainer.append($commentItem);
+            });
 
-            // 将新创建的评论项添加到评论容器中
-            $commentsContainer.append($commentItem);
-        });
     });
 }
 
@@ -321,7 +382,7 @@ function generateStars(score) {
 
     // 遍历5次，为每个星生成HTML
     for (var i = 1; i <= score; i++) {
-            starHtml += fullStar;
+        starHtml += fullStar;
 
     }
 

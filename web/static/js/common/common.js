@@ -177,14 +177,6 @@ function validateEmail(email) {
     return emailRegex.test(email);
 }
 
-// 使用方法：
-const emailInput = $('#text_email').val();
-if (validateEmail(emailInput)) {
-    console.log('The email address is valid.');
-} else {
-    console.log('The email address is not valid.');
-}
-
 function loadAndInitializeHeader() {
     $("#head_div").load("header.html", function () {
         initializeHeaderEvents();
