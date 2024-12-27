@@ -78,13 +78,22 @@ function getCartInfo() {
             $('.cart-offcanvas-wrapper').addClass('open');
             var total = 0
             $.each(response.data, function (index, item) {
+                // var attrs = JSON.parse(item.productAttr);
+                // var attrHtml = '';
+                //
+                // // 为每个属性创建一个显示元素
+                // attrs.forEach(function (attr) {
+                //     attrHtml += `<span className="sale-price">${attr.key}:${attr.value}</span>`;
+                //
+                // });
                 var row = `
                   <div class="cart-product-wrapper mb-4">
                                 <div class="single-cart-product">
                                     <div class="cart-product-thumb"><a href=""><img src="${item.productPic}"
                                                                                     alt="${item.productName}"></a></div>
-                                    <div class="cart-product-content"><h3 class="title no_after"><a href="">${item.productName}</a></h3>
-                                        <div class="product-price"><span class="sale-price">$${item.price}*${item.quantity}</span></div>
+                                    <div class="cart-product-content">
+                                    <h3 class="title no_after"><a href="">${item.productName}</a></h3>
+                                    <div class="product-price"><span class="sale-price">$${item.price}*${item.quantity}</span></div>  
                                     </div>
                                 </div>
                                 <div class="cart-product-remove"><a href="#" onclick="deleteCart(${item.id})"><i class="flaticon-error"></i></a></div>
@@ -160,6 +169,9 @@ function logout() {
 }
 
 function getMemberTotal() {
+    $('#s_m_wishCount').empty();
+    $('#s_pc_wishCount').empty();
+    $('#s_common_cart_total_price').empty();
     ajaxRequest('GET', 'sso/getCartTotal', null, null, function (response) {
         if (response.code == 200) {
             $('#s_m_wishCount').html(response.data.collectTotal);
@@ -180,13 +192,14 @@ function validateEmail(email) {
 function loadAndInitializeHeader() {
     $("#head_div").load("header.html", function () {
         initializeHeaderEvents();
+        getMemberTotal();
     });
     $("#footer-placeholder").load("footer.html");
+
 }
 
 function initializeHeaderEvents() {
     $('#btnLogin').click(function () {
-        alert("dfdfdfdfdfd");
         //判断输入是否为空
         if ($('#textUserName').val() === '') {
             alert("Email cannot be empty！");
@@ -596,4 +609,5 @@ function customFunction() {
 
 $(document).ready(function () {
     loadAndInitializeHeader();
+
 });

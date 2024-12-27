@@ -1,7 +1,6 @@
 // 绑定按钮点击事件
 $(document).ready(function () {
     initData();
-    getMemberTotal();
 });
 
 function initData() {

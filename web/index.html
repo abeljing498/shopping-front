@@ -13,14 +13,167 @@
     <link rel="stylesheet" type="text/css" href="static/css/flaticon.css">
     <script src="static/js/bootstrap.bundle.min.js"></script>
     <script src="static/js/jquery-2.2.4.js"></script>
-    <script src="static/js/common/common.js"></script>
     <script src="static/js/common/index.js"></script>
+    <script src="static/js/common/common.js"></script>
     <script src="static/js/common/product.js"></script>
     <title>ayira</title>
+    <style>
+
+        .product-attributes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem; /* 减小属性组之间的间距 */
+        }
+
+        .attribute-group,
+        .color-group {
+            width: 100%;
+            max-width: 400px;
+        }
+
+
+        .wc-tag img {
+            border-radius: 4px;
+            width: 20px !important; /* 强制宽度 */
+            height: 20px !important; /* 强制高度 */
+            object-fit: cover; /* 确保图片不会变形 */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-right: 0.25rem; /* 减少图片和文字间的间距 */
+        }
+
+        .wc-tag {
+            display: inline-block;
+            padding: 0.2em 0.6em; /* 减少内边距 */
+            background-color: #f1f1f1;
+            border: 1px solid transparent; /* 默认无边框 */
+            border-radius: 4px;
+            margin-right: 0.25rem; /* 减少标签之间的间距 */
+            margin-top: 0.2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9rem; /* 减小字体大小以适应移动设备 */
+        }
+
+        .wc-tag.active,
+        .wc-tag:hover {
+            border: 2px solid #ffbb42; /* 点击后或悬停时显示边框 */
+            background-color: #e6e6e6;
+        }
+
+        .wc-color .wc-tag {
+            display: flex;
+            align-items: center;
+        }
+
+        attribute-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* 确保在桌面端属性名和属性值分列左右 */
+            margin-bottom: 0.5rem;
+        }
+
+        .widget-title {
+            font-size: 1rem;
+            flex: 0 0 auto; /* 不允许标题被压缩 */
+            margin-right: 0.1rem;
+        }
+
+        @media (max-width: 768px) {
+            /* 移动端上的特定样式 */
+            .widget-title {
+                width: 100%; /* 让标题在移动端占据整行 */
+                margin-bottom: 0.25rem; /* 添加底部间距 */
+            }
+
+            .wc-tag {
+                width: 100%; /* 让选项在移动端占据整行 */
+                margin-left: 0; /* 移除左边距以确保居左 */
+                margin-top: 0.25rem; /* 在移动端添加顶部间距 */
+            }
+
+            .wc-color img {
+                margin-right: 0; /* 移除图片和文字间的间距 */
+                margin-bottom: 0.25rem; /* 添加底部间距代替 */
+            }
+        }
+
+    </style>
 </head>
 <body>
 <div id="head_div"></div>
-
+<div class="modal fade login" id="quick_view" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <div class="product-image-summary product-v-one">
+                    <div class="row">
+                        <div class="col-md-6 product-images">
+                            <div class="product-details-img">
+                                <div class="row">
+                                    <div class="col-12 position-relative">
+                                        <div class="slider slider-for">
+                                            <div><h3 class="m-0"><img src="static/picture/p-36.jpg" alt="Product"
+                                                                      id="img-main-pic"></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 summary entry-summary">
+                            <div class="product-list-item">
+                                <div class="product-content">
+                                    <div class="product-category-action d-block">
+                                        <div class="product-title pt-0"><a href="product-detail-v1.html"
+                                                                           id="a-product-name">Women floral
+                                            dress</a></div>
+                                        <div class="product-rating d-flex">
+                                            <ul class="d-flex ps-0">
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                            <span>(5 customer reviews)</span></div>
+                                    </div>
+                                    <div class="product-price"><span class="old-price"
+                                                                     id="s-product-old-price">$39.00</span><span
+                                            class="sale-price" id="s-product-price">$39.00</span></div>
+                                    <div class="short-description"><p id="p-product-dsc"></p>
+                                    </div>
+                                    <div class="product-attributes">
+                                        <div id="colors" class="color-group"></div>
+                                        <div id="otherAttributes" class="attribute-group"></div>
+                                    </div>
+                                    <div class="d-flex quantity-cart_button">
+                                        <div class="product-quantity d-inline-flex">
+                                            <button type="button" class="sub">-</button>
+                                            <input type="text" value="1" id="quantity">
+                                            <button type="button" class="add">+</button>
+                                        </div>
+                                        <div class="ayira-cart-btn"><a class="button add_to_cart_button"
+                                                                       id="btn_add_cart">Add to cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex wishlist-compare">
+                                        <div class="ayira-wishlist-btn"><a class="" href="my-wishlist.html"><i
+                                                class="fa fa-heart-o"></i>Add to wishlist</a></div>
+                                        <div class="ayira-compare-btn"><a class="button d-flex" href="compare.html"><i
+                                                class="flaticon-reload"></i>Compare</a></div>
+                                        <input type="hidden" id="hid_product_id">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="slider slider-one">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
