@@ -106,7 +106,7 @@ function deleteCartPage(id) {
         }
         ajaxRequest('POST', 'cart/delete', null, params, function (response) {
             if (response.code == 200) {
-                getCartInfo();
+                loadCartData();
             }
 
         })

@@ -82,7 +82,7 @@ function initData() {
 
             $("#new_arrivals").append(productHtml);
             $('.open-quick-view', '#new_arrivals').last().on('click', function () {
-                initProductDetail(product.id, 'open');
+                initProductDetail(product.id);
             });
         });
         $('#new_arrivals').trigger('destroy.owl.carousel');
@@ -155,7 +155,7 @@ function initData() {
                 //动态给quick-view添加点击事件
                 $("#collections").append(productHtml);
                 $('.open-quick-view', '#collections').last().on('click', function () {
-                    initProductDetail(product.id, 'open');
+                    initProductDetail(product.id);
                 });
             }
         );
@@ -239,7 +239,7 @@ function initData() {
         `;
             $("#trending_products").append(productHtml);
             $('.open-quick-view', '#trending_products').last().on('click', function () {
-                initProductDetail(product.id,'open');
+                initProductDetail(product.id);
             });
         });
         $('#trending_products').trigger('destroy.owl.carousel');
@@ -321,7 +321,7 @@ function initData() {
         `;
             $("#best_selling").append(productHtml);
             $('.open-quick-view', '#best_selling').last().on('click', function () {
-                initProductDetail(product.id,'open');
+                initProductDetail(product.id);
             });
         });
         $('#best_selling').trigger('destroy.owl.carousel');

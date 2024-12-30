@@ -56,8 +56,13 @@
         }
 
         .wc-tag.active,
+        .wc-tag.wc-tag.active:hover { /* 提高选择器特异性 */
+            border: 2px solid #ffbb42;
+            background-color: #e6e6e6;
+        }
+
         .wc-tag:hover {
-            border: 2px solid #ffbb42; /* 点击后或悬停时显示边框 */
+            border: 2px solid #ffbb42;
             background-color: #e6e6e6;
         }
 

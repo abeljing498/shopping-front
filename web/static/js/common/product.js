@@ -3,8 +3,8 @@ let skuMap = {}; // 存储解析后的 SKU 数据，方便查找
 
 
 function initProductDetail(productId) {
+    skuMap = {};
     productAttr = [];
-    changeSelectionState = {};
     $("#hid_product_id").val(productId)
     ajaxRequest('GET', 'product/detail/' + productId, null, null, function (response) {
         if (response.code == 200) {
@@ -151,6 +151,7 @@ function getColorPic(attributeName, value) {
     return matchingSku.pic;
 }
 function handleSelection($element, attributeName, value) {
+    selectedValues={};
     selectedValues[attributeName] = value;
     const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
     const matchingSku = skuMap[key];
