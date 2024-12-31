@@ -1,8 +1,11 @@
 // 设置全局 AJAX 配置
+let shoId="myshopId";
 
 window.requestUrl = "http://localhost:8085/api/";
 $.ajaxSetup({
     beforeSend: function (xhr) {
+        xhr.setRequestHeader('anonId', getOrCreateAnonymousId());
+        xhr.setRequestHeader('shopId', shoId);
         var token = localStorage.getItem('token');
         if (token) {
             xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -611,3 +614,15 @@ $(document).ready(function () {
     loadAndInitializeHeader();
 
 });
+
+function getOrCreateAnonymousId() {
+    let anonId = localStorage.getItem('anonUserId');
+    if (!anonId) {
+        // 如果没有找到匿名ID，则生成新的并保存
+        anonId = 'anon-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+        localStorage.setItem('anonUserId', anonId);
+    }
+
+    return anonId;
+}
+
