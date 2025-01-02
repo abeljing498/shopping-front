@@ -5,7 +5,6 @@ $(document).ready(function () {
 });
 
 function loadCartData() {
-
     ajaxRequest('GET', 'cart/list', null, null, function (response) {
         if (response.code == 200) {
             var $cartBody = $('#cartBody');
@@ -15,7 +14,6 @@ function loadCartData() {
                 // 解析 productAttr 以获取所有属性
                 var attrs = JSON.parse(item.productAttr);
                 var attrHtml = '';
-
                 // 为每个属性创建一个显示元素
                 attrs.forEach(function (attr) {
                     attrHtml += `<div class="widget-item d-flex"><h4 class="widget-title">${attr.key}:</h4><div class="wc-size ms-1">${attr.value}</div></div>`;

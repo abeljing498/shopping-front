@@ -1,5 +1,5 @@
 // 设置全局 AJAX 配置
-let shoId="myshopId";
+let shoId = "myshopId";
 
 window.requestUrl = "http://localhost:8085/api/";
 $.ajaxSetup({
@@ -175,13 +175,25 @@ function getMemberTotal() {
     $('#s_m_wishCount').empty();
     $('#s_pc_wishCount').empty();
     $('#s_common_cart_total_price').empty();
-    ajaxRequest('GET', 'sso/getCartTotal', null, null, function (response) {
-        if (response.code == 200) {
-            $('#s_m_wishCount').html(response.data.collectTotal);
-            $('#s_pc_wishCount').html(response.data.collectTotal);
-            $('#s_common_cart_total_price').html(response.data.carInfo.cartTotalPrice);
-        }
-    })
+    var token = localStorage.getItem('token');
+    if (token != null) {
+        ajaxRequest('GET', 'sso/getCartTotal', null, null, function (response) {
+            if (response.code == 200) {
+                $('#s_m_wishCount').html(response.data.collectTotal);
+                $('#s_pc_wishCount').html(response.data.collectTotal);
+                $('#s_common_cart_total_price').html(response.data.carInfo.cartTotalPrice);
+            }
+        })
+    } else {
+        ajaxRequest('GET', 'visitor/getCartTotal', null, null, function (response) {
+            if (response.code == 200) {
+                $('#s_m_wishCount').html(response.data.collectTotal);
+                $('#s_pc_wishCount').html(response.data.collectTotal);
+                $('#s_common_cart_total_price').html(response.data.carInfo.cartTotalPrice);
+            }
+        })
+    }
+
 }
 
 function validateEmail(email) {
