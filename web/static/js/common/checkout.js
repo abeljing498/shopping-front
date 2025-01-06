@@ -157,7 +157,7 @@ function validateFormFields() {
         }
 
         handleValidationResult(rule.selector, isValid, rule.message);
-        return isValid;
+        return handleValidationResult;
     }
 
     // 处理验证结果
