@@ -164,7 +164,8 @@ $(document).ready(function () {
             addCartVaule.price = matchingSku.price;
         }
         storeJsonData('buy_now_product', addCartVaule);
-        window.location.href = 'checkout.html?payType=buynow'; // 设置要跳转的URL
+        storeJsonData('cheak_out_type', "buyNow");
+        window.location.href = 'checkout.html'; // 设置要跳转的URL
 
     });
     $('#btn_add_review').click(function () {

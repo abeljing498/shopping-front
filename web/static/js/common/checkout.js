@@ -2,11 +2,7 @@ var cartIds = [];
 $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
     var orderId = urlParams.get('orderId');
-    var carId = urlParams.get('carId');
-    var payTotalMoney = urlParams.get('payTotalMoney');
-    var payType = urlParams.get('payType');
     let allCountries = [];
-
     var token = localStorage.getItem('token');
     if (token) {
         $('#div_login_info').hide();
@@ -39,24 +35,50 @@ $(document).ready(function () {
             $('#text_coupon_code').focus();
             return false;
         }
-        var order = {};
-        order.cartIds = cartIds
-        order.couponCode = $('#text_coupon_code').val();
-        // 发起POST请求到购物车添加端点
-        ajaxRequest('POST', 'member/coupon/applyCouponById', null, order, function (response) {
-            if (response.code == 200) {
-                if (response.data.length === 0) {
-                    alert("Sorry, there are no available coupons！")
-                    $('#text_coupon_code').focus();
-                } else {
-                    $('#p_giftCard').empty();
-                    $('#p_giftCard').html("-" + response.data[0].amount);
-                    loadCartData(response.data[0].amount);
+        var checkoutType=getJsonData("cheak_out_type");
+        if (checkoutType === 'buyNow') {
+            var payNow = {};
+            payNow.couponCode = $('#text_coupon_code').val();
+            var item = getJsonData('buy_now_product');
+            payNow.cartItem=item;
+            // 发起POST请求到购物车添加端点
+            ajaxRequest('POST', 'member/coupon/applyCouponByPayNow', null, payNow, function (response) {
+                if (response.code == 200) {
+                    if (response.data.length === 0) {
+                        alert("Sorry, there are no available coupons！")
+                        $('#text_coupon_code').focus();
+                    } else {
+                        $('#p_giftCard').empty();
+                        $('#p_giftCard').html("-" + response.data[0].amount);
+                        loadCartLocal(response.data[0].amount);
+                    }
+
                 }
 
-            }
+            })
 
-        })
+        } else {
+            var order = {};
+            order.cartIds = cartIds
+            order.couponCode = $('#text_coupon_code').val();
+            // 发起POST请求到购物车添加端点
+            ajaxRequest('POST', 'member/coupon/applyCouponById', null, order, function (response) {
+                if (response.code == 200) {
+                    if (response.data.length === 0) {
+                        alert("Sorry, there are no available coupons！")
+                        $('#text_coupon_code').focus();
+                    } else {
+                        $('#p_giftCard').empty();
+                        $('#p_giftCard').html("-" + response.data[0].amount);
+                        loadCartData(response.data[0].amount);
+                    }
+
+                }
+
+            })
+        }
+
+
     });
 
 
@@ -119,7 +141,8 @@ $(document).ready(function () {
         addUserAddress();
     });
     initAddressDetail();
-    if (payType === 'buynow') {
+    var checkoutType=getJsonData("cheak_out_type");
+    if (checkoutType === 'buyNow') {
         loadCartLocal(0.00);
     } else {
         loadCartData(0.00);
@@ -223,7 +246,6 @@ function loadCartLocal(couponMoney) {
     var total = 0;
     var attrs = JSON.parse(item.productAttr);
     var attrValues = '';
-
     // 只提取属性值并用斜杠分隔，并设置样式
     if (attrs.length > 0) {
         attrValues = attrs.map(function (attr) {
@@ -313,6 +335,7 @@ paypal.Buttons({
                 return false;
             }
         }
+
         var order = {};
         var address = {};
         address.firstName = $('#fname').val();
