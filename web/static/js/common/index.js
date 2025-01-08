@@ -4,7 +4,7 @@ $(document).ready(function () {
 });
 
 function initData() {
-
+    $('.spinner-border').show();
     // 定义 GET 请求的参数
     ajaxRequest('GET', 'home/content', null, null, function (response) {
         if (response.code !== 200) {

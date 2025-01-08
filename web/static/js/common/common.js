@@ -638,3 +638,17 @@ function getOrCreateAnonymousId() {
     return anonId;
 }
 
+// 存储JSON数据
+function storeJsonData(key, jsonData) {
+    localStorage.setItem(key, JSON.stringify(jsonData));
+}
+
+// 获取JSON数据
+function getJsonData(key) {
+    return JSON.parse(localStorage.getItem(key));
+}
+
+// 清除JSON数据
+function clearJsonData(key) {
+    localStorage.removeItem(key);
+}

@@ -14,8 +14,6 @@ function initializeProductDetail(productId) {
             $("#s-product-old-price").text("$" + response.data.product.originalPrice);
             $("#div_product_detail_description").html(response.data.product.detailHtml);
             $("#div_another_note").html(response.data.product.note);
-
-            // 添加到愿望单点击事件
             $('#a_add_wish').click(function () {
                 addWish(response.data.product.id);
             });
@@ -108,7 +106,6 @@ function initializeSlick() {
 }
 
 function handleSelection($element, attributeName, value) {
-
     selectedValues[attributeName] = value;
     const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
     const matchingSku = skuMap[key];
@@ -129,7 +126,7 @@ $(document).ready(function () {
     initializeProductDetail(id);
     initializeSlick();
     userReview(1, 20, id);
-    $('.add_to_cart_button').click(function () {
+    $('#btn_add_to_cart').click(function () {
         const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
         const matchingSku = skuMap[key];
         var addCartVaule = {};
@@ -150,6 +147,24 @@ $(document).ready(function () {
             }
 
         })
+
+    });
+    $('#btn_buy_now').click(function () {
+        const key = Object.entries(selectedValues).sort().map(([k, v]) => `${k}-${v}`).join('_');
+        const matchingSku = skuMap[key];
+        var addCartVaule = {};
+        addCartVaule.productId = id;
+        addCartVaule.quantity = $('#quantity').val(); // 使用.val()来获取input的值
+        if (matchingSku && matchingSku.id !== undefined && matchingSku.id !== null) {
+            addCartVaule.productAttr = matchingSku.spData;
+            if (matchingSku.id !== null) {
+                addCartVaule.productSkuId = matchingSku.id;
+            }
+            addCartVaule.productName =  $("#a-product-name").text();
+            addCartVaule.price = matchingSku.price;
+        }
+        storeJsonData('buy_now_product', addCartVaule);
+        window.location.href = 'checkout.html?payType=buynow'; // 设置要跳转的URL
 
     });
     $('#btn_add_review').click(function () {

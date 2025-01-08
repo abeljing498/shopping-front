@@ -58,10 +58,10 @@
 </div>
 <div class="section section-padding-03 checkout-section">
     <div class="container">
-        <div class="checkout-info"><p class="info-header">Do you already have an account? <a href="#">Click here to
+        <div class="checkout-info" id="div_login_info"><p class="info-header">Do you already have an account? <a
+                href="#" data-dismiss="modal"
+                data-bs-toggle="modal" data-bs-target="#register">Click here to
             login</a></p></div>
-        <div class="checkout-info"><p class="info-header">Have a coupon? <a href="#">Click here to enter your code</a>
-        </p></div>
         <div class="checkout-wrapper">
             <form action="#">
                 <div class="row">
@@ -86,7 +86,7 @@
                                             class="required">*</span></label>
                                         <div class="input-group">
                                             <input list="country-list" id="country-input"
-                                                   placeholder="Type to search..."/>
+                                                   placeholder="Country  to search..."/>
                                             <button type="button" id="clear-button" class="clear-btn"
                                                     title="Clear input">x
                                             </button>
@@ -138,16 +138,6 @@
                                         address</a></div>
                                 </div>
                             </div>
-                            <div class="single-form mt-3">
-                                <div class="form-check d-flex"><input type="checkbox" class="form-check-input"
-                                                                      id="exampleCheck1"><label class="form-check-label"
-                                                                                                for="exampleCheck1">Creat
-                                    an acount</label></div>
-                                <div class="form-check d-flex"><input type="checkbox" class="form-check-input"
-                                                                      id="exampleCheck2"><label class="form-check-label"
-                                                                                                for="exampleCheck2">Ship
-                                    to a different address?</label></div>
-                            </div>
                             <div class="single-form checkout-note"><label class="form-label">Notes about your order,e.g.
                                 special notes for delivery.</label><textarea placeholder=""></textarea></div>
                         </div>
@@ -197,8 +187,9 @@
                             </div>
                             <div class="cart-btn">
                                 <div class="cart-btn-left">
-                                    <div class="coupon_code"><input type="text" placeholder="Apply coupon code">
-                                        <button class="apply">Apply</button>
+                                    <div class="coupon_code"><input type="text" placeholder="Apply coupon code"
+                                                                    id="text_coupon_code">
+                                        <button class="apply" id="btn_apply">Apply</button>
                                     </div>
                                 </div>
                             </div>

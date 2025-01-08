@@ -4,8 +4,15 @@ $(document).ready(function () {
     var orderId = urlParams.get('orderId');
     var carId = urlParams.get('carId');
     var payTotalMoney = urlParams.get('payTotalMoney');
+    var payType = urlParams.get('payType');
     let allCountries = [];
 
+    var token = localStorage.getItem('token');
+    if (token) {
+        $('#div_login_info').hide();
+    } else {
+        $('#div_login_info').show();
+    }
     // 使用 jQuery 的 $.getJSON 方法读取 JSON 文件
     $.getJSON('static/js/common/countries.json', function (countries) { // 确保路径正确指向你的 JSON 文件
         allCountries = countries;
@@ -26,6 +33,31 @@ $(document).ready(function () {
             $('#clear-button').hide();
         }
     });
+    $('#btn_apply').click(function () {
+        if ($('#text_coupon_code').val() == '') {
+            alert("Please enter the coupon code!");
+            $('#text_coupon_code').focus();
+            return false;
+        }
+        var order = {};
+        order.cartIds = cartIds
+        order.couponCode = $('#text_coupon_code').val();
+        // 发起POST请求到购物车添加端点
+        ajaxRequest('POST', 'member/coupon/applyCouponById', null, order, function (response) {
+            if (response.code == 200) {
+                if (response.data.length === 0) {
+                    alert("Sorry, there are no available coupons！")
+                    $('#text_coupon_code').focus();
+                } else {
+                    $('#p_giftCard').empty();
+                    $('#p_giftCard').html("-" + response.data[0].amount);
+                    loadCartData(response.data[0].amount);
+                }
+
+            }
+
+        })
+    });
 
 
     // 当输入框获得焦点时，如果有内容则显示清除按钮
@@ -34,8 +66,65 @@ $(document).ready(function () {
             $('#clear-button').show();
         }
     });
+    $('#a_save_address').click(function () {
+        if ($('#fname').val() === '') {
+            alert("First Name cannot be empty！");
+            $('#fname').focus();
+            return false
+        }
+        if ($('#lname').val() === '') {
+            alert("Last Name cannot be empty");
+            $('#lname').focus();
+            return false
+        }
+        if ($('#country-input').val() === '') {
+            alert("Country cannot be empty");
+            $('#country-input').focus();
+            return false
+        }
+
+        if ($('#text_address_name').val() === '') {
+            alert("Street Address cannot be empty");
+            $('#text_address_name').focus();
+            return false;
+        }
+        if ($('#text_address_city').val() === '') {
+            alert("Town / City cannot be empty");
+            $('#text_address_city').focus();
+            return false;
+        }
+        if ($('#text_zip').val() === '') {
+            alert("Zip Code cannot be empty");
+            $('#text_zip').focus();
+            return false
+        }
+        if ($('#text_phone').val() === '') {
+            alert("Phone cannot be empty");
+            $('#text_phone').focus();
+            return false;
+        }
+        if ($('#text_email').val() === '') {
+            alert("Email cannot be empty");
+            $('#text_email').focus();
+            return false
+        } else {
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            var email = $('#text_email').val();
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address！");
+                $('#text_email').focus();
+                return false;
+            }
+        }
+        addUserAddress();
+    });
     initAddressDetail();
-    loadCartData();
+    if (payType === 'buynow') {
+        loadCartLocal(0.00);
+    } else {
+        loadCartData(0.00);
+    }
+
 });
 
 function initAddressDetail() {
@@ -75,8 +164,7 @@ function updateCountryList(countries) {
     });
 }
 
-function loadCartData() {
-
+function loadCartData(couponMoney) {
     ajaxRequest('GET', 'cart/list', null, null, function (response) {
         if (response.code == 200) {
             var $cartBody = $('#cartBody');
@@ -119,101 +207,142 @@ function loadCartData() {
             </tr>
             <tr>
                 <td class="product-name"><p>Gift card</p></td>
-                <td class="product-price"><p>-$${total.toFixed(2)}</p></td>
+                <td class="product-price"><p id="p_giftCard">-$${couponMoney.toFixed(2)}</p></td>
             </tr>`;
             $cartBody.append(subtotalRow);
+            $('#p_total_price').html("$" + (total - couponMoney).toFixed(2));
         }
     });
 
 }
 
-function validateFormFields() {
-    // 定义验证规则
-    const validationRules = [
-        {selector: '#fname', minLength: 3, message: 'First name must be at least 3 characters long.'},
-        {selector: '#lname', minLength: 3, message: 'Last name must be at least 3 characters long.'},
-        {selector: '#cname', minLength: 3, message: 'Company name must be at least 3 characters long.'},
-        {selector: '#country-input', minLength: 1, message: 'Please select a country.'},
-        {selector: '#text_address_name', minLength: 10, message: 'Address name must be at least 10 characters long.'},
-        {selector: '#text_address_city', minLength: 3, message: 'City must be at least 3 characters long.'},
-        {selector: '#text_zip', minLength: 5, message: 'ZIP code must be at least 5 characters long.'},
-        {selector: '#text_phone', minLength: 8, message: 'Phone number must be at least 8 digits long.'},
-        {
-            selector: '#text_email',
-            rule: (value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) && value.length >= 5,
-            message: 'Invalid email address format.'
-        }
-    ];
+function loadCartLocal(couponMoney) {
+    let item = getJsonData('buy_now_product');
+    var $cartBody = $('#cartBody');
+    $cartBody.empty(); // 清空现有的表格行
+    var total = 0;
+    var attrs = JSON.parse(item.productAttr);
+    var attrValues = '';
 
-    // 验证函数
-    function validateField(rule) {
-        const value = $(rule.selector).val();
-        let isValid;
-
-        if (rule.rule) {
-            isValid = rule.rule(value);
-        } else {
-            isValid = value && value.length >= rule.minLength;
-        }
-
-        handleValidationResult(rule.selector, isValid, rule.message);
-        return isValid;
+    // 只提取属性值并用斜杠分隔，并设置样式
+    if (attrs.length > 0) {
+        attrValues = attrs.map(function (attr) {
+            return `<span style="color: #ff4d4d; font-size: smaller;">${attr.value}</span>`;
+        }).join(' / ');
+        attrValues = `<br><small>${attrValues}</small>`;
     }
+    var row = `
+                <tr>
+                    <td class="product-name">
+                        <p>${item.productName} × ${item.quantity}${attrValues}</p>
+                    </td>
+                    <td class="product-price">
+                        <p>$${(item.price * item.quantity).toFixed(2)}</p>
+                    </td>
+                </tr>`;
+    $cartBody.append(row);
+    total += item.price * item.quantity;
+    var subtotalRow = `
+            <tr>
+                <td class="product-name"><p>Subtotal</p></td>
+                <td class="product-price"><p>$${total.toFixed(2)}</p></td>
+            </tr>
+            <tr>
+                <td class="product-name"><p>Gift card</p></td>
+                <td class="product-price"><p id="p_giftCard">-$${couponMoney.toFixed(2)}</p></td>
+            </tr>`;
+    $cartBody.append(subtotalRow);
+    $('#p_total_price').html("$" + (total - couponMoney).toFixed(2));
 
-    // 处理验证结果
-    function handleValidationResult(selector, isValid, errorMsg) {
-        if (!isValid) {
-            console.log(`Error in field ${selector}: ${errorMsg}`);
-            $(selector).focus(); // 假设有样式 .error 表示错误状态
-            alert(errorMsg);
-            return false;
-        }
-    }
-
-    // 遍历并验证每个字段
-    const results = validationRules.map(validateField);
-
-    // 返回所有验证是否通过的结果
-    return results.every(Boolean); // 如果所有验证都通过，则返回 true
 }
 
 paypal.Buttons({
 
     createOrder: function (data, actions) {
-        if(cartIds.length==0){
+
+        if (cartIds.length == 0) {
             alert("Please select products to shopping cart");
             return false;
         }
-        // 创建订单
-        if (validateFormFields()) {
-            var order = {};
-            var address = {};
-            address.firstName = $('#fname').val();
-            address.name = $('#lname').val();
-            address.company = $('#cname').val();
-            address.country = $('#country-input').val();
-            address.detailAddress = $('#text_address_name').val() + $('#inpt_unit_optional').val();
-            address.city = $('#text_address_city').val();
-            address.postCode = $('#text_zip').val();
-            address.phoneNumber = $('#text_phone').val();
-            address.email = $('#text_email').val();
-            order.umsMemberReceiveAddress = address;
-            order.cartIds = cartIds
-            order.payType = 3;
-            var token = localStorage.getItem('token');
-            return fetch(requestUrl + 'order/generateOrder', {
-                method: 'post',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }, body: JSON.stringify(order)
-            }).then(function (res) {
-                return res.json();
-            }).then(function (orderData) {
-                console.info(orderData)
-                return orderData.data.orderId;
-            });
+        if ($('#fname').val() === '') {
+            alert("First Name cannot be empty！");
+            $('#fname').focus();
+            return false
         }
+        if ($('#lname').val() === '') {
+            alert("Last Name cannot be empty");
+            $('#lname').focus();
+            return false
+        }
+        if ($('#country-input').val() === '') {
+            alert("Country cannot be empty");
+            $('#country-input').focus();
+            return false
+        }
+
+        if ($('#text_address_name').val() === '') {
+            alert("Street Address cannot be empty");
+            $('#text_address_name').focus();
+            return false;
+        }
+        if ($('#text_address_city').val() === '') {
+            alert("Town / City cannot be empty");
+            $('#text_address_city').focus();
+            return false;
+        }
+        if ($('#text_zip').val() === '') {
+            alert("Zip Code cannot be empty");
+            $('#text_zip').focus();
+            return false
+        }
+        if ($('#text_phone').val() === '') {
+            alert("Phone cannot be empty");
+            $('#text_phone').focus();
+            return false;
+        }
+        if ($('#text_email').val() === '') {
+            alert("Email cannot be empty");
+            $('#text_email').focus();
+            return false
+        } else {
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            var email = $('#text_email').val();
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address！");
+                $('#text_email').focus();
+                return false;
+            }
+        }
+        var order = {};
+        var address = {};
+        address.firstName = $('#fname').val();
+        address.name = $('#lname').val();
+        address.company = $('#cname').val();
+        address.country = $('#country-input').val();
+        address.detailAddress = $('#text_address_name').val() + $('#inpt_unit_optional').val();
+        address.city = $('#text_address_city').val();
+        address.postCode = $('#text_zip').val();
+        address.phoneNumber = $('#text_phone').val();
+        address.email = $('#text_email').val();
+        order.umsMemberReceiveAddress = address;
+        order.cartIds = cartIds
+        order.payType = 3;
+        var token = localStorage.getItem('token');
+        return fetch(requestUrl + 'order/generateOrder', {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'anonId': getOrCreateAnonymousId(),
+                'shopId': shoId
+            }, body: JSON.stringify(order)
+        }).then(function (res) {
+            return res.json();
+        }).then(function (orderData) {
+            console.info(orderData)
+            return orderData.data.orderId;
+        });
+
     },
     onApprove: function (data, actions) {
         // 执行支付
@@ -246,5 +375,26 @@ paypal.Buttons({
         });
     }
 }).render('#paypal-button-container');
+
+function addUserAddress() {
+    var address = {};
+    address.firstName = $('#fname').val();
+    address.name = $('#lname').val();
+    address.company = $('#cname').val();
+    address.country = $('#country-input').val();
+    address.detailAddress = $('#text_address_name').val() + $('#inpt_unit_optional').val();
+    address.city = $('#text_address_city').val();
+    address.postCode = $('#text_zip').val();
+    address.phoneNumber = $('#text_phone').val();
+    address.email = $('#text_email').val();
+    // 发起POST请求到购物车添加端点
+    ajaxRequest('POST', 'member/address/add', null, address, function (response) {
+        if (response.code == 200) {
+            alert("save successfully！");
+        }
+
+    })
+
+}
 
 
