@@ -39,24 +39,25 @@ $(document).ready(function () {
             $('#text_coupon_code').focus();
             return false;
         }
-        var order = {};
-        order.cartIds = cartIds
-        order.couponCode = $('#text_coupon_code').val();
-        // 发起POST请求到购物车添加端点
-        ajaxRequest('POST', 'member/coupon/applyCouponById', null, order, function (response) {
-            if (response.code == 200) {
-                if (response.data.length === 0) {
-                    alert("Sorry, there are no available coupons！")
-                    $('#text_coupon_code').focus();
-                } else {
-                    $('#p_giftCard').empty();
-                    $('#p_giftCard').html("-" + response.data[0].amount);
-                    loadCartData(response.data[0].amount);
-                }
-
-            }
-
-        })
+        // var order = {};
+        // order.cartIds = cartIds
+        // order.couponCode = $('#text_coupon_code').val();
+        // // 发起POST请求到购物车添加端点
+        // ajaxRequest('POST', 'member/coupon/applyCouponById', null, order, function (response) {
+        //     if (response.code == 200) {
+        //         if (response.data.length === 0) {
+        //             alert("Sorry, there are no available coupons！")
+        //             $('#text_coupon_code').focus();
+        //         } else {
+        //             $('#p_giftCard').empty();
+        //             $('#p_giftCard').html("-" + response.data[0].amount);
+        //             // loadCartData(response.data[0].amount);
+        //         }
+        //
+        //     }
+        //
+        // })
+        return  false;
     });
 
 
